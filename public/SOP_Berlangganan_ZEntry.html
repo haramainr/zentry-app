@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZEntry - SOP Berlangganan SaaS</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        h1 {
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #3b82f6;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #475569;
+            margin-top: 20px;
+        }
+        .mermaid {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+        }
+        ol {
+            background-color: #f8fafc;
+            padding: 20px 40px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .print-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 12px;
+            background-color: #3b82f6;
+            color: white;
+            text-align: center;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .print-btn:hover {
+            background-color: #2563eb;
+        }
+        @media print {
+            .print-btn {
+                display: none;
+            }
+            body {
+                padding: 0;
+                max-width: 100%;
+            }
+            .mermaid {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+    <!-- Load Mermaid -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</head>
+<body>
+
+    <button class="print-btn" onclick="window.print()">🖨️ Cetak / Simpan ke PDF</button>
+
+    <h1>Alur Sistem Berlangganan (SaaS) Platform ZEntry</h1>
+    <p>Dokumen ini menjelaskan alur (<em>pipeline</em>) dari awal mula pengguna baru hingga mereka dapat mengakses sistem secara penuh. Alur ini dirancang agar mudah digunakan oleh <em>Sales/Tim</em> sekaligus aman bagi pengelola platform (<em>Developer</em>).</p>
+
+    <h2>Pipeline End-to-End</h2>
+    
+    <div class="mermaid">
+sequenceDiagram
+    participant P as Pengguna (Sales/Leader)
+    participant Z as Aplikasi ZEntry
+    participant S as Shopee (Toko)
+    participant D as Developer (Admin)
+
+    %% Fase 1: Pendaftaran
+    rect rgb(240, 249, 255)
+    note right of P: Fase 1: Pembuatan Akun
+    P->>Z: Mengisi Form Registrasi & Tanda Tangan
+    Z-->>P: Akun Berhasil Dibuat
+    note right of Z: Status Akun: "Pending Payment"<br/>(Terkunci otomatis)
+    end
+
+    %% Fase 2: Upaya Login & Instruksi Pembayaran
+    rect rgb(254, 242, 242)
+    note right of P: Fase 2: Upaya Login
+    P->>Z: Login menggunakan Email & Password
+    Z-->>P: Akses Diblokir (Diarahkan ke /suspended)
+    Z-->>P: Menampilkan Instruksi Pembelian Shopee
+    end
+
+    %% Fase 3: Transaksi & Konfirmasi
+    rect rgb(255, 251, 235)
+    note right of P: Fase 3: Pembayaran
+    P->>S: Beli Produk Langganan di Shopee
+    P->>S: Kirim "Email Akun ZEntry" via Chat
+    end
+
+    %% Fase 4: Aktivasi oleh Developer
+    rect rgb(240, 253, 244)
+    note right of P: Fase 4: Validasi Manual
+    S-->>D: Notifikasi Pesanan Masuk
+    D->>S: Cek Email di Chat Shopee
+    D->>Z: Buka Dashboard Developer (ZEntry)
+    D->>Z: Cari Email -> Klik "Aktifkan 30 Hari"
+    note right of Z: Status: "Active"<br/>Tgl Kedaluwarsa: H+30
+    end
+    </div>
+
+    <h2>Deskripsi Tahapan (Standard Operating Procedure)</h2>
+
+    <h3>1. Pendaftaran Pengguna (Sign Up)</h3>
+    <ol>
+        <li>Pengguna membuka halaman pendaftaran pada platform ZEntry.</li>
+        <li>Memasukkan Nama Lengkap, Email, Jabatan (Role), memilih Supervisor (jika Sales), dan memberikan coretan tanda tangan digital.</li>
+        <li>Setelah klik Daftar, akun mereka otomatis tersimpan ke <em>database</em>.</li>
+        <li><strong>Validasi Sistem:</strong> Pengaturan otomatis membuat status akun pendaftar baru menjadi <code>Pending Payment</code>.</li>
+    </ol>
+
+    <h3>2. Tembok Pembayaran (Paywall & Middleware)</h3>
+    <ol>
+        <li>Begitu pendaftar baru mencoba masuk (<em>login</em>), <em>Middleware</em> keamanan langsung mencegatnya.</li>
+        <li>Karena status mereka masih <code>Pending Payment</code>, mereka dilempar secara paksa ke halaman Khusus Langganan.</li>
+        <li>Di halaman tersebut, pengguna tidak bisa melihat data apapun, hanya melihat tombol <strong>"Beli Akses di Shopee"</strong>.</li>
+    </ol>
+
+    <h3>3. Proses Transaksi (Eksternal via Shopee)</h3>
+    <ol>
+        <li>Pengguna menekan tombol dan diarahkan ke toko Shopee Anda.</li>
+        <li>Pengguna melakukan <em>checkout</em> produk langganan 30 hari.</li>
+        <li>Sesuai instruksi, pengguna wajib mengirimkan <strong>Alamat Email</strong> ZEntry mereka ke <em>Chat</em> penjual di Shopee.</li>
+    </ol>
+
+    <h3>4. Proses Aktivasi (Internal via Dashboard Developer)</h3>
+    <ol>
+        <li>Anda mendapatkan notifikasi pesanan masuk dari Shopee dan mengecek alamat email di <em>Chat</em>.</li>
+        <li>Anda membuka ZEntry dan masuk menggunakan akun <strong>Developer</strong>.</li>
+        <li>Pergi ke halaman <strong>System Overview</strong>. Di bagian bawah terdapat tabel <strong>User Subscription Management</strong>.</li>
+        <li>Cari email tersebut di daftar pengguna berstatus <em>"Menunggu Aktivasi"</em>.</li>
+        <li>Klik tombol biru <strong>"Aktifkan 30 Hari"</strong>.</li>
+    </ol>
+
+    <h3>5. Masa Aktif & Kadaluwarsa</h3>
+    <ol>
+        <li>Sistem secara otomatis menambahkan batas waktu <strong>tepat 30 hari ke depan</strong>.</li>
+        <li>Pengguna yang tadinya terblokir sekarang memiliki Akses Penuh.</li>
+        <li><strong>Mati Otomatis:</strong> Setelah tepat 30 hari berlalu, <em>Middleware</em> akan memblokir pengguna tersebut kembali dan memaksa mereka ke halaman Shopee untuk perpanjangan.</li>
+    </ol>
+
+</body>
+</html>
