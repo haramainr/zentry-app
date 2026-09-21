@@ -525,6 +525,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                   <tr style={{ backgroundColor: '#F8FAFC', borderBottom: '2px solid #E2E8F0' }}>
                     <th style={{ padding: '18px 22px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Tanggal</th>
                     <th style={{ padding: '18px 22px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Nama Pelanggan</th>
+                    <th style={{ padding: '18px 22px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Nama Sales</th>
                     <th style={{ padding: '18px 22px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Paket Layanan</th>
                     <th style={{ padding: '18px 22px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Status</th>
                     <th style={{ padding: '18px 22px', fontSize: '0.82rem', fontWeight: 700, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Sumber</th>
@@ -566,6 +567,20 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                             <span style={{ color: '#94A3B8', fontStyle: 'italic', fontWeight: 500 }}>Tanpa Nama</span>
                           )}
                         </td>
+                        {/* Nama Sales */}
+                        <td style={{ padding: '20px 22px', fontSize: '0.9rem', color: '#475569', fontWeight: 500 }}>
+                          {(() => {
+                            let salesName = "-";
+                            if (sub.vas) {
+                              try {
+                                const v = typeof sub.vas === 'string' ? JSON.parse(sub.vas) : sub.vas;
+                                if (v && v.salesNameManual) salesName = v.salesNameManual;
+                              } catch(e){}
+                            }
+                            return salesName;
+                          })()}
+                        </td>
+
 
                         {/* Paket */}
                         <td style={{ padding: '20px 22px', fontSize: '0.92rem', color: '#1E293B', fontWeight: 600 }}>
