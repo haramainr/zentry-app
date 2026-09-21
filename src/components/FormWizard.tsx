@@ -1887,63 +1887,15 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
               <div style={{ position: 'absolute', right: '10px', bottom: '5px', width: '56px', height: '62px', background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)', borderRadius: '16px 16px 28px 28px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: '0 8px 16px rgba(29, 78, 216, 0.4)', border: '2px solid white', transform: 'rotate(6deg)' }}>
                 <CheckCircle size={30} strokeWidth={2.5} />
               </div>
+            </div>
           </div>
         </div>
+
       </div>
 
-      {/* OCR Scanning Overlay */}
-      {isOcring && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.7)', zIndex: 99999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)' }}>
-          <div style={{ background: 'white', padding: '40px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', maxWidth: '85%', width: '360px', textAlign: 'center', animation: 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
-            
-            {/* Animated Scanner Ring */}
-            <div style={{ position: 'relative', width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ position: 'absolute', width: '100%', height: '100%', border: '6px solid #EFF6FF', borderRadius: '50%' }} />
-              <div style={{ position: 'absolute', width: '100%', height: '100%', border: '6px solid #3B82F6', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite' }} />
-              
-              {/* Inner scanning laser */}
-              <div style={{ position: 'absolute', width: '40px', height: '40px', overflow: 'hidden' }}>
-                <Scan size={40} color="#3B82F6" strokeWidth={2} />
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#3B82F6', boxShadow: '0 0 8px #3B82F6', animation: 'scan 1.5s ease-in-out infinite alternate' }} />
-              </div>
-            </div>
-
-            <div>
-              <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#0F172A', marginBottom: '8px', fontWeight: 800 }}>Menganalisis KTP...</h3>
-              <p style={{ margin: 0, color: '#64748B', fontSize: '0.95rem', lineHeight: '1.5' }}>AI sedang mengekstrak data dari KTP Anda. Mohon tunggu sebentar.</p>
-            </div>
-            
-            <div style={{ width: '100%', background: '#F1F5F9', height: '6px', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: '50%', height: '100%', background: '#3B82F6', borderRadius: '4px', animation: 'progress 2s ease-in-out infinite' }} />
-            </div>
-          </div>
-          
-          <style>{`
-            @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-            }
-            @keyframes scaleUp {
-              0% { transform: scale(0.9); opacity: 0; }
-              100% { transform: scale(1); opacity: 1; }
-            }
-            @keyframes scan {
-              0% { top: 0%; opacity: 0; }
-              10% { opacity: 1; }
-              90% { opacity: 1; }
-              100% { top: 100%; opacity: 0; }
-            }
-            @keyframes progress {
-              0% { transform: translateX(-100%); }
-              100% { transform: translateX(200%); }
-            }
-          `}</style>
-        </div>
-      )}
     </div>
   );
 }
-
 
 
 
