@@ -15,7 +15,7 @@ export default async function SalesHistoryPage() {
   // Fetch riwayat
   const { data: submissions, error } = await supabase
     .from("submissions")
-    .select("id, nama_lengkap, paket_layanan, paket_spec, promo, status_pemasangan, is_draft, biaya_total, created_at, pdf_url")
+    .select("id, nama_lengkap, paket_layanan, paket_spec, promo, status_pemasangan, is_draft, biaya_total, created_at, pdf_url, vas")
     .eq("sales_id", user.id)
     .neq("status_pemasangan", "Deleted")
     .order('created_at', { ascending: false });
