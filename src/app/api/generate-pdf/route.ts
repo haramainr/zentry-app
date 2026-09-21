@@ -3,7 +3,7 @@ import { PDFDocument, StandardFonts, TextAlignment, PDFName, rgb, PDFTextField, 
 import fs from 'fs';
 import path from 'path';
 import { createClient } from '@/lib/supabase/server';
-import { DEA_SIGNATURE, WINDIH_SIGNATURE, ALFATH_SIGNATURE, IZ_SIGNATURE } from '@/lib/locked-signatures';
+import { DEA_SIGNATURE, WINDIH_SIGNATURE, ALFATH_SIGNATURE, IZ_SIGNATURE, BIMA_SIGNATURE } from '@/lib/locked-signatures';
 
 export async function POST(req: NextRequest) {
   try {
@@ -45,6 +45,9 @@ export async function POST(req: NextRequest) {
           } else if (user.email === 'iz_sales@zentry.com') {
             leaderSignatureBase64 = IZ_SIGNATURE;
             leaderFullName = 'Iz Timisela';
+          } else if (user.email === 'bima_sales@zentry.com') {
+            leaderSignatureBase64 = BIMA_SIGNATURE;
+            leaderFullName = 'Bima Giri Pangestu';
           }
       }
 
