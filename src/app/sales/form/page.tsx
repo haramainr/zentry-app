@@ -22,6 +22,10 @@ export default async function SalesFormPage({
           tlName = tlProfile.full_name;
         }
       }
+      
+      if (user.email === 'alfath_sales@zentry.com') {
+        tlName = 'Alfath Nugraha N. A.';
+      }
     }
   }
 

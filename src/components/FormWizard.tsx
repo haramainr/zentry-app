@@ -1151,14 +1151,14 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
   const handleShareWa = async () => {
     const { generateWaTemplate } = await import("@/lib/waGenerator");
-    const template = generateWaTemplate(formData);
+    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
     const waUrl = `https://wa.me/?text=${encodeURIComponent(template)}`;
     window.open(waUrl, '_blank');
   };
 
   const handleCopyText = async () => {
     const { generateWaTemplate } = await import("@/lib/waGenerator");
-    const template = generateWaTemplate(formData);
+    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
     try {
       await navigator.clipboard.writeText(template);
       alert('Teks "Format Pendaftaran" berhasil disalin ke Clipboard!');
