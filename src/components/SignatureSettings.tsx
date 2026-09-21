@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Save, Eraser } from "lucide-react";
+import { Save, Eraser, Upload } from "lucide-react";
 import SignatureCanvas from 'react-signature-canvas';
 
 export default function SignatureSettings({ userId }: { userId: string }) {
@@ -13,6 +13,28 @@ export default function SignatureSettings({ userId }: { userId: string }) {
   
   const sigCanvas = useRef<SignatureCanvas>(null);
   const supabase = createClient();
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result && sigCanvas.current) {
+          // Clear first
+          sigCanvas.current.clear();
+          // Draw image
+          sigCanvas.current.fromDataURL(event.target.result.toString(), {
+            width: sigCanvas.current.getCanvas().width,
+            height: sigCanvas.current.getCanvas().height
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
 
   useEffect(() => {
     const fetchSignature = async () => {
@@ -101,9 +123,27 @@ export default function SignatureSettings({ userId }: { userId: string }) {
         </div>
       )}
 
-      <p className="text-body" style={{ fontSize: '0.9rem' }}>
+      
+      <p className="text-body" style={{ fontSize: '0.9rem', marginBottom: '8px' }}>
         Tanda tangan ini akan otomatis dicetak pada form PDF saat Anda (atau tim Anda) membuat dokumen baru.
       </p>
+      
+      <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+          <Upload size={18} color="#2563EB" style={{ marginTop: '2px' }} />
+          <div>
+            <span style={{ fontSize: '0.85rem', color: '#1E3A8A', fontWeight: 600, display: 'block' }}>Import dari Galeri (Disarankan)</span>
+            <span style={{ fontSize: '0.8rem', color: '#3B82F6' }}>Gunakan gambar tanda tangan berlatar transparan (hapus background) agar hasilnya lebih menyatu dengan dokumen PDF.</span>
+          </div>
+        </div>
+        <button type="button" onClick={() => fileInputRef.current?.click()} style={{ background: 'white', border: '1px solid #93C5FD', color: '#2563EB', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, marginTop: '8px', cursor: 'pointer' }}>
+          Pilih Gambar Tanda Tangan
+        </button>
+        <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
+      </div>
+
+      <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '8px', fontWeight: 500 }}>Atau gambar manual di bawah ini:</div>
+
 
       {fetching ? (
         <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-muted)' }}>Memuat tanda tangan...</div>
