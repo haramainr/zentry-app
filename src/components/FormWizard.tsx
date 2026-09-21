@@ -14,6 +14,27 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   
   const sigCanvas = useRef<SignatureCanvas>(null);
   const ccSigCanvas = useRef<SignatureCanvas>(null);
+
+  const sigFileInputRef = useRef<HTMLInputElement>(null);
+  
+  const handleSigImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result && sigCanvas.current) {
+          sigCanvas.current.clear();
+          sigCanvas.current.fromDataURL(event.target.result.toString(), {
+            width: sigCanvas.current.getCanvas().width,
+            height: sigCanvas.current.getCanvas().height
+          });
+          onSigEnd(); // trigger the save state
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const salesSigCanvas = useRef<SignatureCanvas>(null);
   
   const [pdfBlobUrl, setPdfBlobUrl] = useState<string | null>(null);
@@ -1763,7 +1784,24 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap Sales..." value={salesNameInput} onChange={(e) => setSalesNameInput(e.target.value)} />
               </div>
             <label className="input-label">Tanda Tangan Sales</label>
-            <div style={{ border: '2px dashed var(--border-color)', borderRadius: 'var(--radius-lg)', backgroundColor: 'var(--bg-color)', overflow: 'hidden' }}>
+
+              <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <Upload size={18} color="#2563EB" style={{ marginTop: '2px' }} />
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: '#1E3A8A', fontWeight: 600, display: 'block' }}>Import dari Galeri (Disarankan)</span>
+                    <span style={{ fontSize: '0.8rem', color: '#3B82F6' }}>Gunakan gambar tanda tangan berlatar transparan agar menyatu dengan dokumen PDF.</span>
+                  </div>
+                </div>
+                <button type="button" onClick={() => sigFileInputRef.current?.click()} style={{ background: 'white', border: '1px solid #93C5FD', color: '#2563EB', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, marginTop: '8px', cursor: 'pointer' }}>
+                  Pilih Gambar Tanda Tangan
+                </button>
+                <input ref={sigFileInputRef} type="file" accept="image/*" onChange={handleSigImageUpload} style={{ display: 'none' }} />
+              </div>
+
+              <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '8px', fontWeight: 500 }}>Atau gambar manual di bawah ini:</div>
+              <div style={{ border: '2px dashed var(--border-color)', borderRadius: 'var(--radius-lg)', backgroundColor: 'var(--bg-color)', overflow: 'hidden' }}>
+
               <SignatureCanvas 
                 ref={sigCanvas}
                 onEnd={onSigEnd}
