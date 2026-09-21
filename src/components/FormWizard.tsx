@@ -1,4 +1,5 @@
 "use client";
+import { createPortal } from 'react-dom';
 
 import React, { useState, useRef, useEffect } from "react";
 import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan } from "lucide-react";
@@ -1931,7 +1932,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
 
       {/* OCR Scanning Overlay */}
-      {isOcring && (
+      {isOcring && typeof document !== 'undefined' && createPortal(
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.7)', zIndex: 99999, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(6px)' }}>
           <div style={{ background: 'white', padding: '40px', borderRadius: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)', maxWidth: '85%', width: '360px', textAlign: 'center', animation: 'scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
             
@@ -1977,8 +1978,9 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
               100% { transform: translateX(200%); }
             }
           `}</style>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
       </div>
 
     </div>
