@@ -25,11 +25,13 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
       reader.onload = (event) => {
         if (event.target?.result && sigCanvas.current) {
           sigCanvas.current.clear();
-          sigCanvas.current.fromDataURL(event.target.result.toString(), {
-            width: sigCanvas.current.getCanvas().width,
-            height: sigCanvas.current.getCanvas().height
-          });
-          onSigEnd(); // trigger the save state
+                      sigCanvas.current.fromDataURL(event.target.result.toString(), {
+              width: sigCanvas.current.getCanvas().width,
+              height: sigCanvas.current.getCanvas().height
+            });
+            setTimeout(() => {
+              onSigEnd();
+            }, 100);
         }
       };
       reader.readAsDataURL(file);
