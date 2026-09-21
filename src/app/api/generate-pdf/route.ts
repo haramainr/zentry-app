@@ -3,7 +3,7 @@ import { PDFDocument, StandardFonts, TextAlignment, PDFName, rgb, PDFTextField, 
 import fs from 'fs';
 import path from 'path';
 import { createClient } from '@/lib/supabase/server';
-import { DEA_SIGNATURE, WINDIH_SIGNATURE } from '@/lib/locked-signatures';
+import { DEA_SIGNATURE, WINDIH_SIGNATURE, ALFATH_SIGNATURE } from '@/lib/locked-signatures';
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,6 +39,9 @@ export async function POST(req: NextRequest) {
             // HANYA hapus TTD Leader. TTD Sales tetap dipertahankan.
             leaderSignatureBase64 = null;
             leaderFullName = '';
+          } else if (user.email === 'alfath_sales@zentry.com') {
+            leaderSignatureBase64 = ALFATH_SIGNATURE;
+            leaderFullName = 'Alfath Nugraha N. A.';
           }
       }
 
