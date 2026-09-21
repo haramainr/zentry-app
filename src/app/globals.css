@@ -445,21 +445,21 @@ button {
 }
 
 .sidebar-nav-item.active {
-  background-color: #EFF6FF;
-  color: #1E40AF !important;
+  background-color: #F8FAFC;
+  color: #0F172A !important;
   font-weight: 700;
-  border-left: 4px solid #2563EB;
+  border-left: 4px solid #334155;
   border-radius: 4px 10px 10px 4px;
 }
 
 .sidebar-nav-item.active svg {
-  color: #1E40AF !important;
-  stroke: #1E40AF !important;
+  color: #0F172A !important;
+  stroke: #0F172A !important;
 }
 
 .sidebar-nav-item:hover:not(.active) svg {
-  color: #2563EB;
-  stroke: #2563EB;
+  color: #334155;
+  stroke: #334155;
   transform: scale(1.08);
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }

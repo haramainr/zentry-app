@@ -237,7 +237,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                   borderRadius: '12px', border: '1px solid #CBD5E1', backgroundColor: '#FFFFFF',
                   fontSize: '0.95rem', color: '#0F172A', outline: 'none', transition: 'all 0.2s ease'
                 }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37,99,235,0.12)'; }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = '#475569'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(71, 85, 105, 0.12)'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = '#CBD5E1'; e.currentTarget.style.boxShadow = 'none'; }}
               />
             </div>
@@ -259,7 +259,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                   fontSize: '0.95rem', color: '#0F172A', outline: 'none', cursor: 'pointer',
                   appearance: 'none', transition: 'all 0.2s ease', fontWeight: 500
                 }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37,99,235,0.12)'; }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = '#475569'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(71, 85, 105, 0.12)'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = '#CBD5E1'; e.currentTarget.style.boxShadow = 'none'; }}
               >
                 <option value="Semua">Semua Status</option>
@@ -286,7 +286,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                   fontSize: '0.95rem', color: dateFilter ? '#0F172A' : '#64748B', outline: 'none', 
                   transition: 'all 0.2s ease', fontWeight: 500
                 }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37,99,235,0.12)'; }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = '#475569'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(71, 85, 105, 0.12)'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = '#CBD5E1'; e.currentTarget.style.boxShadow = 'none'; }}
               />
             </div>
@@ -316,18 +316,18 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                     style={{ 
                       display: 'flex', alignItems: 'center', gap: '8px',
                       padding: '8px 16px', borderRadius: '12px',
-                      border: `1.5px solid ${active ? '#3B82F6' : '#E2E8F0'}`,
-                      backgroundColor: active ? '#EFF6FF' : '#F8FAFC',
-                      color: active ? '#1D4ED8' : '#64748B',
+                      border: `1.5px solid ${active ? '#64748B' : '#E2E8F0'}`, // CHANGED
+                      backgroundColor: active ? '#F1F5F9' : '#F8FAFC', // CHANGED
+                      color: active ? '#0F172A' : '#64748B', // CHANGED
                       fontSize: '0.88rem', fontWeight: active ? 700 : 600,
                       cursor: 'pointer', transition: 'all 0.2s ease',
-                      boxShadow: active ? '0 2px 6px rgba(59, 130, 246, 0.15)' : 'none'
+                      boxShadow: active ? '0 2px 6px rgba(51, 65, 85, 0.15)' : 'none'
                     }}
                   >
                     <div style={{ 
                       width: '18px', height: '18px', borderRadius: '5px', 
-                      backgroundColor: active ? '#2563EB' : '#FFFFFF',
-                      border: `1px solid ${active ? '#2563EB' : '#CBD5E1'}`,
+                      backgroundColor: active ? '#334155' : '#FFFFFF', // CHANGED
+                      border: `1px solid ${active ? '#334155' : '#CBD5E1'}`, // CHANGED
                       display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF'
                     }}>
                       {active && <Check size={12} strokeWidth={3} />}
@@ -358,18 +358,18 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                 control: (base, state) => ({
                   ...base,
                   minHeight: '48px',
-                  borderColor: state.isFocused ? '#2563EB' : '#CBD5E1',
+                  borderColor: state.isFocused ? '#475569' : '#CBD5E1',
                   borderRadius: '12px',
                   padding: '2px 6px',
-                  boxShadow: state.isFocused ? '0 0 0 3px rgba(37,99,235,0.12)' : 'none',
+                  boxShadow: state.isFocused ? '0 0 0 3px rgba(71, 85, 105, 0.12)' : 'none',
                   '&:hover': { borderColor: '#94A3B8' },
                   backgroundColor: '#FFFFFF'
                 }),
                 multiValue: (base) => ({
                   ...base,
-                  backgroundColor: '#EFF6FF',
+                  backgroundColor: '#F1F5F9',
                   borderRadius: '6px',
-                  border: '1px solid #DBEAFE',
+                  border: '1px solid #E2E8F0',
                 }),
                 multiValueLabel: (base) => ({
                   ...base,
@@ -379,8 +379,8 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                 }),
                 multiValueRemove: (base) => ({
                   ...base,
-                  color: '#3B82F6',
-                  '&:hover': { backgroundColor: '#DBEAFE', color: '#1E40AF' },
+                  color: '#475569',
+                  '&:hover': { backgroundColor: '#E2E8F0', color: '#0F172A' },
                 }),
               }}
             />
@@ -437,7 +437,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                   padding: '10px 22px', 
                   borderRadius: '9999px', 
                   border: 'none',
-                  backgroundColor: active ? '#2563EB' : 'transparent',
+                  backgroundColor: active ? '#1E293B' : 'transparent',
                   color: active ? '#FFFFFF' : '#475569',
                   fontWeight: active ? 700 : 600,
                   fontSize: '0.92rem',
@@ -503,13 +503,13 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
               onClick={handleResetFilters}
               style={{ 
                 marginTop: '8px', padding: '12px 24px', borderRadius: '14px',
-                backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE',
-                color: '#2563EB', fontWeight: 700, fontSize: '0.9rem',
+                backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0',
+                color: '#334155', fontWeight: 700, fontSize: '0.9rem',
                 cursor: 'pointer', transition: 'all 0.2s ease',
                 display: 'flex', alignItems: 'center', gap: '8px'
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#DBEAFE'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#EFF6FF'; }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#F1F5F9'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#F8FAFC'; }}
             >
               <RotateCcw size={18} />
               <span>Atur Ulang Semua Filter</span>
@@ -548,7 +548,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                           transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
                           backgroundColor: '#FFFFFF'
                         }}
-                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#EFF6FF'; }}
+                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#F1F5F9'; }}
                         onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#FFFFFF'; }}
                       >
                         {/* Tanggal */}
@@ -822,7 +822,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                           style={{ 
                             minWidth: '38px', height: '38px', padding: '0 12px', borderRadius: '10px',
                             border: active ? 'none' : '1px solid #CBD5E1',
-                            background: active ? 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)' : '#FFFFFF',
+                            background: active ? 'linear-gradient(135deg, #1E293B 0%, #334155 100%)' : '#FFFFFF',
                             color: active ? '#FFFFFF' : '#334155',
                             fontWeight: active ? 700 : 600, fontSize: '0.9rem',
                             cursor: 'pointer', transition: 'all 0.2s ease',
