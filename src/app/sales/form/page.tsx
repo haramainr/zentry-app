@@ -25,6 +25,8 @@ export default async function SalesFormPage({
       
       if (user.email === 'alfath_sales@zentry.com') {
         tlName = 'Alfath Nugraha N. A.';
+      } else if (user.email === 'iz_sales@zentry.com') {
+        tlName = 'Iz Timisela';
       }
     }
   }
