@@ -128,15 +128,15 @@ export default function SignatureSettings({ userId }: { userId: string }) {
         Tanda tangan ini akan otomatis dicetak pada form PDF saat Anda (atau tim Anda) membuat dokumen baru.
       </p>
       
-      <div style={{ background: '#EFF6FF', border: '1px solid #BFDBFE', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+      <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-          <Upload size={18} color="#2563EB" style={{ marginTop: '2px' }} />
+          <Upload size={18} color="#475569" style={{ marginTop: '2px' }} />
           <div>
-            <span style={{ fontSize: '0.85rem', color: '#1E3A8A', fontWeight: 600, display: 'block' }}>Import dari Galeri (Disarankan)</span>
-            <span style={{ fontSize: '0.8rem', color: '#3B82F6' }}>Gunakan gambar tanda tangan berlatar transparan (hapus background) agar hasilnya lebih menyatu dengan dokumen PDF.</span>
+            <span style={{ fontSize: '0.85rem', color: '#0F172A', fontWeight: 600, display: 'block' }}>Import dari Galeri (Disarankan)</span>
+            <span style={{ fontSize: '0.8rem', color: '#64748B' }}>Gunakan gambar tanda tangan berlatar transparan (hapus background) agar hasilnya lebih menyatu dengan dokumen PDF.</span>
           </div>
         </div>
-        <button type="button" onClick={() => fileInputRef.current?.click()} style={{ background: 'white', border: '1px solid #93C5FD', color: '#2563EB', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, marginTop: '8px', cursor: 'pointer' }}>
+        <button type="button" onClick={() => fileInputRef.current?.click()} style={{ background: 'white', border: '1px solid #CBD5E1', color: '#334155', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, marginTop: '10px', cursor: 'pointer', transition: 'all 0.2s' }}>
           Pilih Gambar Tanda Tangan
         </button>
         <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
