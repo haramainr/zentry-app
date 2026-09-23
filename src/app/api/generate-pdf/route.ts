@@ -364,8 +364,8 @@ export async function POST(req: NextRequest) {
       form.removeField(form.getTextField('Text11'));
     } catch(e) {}
 
-    if (data.telpRumah) {
-      const cleanTelpRumah = data.telpRumah.replace(/[^0-9]/g, '');
+    const cleanTelpRumah = (data.telpRumah || '').replace(/[^0-9]/g, '');
+    if (cleanTelpRumah.length > 0) {
       // Gambar kotak kedua di bawah telpSelular (y - 20) tanpa label tambahan
       drawCustomCombBox(cleanTelpRumah, 407.38, 660, 148.12, 15.15, 13, 10);
     }
