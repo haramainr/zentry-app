@@ -26,20 +26,18 @@ const getMenuForRole = (role: Role) => {
         { name: 'Kritik & Saran', href: '/feedback', icon: MessageSquare },
       ];
     case 'Manager':
-      return [
-        { name: 'Executive Dashboard', href: '/manager', icon: LayoutDashboard },
+        return [
+          { name: 'Executive Dashboard', href: '/manager', icon: LayoutDashboard },
         { name: 'Monitoring Leader', href: '/manager/leaders', icon: Users },
         { name: 'Laporan Bisnis', href: '/manager/reports', icon: BarChart3 },
         { name: 'Kritik & Saran', href: '/feedback', icon: MessageSquare },
       ];
     case 'Developer':
-      return [
-        { name: 'System Overview', href: '/developer', icon: LayoutDashboard },
-        { name: 'User Management', href: '/developer/users', icon: Users },
-        { name: 'Kritik & Saran', href: '/developer/feedback', icon: MessageSquare },
-        { name: 'Konfigurasi', href: '/developer/config', icon: Settings },
-        { name: 'Audit Log', href: '/developer/audit', icon: ClipboardList },
-      ];
+        return [
+          { name: 'System Overview', href: '/developer', icon: LayoutDashboard },
+          { name: 'User Management', href: '/developer/users', icon: Users },
+          { name: 'Kritik & Saran', href: '/feedback', icon: MessageSquare }
+        ];
     case 'Sales':
     default:
       return [

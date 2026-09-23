@@ -23,7 +23,7 @@ export const generateWaTemplate = (formData: any) => {
   };
 
   const telp1Formatted = formatPhone(formData.telpSelular);
-  const telp2Formatted = formatPhone(formData.telpRumah) || '**';
+  const telp2Formatted = formatPhone(formData.telpRumah) || '.';
 
   // Helper function to convert text to Title Case (Proper Case)
   const toTitleCase = (str: string) => {
@@ -52,7 +52,6 @@ STB :${formData.smartboxQty || '**'}
 
 Home ID : ${formData.homepassId || ''}
 Alamat : ${formData.alamat || ''}
-${formData.kodePos || ''}
 
 Tikor : ${formData.titikKoordinat || ''}
 
