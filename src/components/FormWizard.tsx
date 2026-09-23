@@ -1244,9 +1244,9 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
     ],
       [
       'Wajib sama persis dengan alamat terdaftar pada Home ID',
-      'Tekan Enter jika alamat panjang untuk membagi ke Baris 2 form',
-      'Lengkapi RT, RW, dan Kode Pos dengan benar',
-      'Pastikan nomor penanggung jawab di lokasi aktif dan bisa dihubungi'
+      'Cegah revisi saat diserahkan ke admin untuk pembuatan CID',
+      'Tekan Enter untuk Baris 2: Kelurahan - Kecamatan (contoh: Jagakarsa - Jagakarsa)',
+      'Lengkapi RT, RW, dan Kode Pos dengan benar'
     ],
       [
       'Pilih paket yang sesuai dengan kebutuhan internet',
@@ -1547,14 +1547,14 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 rows={3} 
                 value={formData.alamat} 
                 onChange={handleChange}
-                placeholder="Contoh: Jl. Anggrek No. 12, Blok B (Tekan Enter untuk Baris 2)&#10;Kel. Sukamaju, Kec. Cilodong"
+                placeholder="Baris 1: Nama jalan, nomor rumah, atau blok (Tekan Enter untuk Baris 2)&#10;Baris 2: Kelurahan - Kecamatan (Contoh: Jagakarsa - Jagakarsa)"
                 style={{ resize: 'vertical', minHeight: '84px', lineHeight: '1.5' }}
               />
               
               {/* Petunjuk / Note Alamat */}
               <div style={{
                 marginTop: '8px',
-                padding: '10px 14px',
+                padding: '12px 14px',
                 borderRadius: '8px',
                 backgroundColor: '#F8FAFC',
                 border: '1px solid #E2E8F0',
@@ -1563,15 +1563,15 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 gap: '10px'
               }}>
                 <Info size={16} color="#0284C7" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <div style={{ fontSize: '0.785rem', lineHeight: '1.45', color: '#475569' }}>
+                <div style={{ fontSize: '0.785rem', lineHeight: '1.5', color: '#475569' }}>
                   <div style={{ fontWeight: 600, color: '#0F172A', marginBottom: '3px' }}>
-                    Catatan Pengisian Alamat:
+                    Ketentuan Penulisan Alamat Pemasangan:
                   </div>
                   <div>
-                    • <strong>Wajib Sesuai Home ID:</strong> Alamat harus sama persis dengan yang terdaftar pada sistem <em>Home ID</em> agar data tidak terkena revisi alamat saat validasi & pemasangan.
+                    • <strong>Wajib Sesuai Home ID:</strong> Alamat harus sama persis dengan yang tertera pada <em>Home ID</em> agar tidak terkena revisi saat diserahkan ke pihak admin untuk pembuatan CID.
                   </div>
-                  <div style={{ marginTop: '3px' }}>
-                    • <strong>Pemisahan Baris Form:</strong> Jika alamat panjang, tekan <kbd style={{ padding: '1px 5px', fontSize: '0.72rem', backgroundColor: '#EDE9FE', color: '#6D28D9', borderRadius: '4px', border: '1px solid #DDD6FE', fontWeight: 600 }}>Enter</kbd> pada keyboard untuk memindahkan teks ke <strong>Baris 2</strong> pada formulir pendaftaran.
+                  <div style={{ marginTop: '4px' }}>
+                    • <strong>Format Baris 2 (Gunakan Enter):</strong> Tekan <kbd style={{ padding: '1px 5px', fontSize: '0.72rem', backgroundColor: '#EDE9FE', color: '#6D28D9', borderRadius: '4px', border: '1px solid #DDD6FE', fontWeight: 600 }}>Enter</kbd> pada keyboard untuk memindahkan teks ke <strong>Baris 2</strong> formulir. Tuliskan kelurahan dan kecamatan dengan pemisah <strong>"-"</strong>, contohnya: <strong>Jagakarsa - Jagakarsa</strong>.
                   </div>
                 </div>
               </div>
