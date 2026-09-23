@@ -1244,9 +1244,9 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
     ],
       [
       'Wajib sama persis dengan alamat terdaftar pada Home ID',
-      'Jika di perumahan, tuliskan nama perumahan di Baris 1',
-      'Tekan Enter untuk Baris 2: Kelurahan - Kecamatan (AREN JAYA - BEKASI TIMUR)',
-      'Cegah revisi saat diserahkan ke admin untuk pembuatan CID'
+      'Baris 1: Nama perumahan jika ada (lalu Enter)',
+      'Baris 2: Nama jalan dan nomor rumah (lalu Enter)',
+      'Baris 3: Kelurahan/Desa - Kecamatan (AREN JAYA - BEKASI TIMUR)'
     ],
       [
       'Pilih paket yang sesuai dengan kebutuhan internet',
@@ -1544,11 +1544,11 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
               <textarea 
                 name="alamat" 
                 className="input-field" 
-                rows={3} 
+                rows={4} 
                 value={formData.alamat} 
                 onChange={handleChange}
-                placeholder="Baris 1: Nama Perumahan (jika ada), Jl. Maluku 14 RT009/009 No. 122 (Tekan Enter)&#10;Baris 2: AREN JAYA - BEKASI TIMUR"
-                style={{ resize: 'vertical', minHeight: '84px', lineHeight: '1.5' }}
+                placeholder="Baris 1: Nama perumahan jika ada (tekan Enter)&#10;Baris 2: Nama jalan dan nomor rumah (tekan Enter)&#10;Baris 3: Kelurahan/desa - kecamatan (Contoh: AREN JAYA - BEKASI TIMUR)"
+                style={{ resize: 'vertical', minHeight: '98px', lineHeight: '1.5' }}
               />
               
               {/* Petunjuk / Note Alamat */}
@@ -1565,18 +1565,24 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <Info size={16} color="#0284C7" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div style={{ fontSize: '0.785rem', lineHeight: '1.5', color: '#475569' }}>
                   <div style={{ fontWeight: 600, color: '#0F172A', marginBottom: '4px' }}>
-                    Ketentuan Penulisan Alamat Pemasangan:
+                    Ketentuan Format Alamat (Wajib Dienter Per Baris & Sesuai Home ID):
                   </div>
                   <div>
                     • <strong>Wajib Sesuai Home ID:</strong> Alamat harus sama persis dengan yang tertera pada <em>Home ID</em> agar tidak terkena revisi saat diserahkan ke pihak admin untuk pembuatan CID.
                   </div>
-                  <div style={{ marginTop: '4px' }}>
-                    • <strong>Baris 1 (Perumahan & Jalan):</strong> Jika lokasi pelanggan berada di dalam perumahan, tuliskan nama perumahan di baris pertama, diikuti nama jalan, blok/nomor rumah, atau RT/RW.<br />
-                    <span style={{ color: '#0F172A', fontWeight: 500 }}>Contoh:</span> <em>Jl. Maluku 14 RT009/009 No. 122</em> atau <em>Perum Taman Harapan, Blok B No. 12</em>.
-                  </div>
-                  <div style={{ marginTop: '4px' }}>
-                    • <strong>Baris 2 (Gunakan Enter untuk Wilayah):</strong> Tekan <kbd style={{ padding: '1px 5px', fontSize: '0.72rem', backgroundColor: '#EDE9FE', color: '#6D28D9', borderRadius: '4px', border: '1px solid #DDD6FE', fontWeight: 600 }}>Enter</kbd> pada keyboard untuk memindahkan teks ke <strong>Baris 2</strong> formulir. Tuliskan kelurahan dan kecamatan dengan pemisah tanda hubung <strong>"-"</strong>.<br />
-                    <span style={{ color: '#0F172A', fontWeight: 500 }}>Contoh:</span> <strong>AREN JAYA - BEKASI TIMUR</strong> atau <strong>JAGAKARSA - JAGAKARSA</strong>.
+                  <div style={{ marginTop: '5px' }}>
+                    • <strong>Wajib Dienter Sesuai Format 3 Baris:</strong>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', marginTop: '4px', paddingLeft: '8px', borderLeft: '2px solid #BAE6FD' }}>
+                      <div>
+                        <strong>Baris 1:</strong> Nama perumahan (jika lokasi pelanggan di dalam perumahan) &rarr; lalu tekan <kbd style={{ padding: '1px 5px', fontSize: '0.7rem', backgroundColor: '#EDE9FE', color: '#6D28D9', borderRadius: '4px', border: '1px solid #DDD6FE', fontWeight: 600 }}>Enter</kbd>
+                      </div>
+                      <div>
+                        <strong>Baris 2:</strong> Nama jalan, RT/RW, dan nomor rumah (Contoh: <em>Jl. Maluku 14 RT009/009 No. 122</em>) &rarr; lalu tekan <kbd style={{ padding: '1px 5px', fontSize: '0.7rem', backgroundColor: '#EDE9FE', color: '#6D28D9', borderRadius: '4px', border: '1px solid #DDD6FE', fontWeight: 600 }}>Enter</kbd>
+                      </div>
+                      <div>
+                        <strong>Baris 3:</strong> Kelurahan/Desa - Kecamatan dengan pemisah strip (Contoh: <strong>AREN JAYA - BEKASI TIMUR</strong>)
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
