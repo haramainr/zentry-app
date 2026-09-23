@@ -68,7 +68,7 @@ export default function SalesDashboardClient({
   };
 
   const getFullPackageName = (sub: any) => {
-    const paketName = sub.paket_layanan === 'Fiber' ? 'CBN Fiber' : sub.paket_layanan === 'Safe' ? 'CBN Fiber Safe' : sub.paket_layanan === 'Soho' ? 'CBN Fiber Soho' : sub.paket_layanan;
+    const paketName = sub.paket_layanan === 'Fiber' ? 'CBN Fiber' : sub.paket_layanan === 'Safe' ? 'CBN Fiber Safe' : sub.paket_layanan === 'Soho' ? 'CBN Fiber Pro' : sub.paket_layanan;
     let promoName = sub.promo || '';
     if (promoName === 'NAB') promoName = 'Regular FS';
     return `${promoName ? promoName + ' ' : ''}${paketName}${sub.paket_spec ? ' - ' + sub.paket_spec : ''}`;
@@ -215,54 +215,55 @@ export default function SalesDashboardClient({
       />
 
         {/* Top Stats Cards */}
-        <div className="grid-mobile-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '24px', marginBottom: '28px' }}>
+        <div className="grid-mobile-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '28px' }}>
           
           {/* Card 1: Total Pelanggan Didaftarkan */}
-          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '16px', padding: '24px 28px', boxShadow: '0 2px 10px -2px rgba(0, 0, 0, 0.03)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563EB', flexShrink: 0 }}>
-              <Users size={26} strokeWidth={2} />
+          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px 22px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)', display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563EB', flexShrink: 0 }}>
+              <Users size={22} strokeWidth={2} />
             </div>
-            <div style={{ zIndex: 1 }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748B', marginBottom: '4px' }}>Total Pelanggan Didaftarkan</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.1, marginBottom: '8px' }}>{stats.totalRegistrations}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#059669', fontWeight: 600 }}>
-                <span>↑ 50%</span> <span style={{ color: '#94A3B8', fontWeight: 500 }}>dari periode sebelumnya</span>
+            <div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748B', marginBottom: '2px' }}>Total Pelanggan Didaftarkan</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.1, marginBottom: '4px' }}>{stats.totalRegistrations}</div>
+              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>
+                Formulir terkirim & aktif
               </div>
             </div>
-            <div style={{ position: 'absolute', right: '-15px', bottom: '-15px', opacity: 0.02, color: '#0F172A', pointerEvents: 'none' }}><Users size={120} /></div>
           </div>
 
           {/* Card 2: Draft Belum Selesai */}
-          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '16px', padding: '24px 28px', boxShadow: '0 2px 10px -2px rgba(0, 0, 0, 0.03)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: '#FFF7ED', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#EA580C', flexShrink: 0 }}>
-              <FileEdit size={26} strokeWidth={2} />
+          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px 22px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)', display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: '#FFF7ED', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#EA580C', flexShrink: 0 }}>
+              <FileEdit size={22} strokeWidth={2} />
             </div>
-            <div style={{ zIndex: 1 }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748B', marginBottom: '4px' }}>Draft Belum Selesai</div>
-              <div style={{ fontSize: '2rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.1, marginBottom: '8px' }}>{stats.drafts}</div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#059669', fontWeight: 600 }}>
-                <span>↑ 22%</span> <span style={{ color: '#94A3B8', fontWeight: 500 }}>dari periode sebelumnya</span>
+            <div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748B', marginBottom: '2px' }}>Draft Belum Selesai</div>
+              <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.1, marginBottom: '4px' }}>{stats.drafts}</div>
+              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>
+                {stats.drafts > 0 ? (
+                  <Link href="/sales/history" style={{ color: '#EA580C', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '3px' }}>
+                    Lanjutkan pengisian →
+                  </Link>
+                ) : (
+                  'Tidak ada draft tertunda'
+                )}
               </div>
             </div>
-            <div style={{ position: 'absolute', right: '-15px', bottom: '-15px', opacity: 0.02, color: '#0F172A', pointerEvents: 'none' }}><FileEdit size={120} /></div>
           </div>
 
           {/* Card 3: Estimasi Pendapatan Total (Rp) */}
-          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '16px', padding: '24px 28px', boxShadow: '0 2px 10px -2px rgba(0, 0, 0, 0.03)', position: 'relative', overflow: 'hidden', display: 'flex', alignItems: 'center', gap: '20px' }}>
-            <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: '#F0FDF4', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669', flexShrink: 0 }}>
-              <span style={{ fontSize: '1.4rem', fontWeight: 800 }}>Rp</span>
+          <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px 22px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)', display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: '#F0FDF4', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#059669', flexShrink: 0 }}>
+              <span style={{ fontSize: '1.1rem', fontWeight: 800 }}>Rp</span>
             </div>
-            <div style={{ zIndex: 1 }}>
-              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748B', marginBottom: '4px' }}>Estimasi Pendapatan Total (Rp)</div>
-              <div style={{ fontSize: '1.65rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.1, marginBottom: '8px' }}>
+            <div>
+              <div style={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748B', marginBottom: '2px' }}>Estimasi Pendapatan Total</div>
+              <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0F172A', lineHeight: 1.1, marginBottom: '4px' }}>
                 {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(stats.totalRevenue)}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.75rem', color: '#059669', fontWeight: 600 }}>
-                <span>↑ 18%</span> <span style={{ color: '#94A3B8', fontWeight: 500 }}>dari periode sebelumnya</span>
+              <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500 }}>
+                Akumulasi nilai transaksi
               </div>
-            </div>
-            <div style={{ position: 'absolute', right: '-15px', bottom: '-15px', opacity: 0.02, color: '#0F172A', pointerEvents: 'none' }}>
-              <span style={{ fontSize: '120px', fontWeight: 900, lineHeight: 1, letterSpacing: '-5px', fontFamily: 'serif' }}>Rp</span>
             </div>
           </div>
         </div>
@@ -271,7 +272,7 @@ export default function SalesDashboardClient({
       <div className="grid-mobile-1" style={{ display: 'grid', gridTemplateColumns: '1.7fr 1.3fr', gap: '24px', alignItems: 'start' }}>
         
         {/* Left Card: Komposisi Penjualan Paket */}
-        <div className="komposisi-card" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '16px', padding: '20px 24px', boxShadow: '0 2px 10px -2px rgba(0, 0, 0, 0.03)' }}>
+        <div className="komposisi-card" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px 24px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', flexWrap: 'wrap', gap: '8px' }}>
             <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0F172A' }}>Komposisi Penjualan Paket</h3>
             <div style={{ border: '1px solid #E2E8F0', padding: '4px 12px', borderRadius: '8px', color: '#475569', fontSize: '0.75rem', fontWeight: 600, background: '#F8FAFC' }}>
@@ -381,7 +382,7 @@ export default function SalesDashboardClient({
         </div>
 
         {/* Right Card: Aktivitas Terbaru */}
-        <div className="komposisi-card" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '16px', padding: '20px 24px', boxShadow: '0 2px 10px -2px rgba(0, 0, 0, 0.03)' }}>
+        <div className="komposisi-card" style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px 24px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
             <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0F172A' }}>Aktivitas Terbaru</h3>
             <Link href="/sales/history" style={{ textDecoration: 'none' }}>

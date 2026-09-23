@@ -2,7 +2,7 @@
 import { createPortal } from 'react-dom';
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan } from "lucide-react";
+import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan, Receipt, FileText, Camera, ShieldCheck, Copy, Check } from "lucide-react";
 import SignatureCanvas from 'react-signature-canvas';
 import Select from 'react-select';
 import { createClient } from "@/lib/supabase/client";
@@ -42,6 +42,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   
   const [pdfBlobUrl, setPdfBlobUrl] = useState<string | null>(null);
   const [isConvertingToJpg, setIsConvertingToJpg] = useState(false);
+  const [isWaCopied, setIsWaCopied] = useState(false);
   
   let parsedVas: string[] = [];
   let parsedExtras: any = {};
@@ -1022,6 +1023,18 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const [isGeneratingSppb, setIsGeneratingSppb] = useState(false);
+  const [showSppbDropdown, setShowSppbDropdown] = useState(false);
+  const sppbDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (sppbDropdownRef.current && !sppbDropdownRef.current.contains(e.target as Node)) {
+        setShowSppbDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleDownloadSppb = async (format: 'pdf' | 'jpg') => {
     try {
@@ -1163,7 +1176,8 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
     const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
     try {
       await navigator.clipboard.writeText(template);
-      alert('Teks "Format Pendaftaran" berhasil disalin ke Clipboard!');
+      setIsWaCopied(true);
+      setTimeout(() => setIsWaCopied(false), 2500);
     } catch(e) {
       alert('Gagal menyalin teks. Pastikan browser Anda mengizinkan akses Clipboard.');
     }
@@ -1313,11 +1327,11 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         </div>
 
         {/* White Card for Current Step Form */}
-        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '20px', padding: '32px', boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.04)' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '28px 32px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
           
           {/* Step Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px', borderBottom: '1px solid #F1F5F9', paddingBottom: '20px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '14px', background: '#EFF6FF', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', flexShrink: 0 }}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#EFF6FF', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>
               {STEP_ICONS[currentStep - 1]}
             </div>
             <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: '#0F172A' }}>
@@ -1331,38 +1345,139 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             {/* STEP 1 */}
             {currentStep === 1 && (
               <div className="animate-fade-in">
-                {/* OCR Banner Card */}
-                <div style={{ background: '#F8FAFC', border: '1.5px dashed #CBD5E1', borderRadius: '16px', padding: '24px', marginBottom: '28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '20px', position: 'relative', overflow: 'hidden' }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 700, color: '#0F172A', fontSize: '0.95rem', marginBottom: '12px' }}>
-                      Auto-isi dengan Scan KTP (BETA) <span style={{ color: '#2563EB', fontSize: '1rem', cursor: 'pointer' }}>ⓘ</span>
+                {/* OCR Scanner Banner (Clean Enterprise SaaS) */}
+                <div style={{ 
+                  background: '#F8FAFC', 
+                  border: '1px solid #E2E8F0', 
+                  borderRadius: '10px', 
+                  padding: '18px 20px', 
+                  marginBottom: '28px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'space-between', 
+                  flexWrap: 'wrap', 
+                  gap: '16px' 
+                }}>
+                  <div style={{ flex: '1 1 340px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <div style={{ 
+                        width: '28px', height: '28px', borderRadius: '6px', 
+                        backgroundColor: '#0F172A', color: '#FFFFFF', 
+                        display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                      }}>
+                        <Scan size={15} strokeWidth={2.2} />
+                      </div>
+                      <span style={{ fontWeight: 700, color: '#0F172A', fontSize: '0.925rem', letterSpacing: '-0.2px' }}>
+                        Scan e-KTP Otomatis
+                      </span>
+                      <span style={{ 
+                        background: '#E2E8F0', 
+                        color: '#475569', 
+                        fontSize: '0.68rem', 
+                        fontWeight: 700, 
+                        padding: '2px 6px', 
+                        borderRadius: '4px', 
+                        letterSpacing: '0.5px' 
+                      }}>
+                        BETA
+                      </span>
                     </div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                      <button type="button" onClick={() => cameraInputRef.current?.click()} disabled={isOcring} style={{ background: '#EFF6FF', border: '1px solid #3B82F6', color: '#2563EB', padding: '8px 16px', borderRadius: '8px', fontWeight: 700, fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '6px', cursor: 'pointer', transition: 'all 0.2s', flex: 1, justifyContent: 'center' }}>
-                        <Upload size={16} /> {isOcring ? 'Memindai...' : 'Buka Kamera'}
+                    
+                    <p style={{ fontSize: '0.8rem', color: '#64748B', margin: '0 0 14px 0', lineHeight: 1.4 }}>
+                      Pindai foto e-KTP fisik untuk mengisi NIK, Nama, dan Tempat/Tanggal Lahir secara otomatis.
+                    </p>
+
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px' }}>
+                      <button 
+                        type="button" 
+                        onClick={() => cameraInputRef.current?.click()} 
+                        disabled={isOcring} 
+                        style={{ 
+                          background: '#0F172A', 
+                          border: '1px solid #0F172A', 
+                          color: '#FFFFFF', 
+                          padding: '7px 14px', 
+                          borderRadius: '6px', 
+                          fontWeight: 600, 
+                          fontSize: '0.825rem', 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          gap: '6px', 
+                          cursor: isOcring ? 'not-allowed' : 'pointer', 
+                          transition: 'all 0.15s ease' 
+                        }}
+                        onMouseEnter={(e) => { if (!isOcring) e.currentTarget.style.backgroundColor = '#1E293B'; }}
+                        onMouseLeave={(e) => { if (!isOcring) e.currentTarget.style.backgroundColor = '#0F172A'; }}
+                      >
+                        <Camera size={14} strokeWidth={2} /> 
+                        <span>{isOcring ? 'Memindai...' : 'Buka Kamera'}</span>
                       </button>
-                      <button type="button" onClick={() => fileInputRef.current?.click()} disabled={isOcring} style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', color: '#475569', padding: '8px 16px', borderRadius: '8px', fontWeight: 700, fontSize: '0.85rem', display: 'inline-flex', alignItems: 'center', gap: '6px', cursor: 'pointer', transition: 'all 0.2s', flex: 1, justifyContent: 'center' }}>
-                        <Upload size={16} /> {isOcring ? 'Memindai...' : 'Pilih Galeri'}
+
+                      <button 
+                        type="button" 
+                        onClick={() => fileInputRef.current?.click()} 
+                        disabled={isOcring} 
+                        style={{ 
+                          background: '#FFFFFF', 
+                          border: '1px solid #CBD5E1', 
+                          color: '#334155', 
+                          padding: '7px 14px', 
+                          borderRadius: '6px', 
+                          fontWeight: 600, 
+                          fontSize: '0.825rem', 
+                          display: 'inline-flex', 
+                          alignItems: 'center', 
+                          gap: '6px', 
+                          cursor: isOcring ? 'not-allowed' : 'pointer', 
+                          transition: 'all 0.15s ease' 
+                        }}
+                        onMouseEnter={(e) => { if (!isOcring) e.currentTarget.style.backgroundColor = '#F1F5F9'; }}
+                        onMouseLeave={(e) => { if (!isOcring) e.currentTarget.style.backgroundColor = '#FFFFFF'; }}
+                      >
+                        <Upload size={14} strokeWidth={2} /> 
+                        <span>{isOcring ? 'Memindai...' : 'Pilih File Galeri'}</span>
                       </button>
+
                       <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={handleOcrUpload} disabled={isOcring} style={{ display: 'none' }} />
                       <input ref={fileInputRef} type="file" accept="image/*" onChange={handleOcrUpload} disabled={isOcring} style={{ display: 'none' }} />
                     </div>
-                    <div style={{ fontSize: '0.8rem', color: '#334155', fontWeight: 500 }}>Ambil foto KTP untuk mengisi NIK, Nama, dan TTL secara otomatis.</div>
-                    <div style={{ fontSize: '0.75rem', color: '#94A3B8', fontStyle: 'italic', marginTop: '2px' }}>Foto tidak disimpan, sistem hanya membaca teksnya sesaat.</div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '12px' }}>
+                      <ShieldCheck size={13} color="#10B981" />
+                      <span style={{ fontSize: '0.72rem', color: '#64748B' }}>
+                        Privasi terjamin: Foto diproses langsung di memori browser dan tidak disimpan di server.
+                      </span>
+                    </div>
                   </div>
 
-                  {/* 3D Illustration Graphic for KTP + Camera */}
-                  <div style={{ position: 'relative', width: '130px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none', marginRight: '10px' }}>
-                    <div style={{ width: '110px', height: '70px', background: 'linear-gradient(135deg, #FFFFFF 0%, #EFF6FF 100%)', borderRadius: '10px', border: '2px solid #BFDBFE', boxShadow: '0 8px 20px rgba(59, 130, 246, 0.15)', padding: '10px', display: 'flex', gap: '8px', alignItems: 'center', transform: 'rotate(-3deg)' }}>
-                      <div style={{ width: '28px', height: '34px', background: '#DBEAFE', borderRadius: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem' }}>👤</div>
-                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <div style={{ width: '80%', height: '6px', background: '#3B82F6', borderRadius: '3px' }} />
-                        <div style={{ width: '100%', height: '4px', background: '#93C5FD', borderRadius: '2px' }} />
-                        <div style={{ width: '60%', height: '4px', background: '#BFDBFE', borderRadius: '2px' }} />
-                      </div>
-                    </div>
-                    <div style={{ position: 'absolute', right: '-5px', bottom: '-5px', width: '36px', height: '36px', background: '#2563EB', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: '0 4px 10px rgba(37, 99, 235, 0.4)', border: '2px solid white' }}>
-                      <span style={{ fontSize: '1rem' }}>📷</span>
+                  {/* Clean Vector Visual Placeholder (No fake 3D cartoon, no emojis) */}
+                  <div className="hidden-mobile" style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '120px',
+                    height: '82px',
+                    background: '#FFFFFF',
+                    border: '1px solid #E2E8F0',
+                    borderRadius: '8px',
+                    padding: '8px',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.03)'
+                  }}>
+                    <div style={{
+                      width: '100%',
+                      height: '100%',
+                      border: '1px dashed #CBD5E1',
+                      borderRadius: '5px',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '4px',
+                      background: '#F8FAFC'
+                    }}>
+                      <Camera size={18} color="#64748B" strokeWidth={1.8} />
+                      <span style={{ fontSize: '0.65rem', fontWeight: 600, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Frame KTP</span>
                     </div>
                   </div>
                 </div>
@@ -1502,7 +1617,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', minWidth: '140px' }}>
                               <input type="radio" name="paketLayanan" value={cat} checked={formData.paketLayanan === cat} onChange={handleChange} style={{ flexShrink: 0 }} />
                               <span style={{ fontWeight: 600 }}>
-                                {cat === 'Fiber' ? 'CBN Fiber' : cat === 'Safe' ? 'CBN Fiber Safe' : 'CBN Fiber Soho'}
+                                {cat === 'Fiber' ? 'CBN Fiber' : cat === 'Safe' ? 'CBN Fiber Safe' : 'CBN Fiber Pro'}
                               </span>
                             </div>
                             {formData.paketLayanan === cat && (
@@ -1866,32 +1981,246 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         )}
           </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px', paddingTop: '24px', borderTop: '2px dashed #E2E8F0', flexWrap: 'wrap', gap: '16px' }} className="btn-group-mobile">
-            <div style={{ display: 'flex', gap: '12px' }} className="btn-group-mobile">
-              <button type="button" onClick={handlePrev} disabled={currentStep === 1 || isSubmitting || isDrafting} style={{ background: 'white', border: '1px solid #E2E8F0', padding: '10px 24px', borderRadius: '10px', fontWeight: 600, fontSize: '0.9rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '8px', cursor: currentStep === 1 ? 'not-allowed' : 'pointer', opacity: currentStep === 1 ? 0.5 : 1, transition: 'all 0.2s' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '40px', paddingTop: '24px', borderTop: '1px solid #E2E8F0', flexWrap: 'wrap', gap: '16px' }} className="btn-group-mobile">
+            <div style={{ display: 'flex', gap: '10px' }} className="btn-group-mobile">
+              <button 
+                type="button" 
+                onClick={handlePrev} 
+                disabled={currentStep === 1 || isSubmitting || isDrafting} 
+                style={{ 
+                  background: 'white', 
+                  border: '1px solid #CBD5E1', 
+                  padding: '10px 20px', 
+                  borderRadius: '8px', 
+                  fontWeight: 600, 
+                  fontSize: '0.875rem', 
+                  color: '#475569', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  cursor: currentStep === 1 ? 'not-allowed' : 'pointer', 
+                  opacity: currentStep === 1 ? 0.5 : 1, 
+                  transition: 'all 0.15s ease' 
+                }}
+              >
                 ← Kembali
               </button>
-              <button type="button" onClick={handleSaveDraft} disabled={isSubmitting || isDrafting} style={{ background: 'white', border: '1px solid #E2E8F0', padding: '10px 24px', borderRadius: '10px', fontWeight: 600, fontSize: '0.9rem', color: '#0F172A', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', transition: 'all 0.2s' }}>
-                {isDrafting ? 'Menyimpan...' : '💾 Simpan Draft'}
+              <button 
+                type="button" 
+                onClick={handleSaveDraft} 
+                disabled={isSubmitting || isDrafting} 
+                style={{ 
+                  background: 'white', 
+                  border: '1px solid #CBD5E1', 
+                  padding: '10px 20px', 
+                  borderRadius: '8px', 
+                  fontWeight: 600, 
+                  fontSize: '0.875rem', 
+                  color: '#0F172A', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '6px', 
+                  cursor: 'pointer', 
+                  transition: 'all 0.15s ease' 
+                }}
+              >
+                {isDrafting ? (
+                  'Menyimpan...'
+                ) : (
+                  <>
+                    <Save size={14} strokeWidth={2} />
+                    <span>Simpan Draft</span>
+                  </>
+                )}
               </button>
             </div>
             {currentStep < totalSteps ? (
-              <button type="button" onClick={handleNext} disabled={isSubmitting || isDrafting} style={{ background: '#2563EB', border: 'none', padding: '10px 24px', borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', color: 'white', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)', transition: 'all 0.2s' }}>
+              <button 
+                type="button" 
+                onClick={handleNext} 
+                disabled={isSubmitting || isDrafting} 
+                style={{ 
+                  background: '#2563EB', 
+                  border: 'none', 
+                  padding: '10px 24px', 
+                  borderRadius: '8px', 
+                  fontWeight: 700, 
+                  fontSize: '0.9rem', 
+                  color: 'white', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '8px', 
+                  cursor: 'pointer', 
+                  boxShadow: '0 2px 6px rgba(37, 99, 235, 0.25)', 
+                  transition: 'all 0.15s ease' 
+                }}
+              >
                 Selanjutnya →
               </button>
             ) : (
-              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }} className="btn-group-mobile">
-                <button type="button" onClick={() => handleDownloadSppb('pdf')} disabled={isGeneratingSppb || isSubmitting || isDrafting} style={{ background: '#F59E0B', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }}>
-                  {isGeneratingSppb ? '...' : 'SPPB (PDF)'}
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end', alignItems: 'center' }} className="btn-group-mobile">
+                
+                {/* Salin Format WA Button */}
+                <button
+                  type="button"
+                  onClick={handleCopyText}
+                  disabled={isSubmitting || isGeneratingSppb || isDrafting}
+                  style={{
+                    background: isWaCopied ? '#ECFDF5' : '#FFFFFF',
+                    border: `1px solid ${isWaCopied ? '#10B981' : '#CBD5E1'}`,
+                    padding: '10px 14px',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    fontSize: '0.85rem',
+                    color: isWaCopied ? '#059669' : '#334155',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    transition: 'all 0.15s ease'
+                  }}
+                  title="Salin ringkasan data formulir dalam format teks WhatsApp"
+                  onMouseEnter={(e) => {
+                    if (!isWaCopied) e.currentTarget.style.backgroundColor = '#F8FAFC';
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isWaCopied) e.currentTarget.style.backgroundColor = '#FFFFFF';
+                  }}
+                >
+                  {isWaCopied ? <Check size={15} color="#059669" strokeWidth={2.5} /> : <Copy size={15} color="#059669" />}
+                  <span>{isWaCopied ? 'Format WA Tersalin!' : 'Salin Format WA'}</span>
                 </button>
-                <button type="button" onClick={() => handleDownloadSppb('jpg')} disabled={isGeneratingSppb || isSubmitting || isDrafting} style={{ background: '#D97706', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }}>
-                  {isGeneratingSppb ? '...' : 'SPPB (JPG)'}
+
+                {/* SPPB Options Dropdown */}
+                <div ref={sppbDropdownRef} style={{ position: 'relative' }}>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowSppbDropdown(!showSppbDropdown)} 
+                    disabled={isGeneratingSppb || isSubmitting || isDrafting} 
+                    style={{ 
+                      background: '#FFFFFF', 
+                      border: '1px solid #CBD5E1', 
+                      padding: '10px 14px', 
+                      borderRadius: '8px', 
+                      fontWeight: 600, 
+                      fontSize: '0.85rem', 
+                      color: '#475569', 
+                      cursor: 'pointer', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      gap: '6px',
+                      transition: 'all 0.15s ease'
+                    }}
+                    title="Cetak Surat Permintaan Pemasangan Baru (SPPB)"
+                  >
+                    <FileText size={15} color="#D97706" />
+                    <span>{isGeneratingSppb ? 'Memproses...' : 'SPPB (Opsional)'}</span>
+                    <span style={{ fontSize: '0.7rem', color: '#94A3B8' }}>▾</span>
+                  </button>
+
+                  {showSppbDropdown && (
+                    <div style={{ 
+                      position: 'absolute', 
+                      bottom: 'calc(100% + 8px)', 
+                      right: 0, 
+                      background: '#FFFFFF', 
+                      border: '1px solid #E2E8F0', 
+                      borderRadius: '8px', 
+                      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)', 
+                      padding: '6px', 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      gap: '4px',
+                      minWidth: '175px',
+                      zIndex: 50
+                    }}>
+                      <div style={{ padding: '6px 10px', fontSize: '0.7rem', fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        Format SPPB
+                      </div>
+                      <button 
+                        type="button"
+                        onClick={() => { setShowSppbDropdown(false); handleDownloadSppb('jpg'); }}
+                        disabled={isGeneratingSppb}
+                        style={{
+                          background: 'none', border: 'none', textAlign: 'left',
+                          padding: '8px 10px', borderRadius: '6px', fontSize: '0.825rem',
+                          color: '#0F172A', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
+                          fontWeight: 500, transition: 'background-color 0.15s ease'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F8FAFC'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      >
+                        <FileText size={14} color="#64748B" />
+                        <span>Unduh SPPB (JPG)</span>
+                      </button>
+                      <button 
+                        type="button"
+                        onClick={() => { setShowSppbDropdown(false); handleDownloadSppb('pdf'); }}
+                        disabled={isGeneratingSppb}
+                        style={{
+                          background: 'none', border: 'none', textAlign: 'left',
+                          padding: '8px 10px', borderRadius: '6px', fontSize: '0.825rem',
+                          color: '#0F172A', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
+                          fontWeight: 500, transition: 'background-color 0.15s ease'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F8FAFC'}
+                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                      >
+                        <FileText size={14} color="#64748B" />
+                        <span>Unduh SPPB (PDF)</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {/* Secondary Action: Unduh PDF */}
+                <button 
+                  type="button" 
+                  onClick={() => handleSubmit('pdf')} 
+                  disabled={isSubmitting || isGeneratingSppb || isDrafting} 
+                  style={{ 
+                    background: '#FFFFFF', 
+                    border: '1px solid #CBD5E1', 
+                    padding: '10px 16px', 
+                    borderRadius: '8px', 
+                    fontWeight: 600, 
+                    fontSize: '0.85rem', 
+                    color: '#334155', 
+                    cursor: 'pointer', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '6px',
+                    transition: 'all 0.15s ease'
+                  }}
+                  title="Simpan formulir dan unduh dalam format dokumen PDF"
+                >
+                  <FileText size={15} color="#64748B" />
+                  <span>{isSubmitting ? 'Memproses...' : 'Unduh PDF'}</span>
                 </button>
-                <button type="button" onClick={() => handleSubmit('pdf')} disabled={isSubmitting || isGeneratingSppb || isDrafting} style={{ background: '#94A3B8', border: 'none', padding: '10px 16px', borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', color: 'white', cursor: 'pointer', transition: 'all 0.2s' }}>
-                  {isSubmitting ? '...' : 'Unduh PDF'}
-                </button>
-                <button type="button" onClick={() => handleSubmit('jpg')} disabled={isSubmitting || isGeneratingSppb || isDrafting} style={{ background: '#10B981', border: 'none', padding: '10px 24px', borderRadius: '10px', fontWeight: 700, fontSize: '0.9rem', color: 'white', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)', transition: 'all 0.2s' }}>
-                  {isSubmitting ? 'Memproses...' : 'Simpan & Generate JPG →'}
+
+                {/* Primary Action: Simpan & Generate JPG */}
+                <button 
+                  type="button" 
+                  onClick={() => handleSubmit('jpg')} 
+                  disabled={isSubmitting || isGeneratingSppb || isDrafting} 
+                  style={{ 
+                    background: '#10B981', 
+                    border: 'none', 
+                    padding: '10px 22px', 
+                    borderRadius: '8px', 
+                    fontWeight: 700, 
+                    fontSize: '0.9rem', 
+                    color: 'white', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px', 
+                    cursor: isSubmitting ? 'not-allowed' : 'pointer', 
+                    boxShadow: '0 2px 8px rgba(16, 185, 129, 0.25)', 
+                    transition: 'all 0.15s ease' 
+                  }}
+                  title="Simpan pendaftaran dan terbitkan gambar formulir JPG siap kirim ke WhatsApp"
+                >
+                  {isSubmitting ? 'Memproses Dokumen...' : 'Simpan & Terbitkan (JPG) →'}
                 </button>
               </div>
             )}
@@ -1900,78 +2229,150 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
       </div>
 
-      {/* Right Column: Progress & Tips Widgets */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'sticky', top: '24px' }}>
+      {/* Right Column: Live Order Summary & Progress */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', position: 'sticky', top: '24px' }}>
         
-        {/* Widget 1: PROGRES PENGISIAN */}
-        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '20px', padding: '24px', boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.04)' }}>
-          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', letterSpacing: '0.5px', marginBottom: '16px' }}>PROGRES PENGISIAN</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            
-            {/* Donut Progress Circle */}
-            <div style={{ position: 'relative', width: '70px', height: '70px', flexShrink: 0 }}>
-              <svg viewBox="0 0 36 36" style={{ width: '100%', height: '100%', transform: 'rotate(-90deg)' }}>
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#F1F5F9"
-                  strokeWidth="3.5"
-                />
-                <path
-                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                  fill="none"
-                  stroke="#2563EB"
-                  strokeWidth="3.5"
-                  strokeDasharray={`${Math.round((currentStep / 6) * 100)}, 100`}
-                  strokeLinecap="round"
-                />
-              </svg>
-              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontWeight: 800, fontSize: '0.85rem', color: '#0F172A' }}>
-                {Math.round((currentStep / 6) * 100)}%
+        {/* Widget 1: RINGKASAN TAGIHAN (LIVE ORDER SUMMARY) */}
+        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', borderBottom: '1px solid #F1F5F9', paddingBottom: '12px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Receipt size={17} color="#2563EB" />
+              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Ringkasan Tagihan</span>
+            </div>
+            <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#059669', backgroundColor: '#ECFDF5', padding: '2px 8px', borderRadius: '6px' }}>
+              Real-Time
+            </span>
+          </div>
+
+          {/* Info Pelanggan & Paket Ringkas */}
+          <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div style={{ background: '#F8FAFC', borderRadius: '8px', padding: '10px 12px', border: '1px solid #F1F5F9' }}>
+              <div style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase' }}>Calon Pelanggan</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0F172A', marginTop: '2px', wordBreak: 'break-word' }}>
+                {formData.namaLengkap ? formData.namaLengkap : <span style={{ color: '#94A3B8', fontWeight: 400, fontStyle: 'italic' }}>Belum diisi (Step 1)</span>}
               </div>
             </div>
 
-            <div>
-              <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#2563EB' }}>Langkah {currentStep} dari 6</div>
-              <div style={{ fontSize: '1rem', fontWeight: 800, color: '#0F172A', margin: '2px 0' }}>{STEP_TITLES[currentStep - 1]}</div>
-              <div style={{ fontSize: '0.7rem', color: '#64748B', lineHeight: 1.3 }}>Lengkapi data dengan benar untuk melanjutkan</div>
+            <div style={{ background: '#F8FAFC', borderRadius: '8px', padding: '10px 12px', border: '1px solid #F1F5F9' }}>
+              <div style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 600, textTransform: 'uppercase' }}>Paket Dipilih</div>
+              <div style={{ fontSize: '0.875rem', fontWeight: 700, color: '#0F172A', marginTop: '2px' }}>
+                {formData.paketSpec ? (
+                  `${formData.paketLayanan === 'Fiber' ? 'CBN Fiber' : formData.paketLayanan === 'Safe' ? 'CBN Fiber Safe' : formData.paketLayanan === 'Soho' ? 'CBN Fiber Pro' : formData.paketLayanan} ${formData.paketSpec}`
+                ) : (
+                  <span style={{ color: '#94A3B8', fontWeight: 400, fontStyle: 'italic' }}>Pilih di Step 3</span>
+                )}
+              </div>
+              <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '3px' }}>
+                {formData.area || 'Regular FS'} • {formData.promoTerm || 'Bulanan'}
+              </div>
+            </div>
+          </div>
+
+          {/* Breakdown Biaya Table */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', fontSize: '0.8rem', color: '#475569' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>Biaya Paket</span>
+              <span style={{ fontWeight: 600, color: '#0F172A' }}>{formatRupiah(formData.biayaPaket || 0)}</span>
+            </div>
+
+            {Number(formData.biayaPemasangan) > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Biaya Pemasangan</span>
+                <span style={{ fontWeight: 600, color: formData.promo === 'Free Instalasi' ? '#059669' : '#0F172A' }}>
+                  {formData.promo === 'Free Instalasi' ? 'Rp 0 (Promo)' : formatRupiah(formData.biayaPemasangan)}
+                </span>
+              </div>
+            )}
+
+            {Number(formData.biayaLainnya) > 0 && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Biaya Admin / Lainnya</span>
+                <span style={{ fontWeight: 600, color: '#0F172A' }}>{formatRupiah(formData.biayaLainnya)}</span>
+              </div>
+            )}
+
+            {(Number(formData.biayaTambahan) > 0 || Number(formData.biayaServices) > 0) && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Layanan Tambahan (VAS)</span>
+                <span style={{ fontWeight: 600, color: '#0F172A' }}>
+                  {formatRupiah((Number(formData.biayaTambahan) || 0) + (Number(formData.biayaServices) || 0))}
+                </span>
+              </div>
+            )}
+
+            {(Number(formData.biayaPerangkat) > 0 || Number(formData.biayaAddons) > 0) && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span>Perangkat & Add-ons</span>
+                <span style={{ fontWeight: 600, color: '#0F172A' }}>
+                  {formatRupiah((Number(formData.biayaPerangkat) || 0) + (Number(formData.biayaAddons) || 0))}
+                </span>
+              </div>
+            )}
+
+            {formData.promo === 'Diskon 50K' && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#059669' }}>
+                <span>Diskon Promo</span>
+                <span style={{ fontWeight: 600 }}>- Rp 50.000</span>
+              </div>
+            )}
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>PPN 11%</span>
+              <span style={{ fontWeight: 600, color: '#0F172A' }}>{formatRupiah(kalkulasi.ppn)}</span>
+            </div>
+          </div>
+
+          {/* Total Highlight Box */}
+          <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px dashed #CBD5E1', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0F172A' }}>Total Tagihan</span>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.5px' }}>
+                {formatRupiah(kalkulasi.total)}
+              </span>
+            </div>
+            <div style={{ fontSize: '0.7rem', color: '#94A3B8', textAlign: 'right' }}>
+              *Estimasi tagihan pembayaran pertama
             </div>
           </div>
         </div>
 
-        {/* Widget 2: TIPS PENGISIAN */}
-        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '20px', padding: '24px', boxShadow: '0 10px 30px -5px rgba(0, 0, 0, 0.04)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '360px', position: 'relative', overflow: 'hidden' }}>
-          <div>
-            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', letterSpacing: '0.5px', marginBottom: '16px' }}>TIPS PENGISIAN</div>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {(STEP_TIPS[currentStep - 1] || STEP_TIPS[0]).map((tip, idx) => (
-                <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '0.825rem', color: '#334155', lineHeight: 1.4, fontWeight: 500 }}>
-                  <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: '#EFF6FF', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '1px' }}>
-                    <CheckCircle size={12} strokeWidth={3} />
-                  </div>
-                  <span>{tip}</span>
-                </li>
-              ))}
-            </ul>
+        {/* Widget 2: PROGRES & PANDUAN LANGKAH */}
+        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '18px 20px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              Langkah {currentStep} dari {totalSteps}
+            </span>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#2563EB' }}>
+              {Math.round((currentStep / totalSteps) * 100)}% Selesai
+            </span>
           </div>
 
-          {/* 3D Illustration Graphic at bottom of Tips */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '28px', pointerEvents: 'none' }}>
-            <div style={{ position: 'relative', width: '140px', height: '130px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {/* Soft Blue Document */}
-              <div style={{ width: '100px', height: '110px', background: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)', borderRadius: '12px', border: '2px solid #BFDBFE', transform: 'rotate(-6deg)', boxShadow: '0 10px 20px rgba(59, 130, 246, 0.15)', padding: '14px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div style={{ width: '40%', height: '8px', background: '#93C5FD', borderRadius: '4px' }} />
-                <div style={{ width: '80%', height: '6px', background: '#BFDBFE', borderRadius: '3px' }} />
-                <div style={{ width: '70%', height: '6px', background: '#BFDBFE', borderRadius: '3px' }} />
-                <div style={{ width: '60%', height: '6px', background: '#BFDBFE', borderRadius: '3px', marginTop: '8px' }} />
-              </div>
-              {/* Shield Checkmark Overlay */}
-              <div style={{ position: 'absolute', right: '10px', bottom: '5px', width: '56px', height: '62px', background: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)', borderRadius: '16px 16px 28px 28px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', boxShadow: '0 8px 16px rgba(29, 78, 216, 0.4)', border: '2px solid white', transform: 'rotate(6deg)' }}>
-                <CheckCircle size={30} strokeWidth={2.5} />
-              </div>
-            </div>
+          {/* Progress bar */}
+          <div style={{ width: '100%', height: '6px', backgroundColor: '#F1F5F9', borderRadius: '9999px', overflow: 'hidden', marginBottom: '14px' }}>
+            <div 
+              style={{ 
+                width: `${(currentStep / totalSteps) * 100}%`, 
+                height: '100%', 
+                backgroundColor: '#2563EB', 
+                borderRadius: '9999px',
+                transition: 'width 0.3s ease'
+              }} 
+            />
           </div>
+
+          <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0F172A', marginBottom: '8px' }}>
+            Petunjuk Pengisian:
+          </div>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {(STEP_TIPS[currentStep - 1] || STEP_TIPS[0]).slice(0, 2).map((tip, idx) => (
+              <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.78rem', color: '#475569', lineHeight: 1.4 }}>
+                <span style={{ color: '#2563EB', fontWeight: 700, flexShrink: 0 }}>•</span>
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
         </div>
+      </div>
 
 
       {/* OCR Scanning Overlay */}
@@ -2025,8 +2426,6 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           document.body
         )}
       </div>
-
-    </div>
   );
 }
 

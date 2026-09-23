@@ -305,7 +305,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
               {[
                 { key: 'Fiber' as const, label: 'CBN Fiber' },
                 { key: 'Safe' as const, label: 'CBN Fiber Safe' },
-                { key: 'Soho' as const, label: 'CBN Fiber Soho' }
+                { key: 'Soho' as const, label: 'CBN Fiber Pro' }
               ].map((item) => {
                 const active = selectedPackages[item.key];
                 return (
@@ -585,7 +585,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                         {/* Paket */}
                         <td style={{ padding: '20px 22px', fontSize: '0.92rem', color: '#1E293B', fontWeight: 600 }}>
                           {sub.promo ? `${sub.promo} ` : ''}
-                          {sub.paket_layanan === 'Fiber' ? 'CBN Fiber' : sub.paket_layanan === 'Safe' ? 'CBN Fiber Safe' : sub.paket_layanan === 'Soho' ? 'CBN Fiber Soho' : sub.paket_layanan}
+                          {sub.paket_layanan === 'Fiber' ? 'CBN Fiber' : sub.paket_layanan === 'Safe' ? 'CBN Fiber Safe' : sub.paket_layanan === 'Soho' ? 'CBN Fiber Pro' : sub.paket_layanan}
                           {sub.paket_spec ? ` - ${sub.paket_spec}` : ''}
                         </td>
 

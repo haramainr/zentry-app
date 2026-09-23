@@ -40,5 +40,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
-.env*
+# archives & scratch scripts
+/archive/
+/scripts/archive/
+*.pyc
+__pycache__/
+
+# large media & archives
+*.mp4
+*.zip
+*.lnk

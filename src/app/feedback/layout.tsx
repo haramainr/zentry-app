@@ -11,20 +11,24 @@ export default async function FeedbackLayout({ children }: { children: React.Rea
 
   let role: any = 'Sales';
   let subscriptionEndDate = null;
+  let profile: { full_name?: string; role?: string } | null = null;
   
-  const { data } = await supabase.from('users').select('role, subscription_end_date').eq('id', user.id).single();
+  const { data } = await supabase.from('users').select('full_name, role, subscription_end_date').eq('id', user.id).single();
   if (data) {
     role = data.role;
     subscriptionEndDate = data.subscription_end_date;
+    profile = { full_name: data.full_name, role: data.role };
   }
 
   return (
-    <div className="flex stack-mobile" style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
-      <Sidebar role={role} subscriptionEndDate={subscriptionEndDate} />
+    <div className="flex stack-mobile app-layout-wrapper" style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-color)', position: 'relative' }}>
+      <Sidebar role={role} subscriptionEndDate={subscriptionEndDate} profile={profile} />
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
-        {children}
+      <main style={{ flex: 1, height: '100%', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1 }}>
+          {children}
+        </div>
         <Footer />
       </main>
     </div>

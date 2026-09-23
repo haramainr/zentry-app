@@ -17,30 +17,15 @@ export default async function SalesLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="flex stack-mobile" style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color)', position: 'relative' }}>
+    <div className="flex stack-mobile app-layout-wrapper" style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden', backgroundColor: '#F8FAFC', position: 'relative' }}>
       
-      {/* Premium Dark Blue Hero Banner (Spans full width behind everything) */}
-      <div style={{
-        position: 'absolute',
-        top: 0, left: 0, right: 0,
-        height: '290px',
-        background: 'linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%)',
-        borderBottomLeftRadius: '32px',
-        borderBottomRightRadius: '32px',
-        zIndex: 0,
-        overflow: 'hidden'
-      }}>
-        <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '300px', height: '300px', background: 'radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)', borderRadius: '50%' }} />
-        <div style={{ position: 'absolute', bottom: '-50px', left: '10%', width: '250px', height: '250px', background: 'radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%)', borderRadius: '50%' }} />
-      </div>
+      <Sidebar subscriptionEndDate={subscriptionEndDate} profile={profile} />
 
-      <div style={{ position: 'relative', zIndex: 10 }}>
-        <Sidebar subscriptionEndDate={subscriptionEndDate} profile={profile} />
-      </div>
-
-      {/* Main Content Area */}
-      <main style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
-        {children}
+      {/* Main Content Area (Independent scroll) */}
+      <main style={{ flex: 1, height: '100%', overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', backgroundColor: '#F8FAFC' }}>
+        <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+          {children}
+        </div>
         <Footer />
       </main>
     </div>

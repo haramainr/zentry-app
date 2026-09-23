@@ -51,11 +51,29 @@ export default async function SalesDashboard() {
   return (
     <div className="animate-fade-in dashboard-container" style={{ position: 'relative', minHeight: '100vh' }}>
       
-      <div style={{ position: 'relative', zIndex: 1, padding: '32px' }}>
-        <header style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+      <div style={{ padding: '32px' }}>
+        <header style={{ 
+          marginBottom: '28px', 
+          display: 'flex', 
+          justifyContent: 'space-between', 
+          alignItems: 'center', 
+          flexWrap: 'wrap', 
+          gap: '16px',
+          paddingBottom: '24px',
+          borderBottom: '1px solid #E2E8F0'
+        }}>
           <div>
-            <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#FFFFFF', margin: 0, letterSpacing: '-0.5px' }}>Selamat Datang, {profile?.full_name || 'Sales Zentry'} 👋</h1>
-            <p style={{ fontSize: '0.95rem', color: '#94A3B8', margin: 0, marginTop: '4px' }}>Ringkasan performa penjualan Anda hari ini.</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#2563EB', backgroundColor: '#EFF6FF', padding: '3px 10px', borderRadius: '6px', letterSpacing: '0.3px' }}>
+                Sales Dashboard
+              </span>
+            </div>
+            <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>
+              Selamat Datang, {profile?.full_name || 'Sales Zentry'} 👋
+            </h1>
+            <p style={{ fontSize: '0.925rem', color: '#64748B', margin: 0, marginTop: '4px' }}>
+              Ringkasan performa penjualan dan pemantauan aktivitas pendaftaran pelanggan Anda.
+            </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', flexWrap: 'wrap' }}>
             <div className="hidden-mobile">

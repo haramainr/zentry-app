@@ -116,8 +116,8 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
           
           {/* Header / Logo & Collapse Toggle */}
           <div style={{ 
-            padding: isCollapsed ? '24px 0 20px 0' : '24px 20px 20px 24px', 
-            borderBottom: '1px solid rgba(226, 232, 240, 0.6)', 
+            padding: isCollapsed ? '16px 0' : '16px 16px 16px 20px', 
+            borderBottom: '1px solid #E2E8F0', 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: isCollapsed ? 'center' : 'space-between',
@@ -125,7 +125,7 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
           }}>
             {!isCollapsed && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '138px', height: 'auto', objectFit: 'contain' }} />
+                <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '128px', height: 'auto', objectFit: 'contain' }} />
               </div>
             )}
             
@@ -188,73 +188,68 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
           </div>
           
           {/* Navigation */}
-          <nav style={{ flex: 1, padding: '18px 14px', overflowY: 'auto', minHeight: 0 }}>
-            {!isCollapsed && <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94A3B8', letterSpacing: '1px', padding: '0 18px', marginBottom: '12px' }}>MENU UTAMA</div>}
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {menuItems.map((item, index) => {
-                const IconComponent = item.icon;
-                const active = isItemActive(item.href);
-                return (
-                  <li key={index}>
-                    <Link 
-                      href={item.href} 
-                      className={`sidebar-nav-item ${active ? 'active' : ''}`} 
-                      onClick={() => setMobileOpen(false)}
-                      style={{ 
-                        justifyContent: isCollapsed ? 'center' : 'flex-start', 
-                        padding: isCollapsed ? '14px 0' : '14px 18px' 
-                      }} 
-                      title={item.name}
-                    >
-                      <IconComponent size={22} style={{ minWidth: '22px' }} /> 
-                      {!isCollapsed && <span>{item.name}</span>}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-
-            {/* Pengaturan Section Moved Up */}
-            {!isCollapsed && <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94A3B8', letterSpacing: '1px', padding: '0 18px', marginTop: '24px', marginBottom: '12px' }}>PENGATURAN</div>}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <Link 
-                href="/settings/profile" 
-                className="sidebar-settings-item" 
-                onClick={() => setMobileOpen(false)} 
-                style={{ 
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '14px',
-                  color: '#64748B',
-                  fontWeight: 600,
-                  textDecoration: 'none',
-                  borderRadius: '12px',
-                  transition: 'all 0.2s ease',
-                  justifyContent: isCollapsed ? 'center' : 'flex-start', 
-                  padding: isCollapsed ? '12px 0' : '12px 18px' 
-                }} 
-                title="Pengaturan Profil"
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#F8FAFC';
-                  e.currentTarget.style.color = '#334155';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#64748B';
-                }}
-              >
-                <Settings size={22} style={{ minWidth: '22px' }} />
-                {!isCollapsed && <span>Pengaturan</span>}
-              </Link>
-              
-              <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                {isCollapsed ? (
-                  <LogoutButton isIconOnly={true} />
-                ) : (
-                  <LogoutButton />
-                )}
-              </div>
+          <nav style={{ flex: 1, padding: '16px 12px', overflowY: 'auto', minHeight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              {!isCollapsed && <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#94A3B8', letterSpacing: '0.5px', padding: '0 12px', marginBottom: '8px' }}>MENU UTAMA</div>}
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {menuItems.map((item, index) => {
+                  const IconComponent = item.icon;
+                  const active = isItemActive(item.href);
+                  return (
+                    <li key={index}>
+                      <Link 
+                        href={item.href} 
+                        className={`sidebar-nav-item ${active ? 'active' : ''}`} 
+                        onClick={() => setMobileOpen(false)} 
+                        style={{ 
+                          justifyContent: isCollapsed ? 'center' : 'flex-start', 
+                          padding: isCollapsed ? '12px 0' : '10px 14px' 
+                        }} 
+                        title={item.name}
+                      >
+                        <IconComponent size={20} style={{ minWidth: '20px' }} /> 
+                        {!isCollapsed && <span>{item.name}</span>}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
+
+            {/* Bottom Section (Pengaturan, Logout, & Lisensi) */}
+            <div style={{ marginTop: 'auto', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {!isCollapsed && <div style={{ fontSize: '0.7rem', fontWeight: 700, color: '#94A3B8', letterSpacing: '0.5px', padding: '0 12px', marginBottom: '4px' }}>PENGATURAN</div>}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                <Link 
+                  href="/settings/profile" 
+                  className="sidebar-settings-item" 
+                  onClick={() => setMobileOpen(false)} 
+                  style={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '12px',
+                    color: '#64748B',
+                    fontWeight: 500,
+                    textDecoration: 'none',
+                    borderRadius: '8px',
+                    transition: 'all 0.15s ease',
+                    justifyContent: isCollapsed ? 'center' : 'flex-start', 
+                    padding: isCollapsed ? '10px 0' : '10px 14px' 
+                  }} 
+                  title="Pengaturan Profil"
+                >
+                  <Settings size={20} style={{ minWidth: '20px' }} />
+                  {!isCollapsed && <span>Pengaturan</span>}
+                </Link>
+                
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                  {isCollapsed ? (
+                    <LogoutButton isIconOnly={true} />
+                  ) : (
+                    <LogoutButton />
+                  )}
+                </div>
+              </div>
 
             {/* Premium License Card (Emerald Green Glow with 6-Segment Pill Progress) */}
             {(!isCollapsed && subscriptionEndDate && (role as string) !== 'Admin') || (isCollapsed && subscriptionEndDate && (role as string) !== 'Admin') ? (
@@ -270,19 +265,6 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
               }}>
               {!isCollapsed && subscriptionEndDate && (role as string) !== 'Admin' && (
                 <div className="premium-license-card" style={{ width: '100%' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                    <div style={{ 
-                      width: '28px', height: '28px', borderRadius: '8px', backgroundColor: '#10B981', 
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF',
-                      boxShadow: '0 2px 6px rgba(16, 185, 129, 0.35)' 
-                    }}>
-                      <Crown size={16} />
-                    </div>
-                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#065F46', letterSpacing: '0.2px', whiteSpace: 'nowrap' }}>
-                      Premium License
-                    </span>
-                  </div>
-
                   {(() => {
                     const end = new Date(subscriptionEndDate);
                     const now = new Date();
@@ -290,44 +272,25 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
 
                     if (diffMs <= 0) {
                       return (
-                        <div style={{ fontSize: '0.9rem', color: '#991B1B', fontWeight: 700 }}>
-                          Lisensi Berakhir
+                        <div style={{ fontSize: '0.8rem', color: '#DC2626', fontWeight: 600 }}>
+                          Lisensi Telah Berakhir
                         </div>
                       );
                     }
                     
                     const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
                     const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const activeSegments = Math.max(1, Math.min(6, Math.ceil((days / 30) * 6)));
                     
                     return (
-                      <>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginBottom: '12px' }}>
-                          <span style={{ fontSize: '0.75rem', color: '#047857', fontWeight: 600, whiteSpace: 'nowrap' }}>Aktif Hingga</span>
-                          <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#064E3B', whiteSpace: 'nowrap' }}>
-                            {days > 0 ? `${days} Hari` : `${hours} Jam`}
-                          </span>
-                          <span style={{ fontSize: '0.75rem', color: '#047857', fontWeight: 500, whiteSpace: 'nowrap' }}>tersisa</span>
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }}></span>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0F172A' }}>Lisensi Enterprise</span>
                         </div>
-                        <div style={{ display: 'flex', gap: '5px', width: '100%' }}>
-                          {[...Array(6)].map((_, i) => {
-                            const isSegActive = i < activeSegments;
-                            return (
-                              <div 
-                                key={i} 
-                                style={{ 
-                                  flex: 1, 
-                                  height: '6px', 
-                                  borderRadius: '9999px', 
-                                  backgroundColor: isSegActive ? '#10B981' : 'rgba(167, 243, 208, 0.65)',
-                                  boxShadow: isSegActive ? '0 1px 3px rgba(16, 185, 129, 0.4)' : 'none',
-                                  transition: 'all 0.3s ease'
-                                }} 
-                              />
-                            );
-                          })}
+                        <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '3px', fontWeight: 500 }}>
+                          {days > 0 ? `${days} hari tersisa` : `${hours} jam tersisa`}
                         </div>
-                      </>
+                      </div>
                     );
                   })()}
                 </div>
@@ -348,6 +311,7 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
               )}
               </div>
             ) : null}
+            </div>
           </nav>
         </aside>
       </div>

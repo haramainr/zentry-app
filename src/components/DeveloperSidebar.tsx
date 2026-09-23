@@ -222,23 +222,23 @@ export default function DeveloperSidebar() {
         />
       )}
 
-      {/* Floating DevOps Sidebar Wrapper */}
+      {/* DevOps Sidebar Wrapper */}
       <div 
-        className={`sidebar-float-wrapper ${mobileOpen ? 'open' : ''}`}
+        className={`sidebar-float-wrapper dev-sidebar-wrapper ${mobileOpen ? 'open' : ''}`}
         style={{ 
           width: isCollapsed ? '96px' : '280px',
-          padding: '16px',
-          backgroundColor: '#0B1220',
+          padding: 0,
+          backgroundColor: '#0F172A',
+          borderRight: '1px solid #1E293B',
           transition: 'width 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
         }}
       >
         <aside 
           style={{
-            backgroundColor: '#131D31',
-            border: '1px solid #22314A',
-            borderRadius: '24px',
-            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(16px)',
+            backgroundColor: '#0F172A',
+            border: 'none',
+            borderRadius: 0,
+            boxShadow: 'none',
             width: '100%',
             height: '100%',
             display: 'flex',

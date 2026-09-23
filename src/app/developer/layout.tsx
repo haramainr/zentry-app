@@ -3,11 +3,11 @@ import Footer from "@/components/Footer";
 
 export default function DeveloperLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex stack-mobile" style={{ minHeight: '100vh', backgroundColor: '#0F172A' }}>
+    <div className="flex stack-mobile app-layout-wrapper" style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden', backgroundColor: '#0F172A' }}>
       <Sidebar role="Developer" />
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, height: '100%', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
         {/* Developer Mode Banner */}
         <div style={{ backgroundColor: '#F59E0B', color: '#78350F', padding: '8px 16px', fontSize: '0.875rem', fontWeight: 600, textAlign: 'center' }}>
           DEVELOPER MODE ACTIVE: You have elevated privileges.
@@ -17,9 +17,7 @@ export default function DeveloperLayout({ children }: { children: React.ReactNod
           {children}
         </div>
         
-        <div style={{ filter: 'invert(1) hue-rotate(180deg)' }}>
-          <Footer />
-        </div>
+        <Footer isDark={true} />
       </main>
     </div>
   );

@@ -104,14 +104,14 @@ export default function ExportExcelButton({ role, currentUserId, usersList = [] 
         onClick={() => setIsModalOpen(true)}
         style={{ 
           display: 'flex', alignItems: 'center', gap: '8px',
-          padding: '10px 18px', borderRadius: '12px',
-          border: '1px solid #E2E8F0', backgroundColor: '#FFFFFF',
-          color: '#475569', fontSize: '0.85rem', fontWeight: 600,
-          cursor: 'pointer', transition: 'all 0.2s ease',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
+          padding: '8px 16px', borderRadius: '8px',
+          border: '1px solid #CBD5E1', backgroundColor: '#FFFFFF',
+          color: '#334155', fontSize: '0.85rem', fontWeight: 600,
+          cursor: 'pointer', transition: 'all 0.15s ease',
+          boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
         }}
       >
-        <Download size={16} color="#10B981" />
+        <Download size={15} color="#475569" />
         Export Data
       </button>
 

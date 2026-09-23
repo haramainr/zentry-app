@@ -31,11 +31,11 @@ export default async function SettingsProfilePage() {
   }
 
   return (
-    <div className="flex stack-mobile" style={{ minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
-      {/* We use Sidebar here but pass the role so it knows what menu to show */}
-      <Sidebar role={profile?.role || 'Sales'} />
+    <div className="flex stack-mobile app-layout-wrapper" style={{ height: '100vh', maxHeight: '100vh', overflow: 'hidden', backgroundColor: 'var(--bg-color)', position: 'relative' }}>
+      {/* We use Sidebar here but pass the role and profile so it knows what menu and user details to show */}
+      <Sidebar role={profile?.role || 'Sales'} profile={profile} subscriptionEndDate={profile?.subscription_end_date} />
 
-      <main style={{ flex: 1, padding: 'var(--spacing-xl)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+      <main style={{ flex: 1, height: '100%', padding: 'var(--spacing-xl)', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
         <div className="animate-fade-in" style={{ maxWidth: '600px', margin: '0 auto', flex: 1 }}>
           <header style={{ marginBottom: 'var(--spacing-xl)' }}>
             <h1 className="h2" style={{ color: 'var(--text-primary)' }}>Pengaturan Profil</h1>
