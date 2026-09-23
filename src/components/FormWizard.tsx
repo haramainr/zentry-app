@@ -2,7 +2,7 @@
 import { createPortal } from 'react-dom';
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan, Receipt, FileText, Camera, ShieldCheck, Copy, Check } from "lucide-react";
+import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan, Receipt, FileText, Camera, ShieldCheck, Copy, Check, Info } from "lucide-react";
 import SignatureCanvas from 'react-signature-canvas';
 import Select from 'react-select';
 import { createClient } from "@/lib/supabase/client";
@@ -1243,9 +1243,9 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
       'Simpan draft jika belum selesai'
     ],
       [
-      'Tuliskan alamat selengkap dan sedetail mungkin',
-      'Jangan lupa mencantumkan RT, RW, Kode Pos, dan Kelurahan',
-      'Isi koordinat atau patokan rumah agar mempermudah teknisi',
+      'Wajib sama persis dengan alamat terdaftar pada Home ID',
+      'Tekan Enter jika alamat panjang untuk membagi ke Baris 2 form',
+      'Lengkapi RT, RW, dan Kode Pos dengan benar',
       'Pastikan nomor penanggung jawab di lokasi aktif dan bisa dihubungi'
     ],
       [
@@ -1533,8 +1533,48 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           {currentStep === 2 && (
           <div className="animate-fade-in">
             <div className="input-group">
-              <label className="input-label">Alamat Lengkap</label>
-              <textarea name="alamat" className="input-field" rows={3} value={formData.alamat} onChange={handleChange}></textarea>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                <label className="input-label" style={{ fontWeight: 600, color: '#0F172A', margin: 0 }}>
+                  Alamat Lengkap
+                </label>
+                <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#0284C7', backgroundColor: '#F0F9FF', border: '1px solid #BAE6FD', padding: '2px 8px', borderRadius: '4px' }}>
+                  Wajib Sesuai Home ID
+                </span>
+              </div>
+              <textarea 
+                name="alamat" 
+                className="input-field" 
+                rows={3} 
+                value={formData.alamat} 
+                onChange={handleChange}
+                placeholder="Contoh: Jl. Anggrek No. 12, Blok B (Tekan Enter untuk Baris 2)&#10;Kel. Sukamaju, Kec. Cilodong"
+                style={{ resize: 'vertical', minHeight: '84px', lineHeight: '1.5' }}
+              />
+              
+              {/* Petunjuk / Note Alamat */}
+              <div style={{
+                marginTop: '8px',
+                padding: '10px 14px',
+                borderRadius: '8px',
+                backgroundColor: '#F8FAFC',
+                border: '1px solid #E2E8F0',
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: '10px'
+              }}>
+                <Info size={16} color="#0284C7" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div style={{ fontSize: '0.785rem', lineHeight: '1.45', color: '#475569' }}>
+                  <div style={{ fontWeight: 600, color: '#0F172A', marginBottom: '3px' }}>
+                    Catatan Pengisian Alamat:
+                  </div>
+                  <div>
+                    • <strong>Wajib Sesuai Home ID:</strong> Alamat harus sama persis dengan yang terdaftar pada sistem <em>Home ID</em> agar data tidak terkena revisi alamat saat validasi & pemasangan.
+                  </div>
+                  <div style={{ marginTop: '3px' }}>
+                    • <strong>Pemisahan Baris Form:</strong> Jika alamat panjang, tekan <kbd style={{ padding: '1px 5px', fontSize: '0.72rem', backgroundColor: '#EDE9FE', color: '#6D28D9', borderRadius: '4px', border: '1px solid #DDD6FE', fontWeight: 600 }}>Enter</kbd> pada keyboard untuk memindahkan teks ke <strong>Baris 2</strong> pada formulir pendaftaran.
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="flex stack-mobile gap-md">
