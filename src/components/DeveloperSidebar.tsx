@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { User } from "@supabase/supabase-js";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -43,7 +44,21 @@ export default function DeveloperSidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname() || '';
-  const supabase = createClient();
+    const supabase = createClient();
+  const [userName, setUserName] = useState("Developer Account");
+  const [userEmail, setUserEmail] = useState("admin@zentry.com");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        setUserEmail(user.email || "admin@zentry.com");
+        const { data: profile } = await supabase.from('profiles').select('full_name').eq('id', user.id).single();
+        if (profile?.full_name) setUserName(profile.full_name);
+      }
+    };
+    fetchUser();
+  }, []);
 
   // Di mobile, sidebar selalu dianggap dalam mode "terbuka penuh" (tidak collapsed) saat dimunculkan
   const isCollapsed = collapsed && !mobileOpen;
@@ -458,38 +473,37 @@ export default function DeveloperSidebar() {
             zIndex: 1
           }}>
             
-            {/* System Status Card */}
+            {/* User Profile Card */}
             {!isCollapsed ? (
-              <div className="dev-status-card" style={{ width: '100%' }}>
+              <div className="dev-status-card" style={{ width: '100%', cursor: 'pointer' }}>
                 <div style={{ 
                   width: '36px', height: '36px', borderRadius: '12px', 
-                  backgroundColor: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10B981',
-                  boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)', flexShrink: 0
+                  backgroundColor: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3B82F6',
+                  boxShadow: '0 0 15px rgba(59, 130, 246, 0.25)', flexShrink: 0
                 }}>
-                  <Server size={18} />
+                  <User size={18} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', overflow: 'hidden' }}>
-                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#F8FAFC', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                    Production Environment
+                  <span style={{ fontSize: '0.82rem', fontWeight: 700, color: '#F8FAFC', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+                    {userName}
                   </span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981' }} className="animate-pulse" />
-                    <span style={{ fontSize: '0.74rem', fontWeight: 600, color: '#34D399' }}>Healthy • v1.3.2</span>
+                    <span style={{ fontSize: '0.74rem', fontWeight: 500, color: '#94A3B8', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{userEmail}</span>
                   </div>
                 </div>
               </div>
             ) : (
               <div 
-                title="System Status: Healthy (v1.3.2)" 
+                title={`${userName} (${userEmail})`} 
                 style={{ 
                   width: '40px', height: '40px', borderRadius: '12px', 
-                  backgroundColor: 'rgba(16, 185, 129, 0.15)', border: '1px solid rgba(16, 185, 129, 0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10B981',
-                  boxShadow: '0 0 15px rgba(16, 185, 129, 0.25)'
+                  backgroundColor: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3B82F6',
+                  boxShadow: '0 0 15px rgba(59, 130, 246, 0.25)'
                 }}
               >
-                <Server size={20} />
+                <User size={20} />
               </div>
             )}
             
