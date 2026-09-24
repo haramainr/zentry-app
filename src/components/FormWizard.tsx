@@ -1343,7 +1343,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         </div>
 
         {/* White Card for Current Step Form */}
-        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '28px 32px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
+        <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: 'clamp(16px, 5vw, 32px)', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
           
           {/* Step Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px', borderBottom: '1px solid #F1F5F9', paddingBottom: '20px' }}>

@@ -54,7 +54,7 @@ export default async function SalesFormPage({
   }
 
   return (
-    <div className="animate-fade-in" style={{ padding: '32px', backgroundColor: '#F8FAFC', minHeight: '100vh' }}>
+    <div className="animate-fade-in" style={{ padding: 'clamp(12px, 4vw, 32px)', backgroundColor: '#F8FAFC', minHeight: '100vh' }}>
       <header style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', margin: 0 }}>
