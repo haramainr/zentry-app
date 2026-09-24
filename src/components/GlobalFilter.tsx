@@ -30,12 +30,12 @@ export default function GlobalFilter({
   actionButton
 }: GlobalFilterProps) {
   return (
-    <div style={{
-      background: '#FFFFFF',
+    <div style={{ 
+      backgroundColor: '#FFFFFF', 
       border: '1px solid #E2E8F0',
       borderRadius: '12px',
-      padding: '16px',
-      marginBottom: '24px',
+      padding: '24px',
+      marginBottom: '32px',
       boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
       position: 'relative',
       overflow: 'visible',
@@ -75,8 +75,8 @@ export default function GlobalFilter({
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0F172A', fontWeight: 700, fontSize: '0.85rem', marginBottom: '10px' }}>
               <CalendarDays size={16} color="#64748B" /> <span>Rentang Waktu</span>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <div style={{ flex: 1 }}>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <div style={{ flex: '1 1 130px' }}>
                 <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 600, color: '#64748B', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Dari Tanggal</label>
                 <input 
                   type="date" 
@@ -96,7 +96,7 @@ export default function GlobalFilter({
                   }}
                 />
               </div>
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: '1 1 130px' }}>
                 <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 600, color: '#64748B', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Sampai Tanggal</label>
                 <input 
                   type="date" 
