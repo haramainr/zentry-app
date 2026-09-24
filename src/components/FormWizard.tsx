@@ -350,7 +350,11 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
     const { name, value, type, checked } = target;
     
     setFormData(prev => {
-      let newData = { ...prev, [name]: type === 'checkbox' ? checked : value };
+      let actualValue = type === 'checkbox' ? checked : value;
+        if (name === 'username' || name === 'email') {
+          actualValue = typeof actualValue === 'string' ? actualValue.toLowerCase() : actualValue;
+        }
+        let newData = { ...prev, [name]: actualValue };
       
       // Auto-check custom add-on TV if text is typed
       if (name === 'addon1Text' && value.trim() !== '') {
