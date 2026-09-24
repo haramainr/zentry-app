@@ -175,7 +175,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
   };
 
   return (
-    <div className="animate-fade-in flex stack-mobile" style={{ padding: '32px', backgroundColor: '#F8FAFC', minHeight: '100vh', flexDirection: 'column', gap: '28px' }}>
+    <div className="animate-fade-in flex stack-mobile" style={{ padding: 'clamp(12px, 4vw, 32px)', backgroundColor: '#F8FAFC', minHeight: '100vh', flexDirection: 'column', gap: '28px' }}>
       
       {/* Header Section */}
       <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
