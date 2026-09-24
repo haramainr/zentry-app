@@ -230,24 +230,38 @@ export async function POST(req: NextRequest) {
             // Jika teks melebihi jumlah kotak yang tersedia, atau dipaksa normal text
             if (forceNormalText || cleanValue.length > maxBoxes * numRows) {
               // 1. Gambar kotak putih solid tanpa border untuk menghapus tuntas comb box bawaan
-              firstPage.drawRectangle({
-                x: rect.x - 4,
-                y: rect.y - 2,
-                width: totalWidth + 8,
-                height: rect.height + 6,
-                color: rgb(1, 1, 1),
-                borderWidth: 0
-              });
-
-              // 2. Gambar kotak bergaris yang posisinya digeser ke atas agar tidak menempel dengan RT/RW
-              firstPage.drawRectangle({
-                x: rect.x - 2,
-                y: rect.y + 3, // Diberi jarak 5pt dari garis bawah bawaan
-                width: totalWidth + 4,
-                height: rect.height + 2,
-                borderColor: rgb(0.2, 0.2, 0.2),
-                borderWidth: 0.5
-              });
+                if (fieldName === 'Text17') {
+                  // KHUSUS USERNAME:
+                  // rect.height untuk Text17 terlalu besar dan menutupi label "USERNAME"
+                  // Kita hanya block bagian bawahnya saja (sekitar 15pt) dan jangan beri border hitam
+                  firstPage.drawRectangle({
+                    x: rect.x - 2,
+                    y: rect.y,
+                    width: totalWidth + 4,
+                    height: 16,
+                    color: rgb(1, 1, 1),
+                    borderWidth: 0
+                  });
+                } else {
+                  // Untuk field lain (seperti Alamat)
+                  firstPage.drawRectangle({
+                    x: rect.x - 4,
+                    y: rect.y - 2,
+                    width: totalWidth + 8,
+                    height: rect.height + 6,
+                    color: rgb(1, 1, 1),
+                    borderWidth: 0
+                  });
+                  // 2. Gambar kotak bergaris yang posisinya digeser ke atas agar tidak menempel dengan RT/RW
+                  firstPage.drawRectangle({
+                    x: rect.x - 2,
+                    y: rect.y + 3,
+                    width: totalWidth + 4,
+                    height: rect.height + 2,
+                    borderColor: rgb(0.2, 0.2, 0.2),
+                    borderWidth: 0.5
+                  });
+                }
                             const textToDraw = cleanValue;
                 
                 let customSize = fontSize + 1; // Default 11
@@ -301,7 +315,7 @@ export async function POST(req: NextRequest) {
                   
                   firstPage.drawText(textToDraw, {
                   x: rect.x + 4,
-                  y: rect.y + rect.height - startYOffset,
+                  y: fieldName === 'Text17' ? rect.y + 4 : rect.y + rect.height - startYOffset,
                   size: customSize,
                   font: helveticaBoldFont,
                   color: rgb(0, 0, 0),
@@ -499,9 +513,9 @@ export async function POST(req: NextRequest) {
         if (widgets.length > 0) {
           const rect = widgets[0].getRectangle();
           firstPage.drawText('Secepatnya', {
-              x: rect.x + 4,
-              y: rect.y + 5,
-              size: 8,
+              x: rect.x + 8,
+              y: rect.y + 4,
+              size: 11,
             font: helveticaBoldFont,
           });
         }
