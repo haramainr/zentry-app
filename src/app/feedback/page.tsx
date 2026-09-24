@@ -99,7 +99,7 @@ export default function SubmitFeedbackPage() {
 
   return (
     <div className="animate-fade-in flex stack-mobile" style={{ 
-      padding: '36px 32px', 
+      padding: 'clamp(16px, 4vw, 36px) clamp(12px, 4vw, 32px)', 
       backgroundColor: '#F8FAFC', 
       minHeight: '100vh', 
       flexDirection: 'column', 
@@ -154,7 +154,7 @@ export default function SubmitFeedbackPage() {
         background: '#FFFFFF', 
         borderRadius: '24px', 
         border: '1px solid #E2E8F0', 
-        padding: '32px 36px', 
+        padding: 'clamp(20px, 5vw, 32px) clamp(16px, 5vw, 36px)', 
         boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.04), 0 5px 15px -5px rgba(0, 0, 0, 0.02)',
         position: 'relative', zIndex: 1,
         display: 'flex', flexDirection: 'column', gap: '28px'
@@ -359,7 +359,7 @@ export default function SubmitFeedbackPage() {
         background: '#FFFFFF', 
         borderRadius: '24px', 
         border: '1px solid #E2E8F0', 
-        padding: '32px 36px', 
+        padding: 'clamp(20px, 5vw, 32px) clamp(16px, 5vw, 36px)', 
         boxShadow: '0 12px 35px -5px rgba(0, 0, 0, 0.04), 0 5px 15px -5px rgba(0, 0, 0, 0.02)',
         position: 'relative', zIndex: 1,
         display: 'flex', flexDirection: 'column', gap: '24px'
