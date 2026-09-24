@@ -67,19 +67,6 @@ export default async function SalesFormPage({
           </p>
         </div>
         
-        {/* Profile Badge & Notification */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', background: '#FFFFFF', border: '1px solid #E2E8F0', padding: '6px 14px 6px 6px', borderRadius: '30px', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-          <div style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#0F172A', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.95rem' }}>
-            {(caeName || 'S').charAt(0).toUpperCase()}
-          </div>
-          <div>
-            <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#0F172A', lineHeight: 1.1 }}>{caeName || 'Sales zyntaxera'} <span style={{ fontSize: '0.7rem', color: '#94A3B8' }}>⌄</span></div>
-            <div style={{ fontSize: '0.7rem', color: '#64748B', fontWeight: 500 }}>Sales Team</div>
-          </div>
-          <div style={{ position: 'relative', marginLeft: '6px', paddingLeft: '12px', borderLeft: '1px solid #F1F5F9', cursor: 'pointer' }}>
-            <span style={{ fontSize: '1.2rem' }}>🔔</span>
-            <span style={{ position: 'absolute', top: '-4px', right: '-6px', background: '#2563EB', color: 'white', fontSize: '0.65rem', fontWeight: 700, width: '18px', height: '18px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px solid white' }}>2</span>
-          </div>
         </div>
       </header>
       
