@@ -1,3 +1,5 @@
+export const maxDuration = 60;
+
 import { NextRequest, NextResponse } from 'next/server';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     // Kita gunakan model flash karena sangat cepat dan murah
-    const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
     const prompt = `
 Anda adalah sistem pengekstrak data KTP Indonesia.
@@ -43,7 +45,7 @@ Pastikan data jenis kelamin dikonversi: jika tertulis "LAKI-LAKI" jadikan "Pria"
       {
         inlineData: {
           data: base64Image,
-          mimeType: file.type,
+          mimeType: 'image/jpeg',
         },
       },
     ]);
