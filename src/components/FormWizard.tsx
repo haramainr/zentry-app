@@ -2,7 +2,7 @@
 import { createPortal } from 'react-dom';
 
 import React, { useState, useRef, useEffect } from "react";
-import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan, Receipt, FileText, Camera, ShieldCheck, Copy, Check, Info } from "lucide-react";
+import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, Minus, Scan, Receipt, FileText, Camera, ShieldCheck, Copy, Check, Info, Loader2 } from "lucide-react";
 import SignatureCanvas from 'react-signature-canvas';
 import Select from 'react-select';
 import { createClient } from "@/lib/supabase/client";
@@ -2480,37 +2480,38 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           </div>,
           document.body
         )}
-      </div>
+  
+      {/* GLOBAL LOADING OVERLAY */}
+      {isSubmitting && (
+        <div style={{
+          position: 'fixed',
+          top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.75)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 9999,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          color: 'white',
+          animation: 'fadeIn 0.2s ease-out'
+        }}>
+          <div style={{
+            background: 'white',
+            padding: '32px 48px',
+            borderRadius: '16px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            color: '#0F172A'
+          }}>
+            <Loader2 size={48} color="#10B981" className="animate-spin" style={{ marginBottom: '16px' }} />
+            <h3 style={{ margin: '0 0 8px 0', fontSize: '1.25rem', fontWeight: 700 }}>Memproses Dokumen</h3>
+            <p style={{ margin: 0, color: '#64748B', fontSize: '0.95rem' }}>Harap tunggu sebentar, dokumen sedang di-generate...</p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
