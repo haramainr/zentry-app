@@ -67,6 +67,18 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   }
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Preload PDF.js di background saat user masuk ke langkah 3 (Rangkuman)
+  // Ini memangkas waktu loading 2-4 detik saat menekan tombol Terbitkan JPG!
+  useEffect(() => {
+    if (currentStep === 3) {
+      import('pdfjs-dist').then(pdfjsLib => {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+        // Opsional: pre-fetch file mjs-nya agar masuk cache browser
+        fetch(pdfjsLib.GlobalWorkerOptions.workerSrc, { mode: 'no-cors' }).catch(() => {});
+      }).catch(e => console.error('Gagal preload pdf.js', e));
+    }
+  }, [currentStep]);
 
   // Simpan data Tanda Tangan ke state agar tidak hilang saat unmount
   const [signatureData, setSignatureData] = useState<string | null>(initialData?.signature_base64 || parsedExtras?.signature_base64 || null);
