@@ -1,6 +1,6 @@
 export default function SalesLoading() {
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', gap: '16px' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 'calc(100vh - 140px)', gap: '16px' }}>
       <div style={{ 
         width: '40px', 
         height: '40px', 

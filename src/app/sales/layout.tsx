@@ -23,7 +23,7 @@ export default async function SalesLayout({ children }: { children: React.ReactN
 
       {/* Main Content Area (Independent scroll) */}
       <main style={{ flex: 1, height: '100%', overflowY: 'auto', display: 'flex', flexDirection: 'column', position: 'relative', backgroundColor: '#F8FAFC' }}>
-        <div style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+        <div style={{ flex: 1, position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column' }}>
           {children}
         </div>
         <Footer />
