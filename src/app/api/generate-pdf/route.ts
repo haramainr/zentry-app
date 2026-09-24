@@ -281,7 +281,25 @@ export async function POST(req: NextRequest) {
                    startYOffset = 4;
                 }
                 
-                firstPage.drawText(textToDraw, {
+                
+                  // Auto-shrink font size if a single word (like a long email or username) overflows the box width
+                  while (customSize > 4) {
+                    let tooWide = false;
+                    const segmentsForWidth = textToDraw.split('\n');
+                    for (const seg of segmentsForWidth) {
+                      const words = seg.split(' ');
+                      for (const word of words) {
+                        if (helveticaBoldFont.widthOfTextAtSize(word, customSize) > totalWidth - 6) {
+                          tooWide = true;
+                          break;
+                        }
+                      }
+                    }
+                    if (!tooWide) break;
+                    customSize -= 0.5;
+                  }
+                  
+                  firstPage.drawText(textToDraw, {
                   x: rect.x + 4,
                   y: rect.y + rect.height - startYOffset,
                   size: customSize,
@@ -481,9 +499,9 @@ export async function POST(req: NextRequest) {
         if (widgets.length > 0) {
           const rect = widgets[0].getRectangle();
           firstPage.drawText('Secepatnya', {
-            x: rect.x + 8,
-            y: rect.y + 4,
-            size: 11,
+              x: rect.x + 4,
+              y: rect.y + 5,
+              size: 8,
             font: helveticaBoldFont,
           });
         }
