@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     // Kita gunakan model flash karena sangat cepat dan murah
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3.1-flash-lite' });
 
     const prompt = `
 Anda adalah sistem pengekstrak data KTP Indonesia.
