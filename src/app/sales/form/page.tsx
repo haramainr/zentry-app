@@ -66,8 +66,6 @@ export default async function SalesFormPage({
               : "Silakan lengkapi data pelanggan. Tanda tangan Anda dan Leader akan otomatis terlampir pada dokumen akhir."}
           </p>
         </div>
-        
-        </div>
       </header>
       
       {/* Multi-step Form Wizard with 2-Column Layout */}
