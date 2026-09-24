@@ -546,7 +546,7 @@ export async function POST(req: NextRequest) {
     fillText('Text30', data.biayaAddons, 8);
     fillText('Text31', data.biayaPerangkat, 8);
     fillText('Text32', data.biayaLainnya, 8);
-    fillText('Text33', data.biayaPpn, 8);
+    fillText('Text33', data.biayaPpn && data.biayaPpn !== 'Rp 0' ? 'PPN 11%' : '', 8);
     fillText('Text22', data.biayaTotal, 11, true); // TOTAL DIBUAT BESAR DAN BOLD
 
     const today = new Date();
