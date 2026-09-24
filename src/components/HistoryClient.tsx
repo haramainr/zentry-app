@@ -180,22 +180,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
       {/* Header Section */}
       <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
-          <Link 
-            href="/sales" 
-            style={{ 
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              width: '44px', height: '44px', borderRadius: '14px',
-              backgroundColor: '#FFFFFF', border: '1px solid #E2E8F0',
-              color: '#0F172A', textDecoration: 'none',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-              transition: 'all 0.2s ease'
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#F1F5F9'; e.currentTarget.style.borderColor = '#CBD5E1'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#FFFFFF'; e.currentTarget.style.borderColor = '#E2E8F0'; }}
-            title="Kembali ke Dashboard"
-          >
-            <ArrowLeft size={20} />
-          </Link>
+          
           <div>
             <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0F172A', margin: 0, letterSpacing: '-0.5px' }}>Riwayat & Draft</h1>
             <p style={{ fontSize: '0.95rem', color: '#64748B', margin: 0, marginTop: '4px', fontWeight: 500 }}>
