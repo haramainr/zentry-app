@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User } from "@supabase/supabase-js";
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
   LayoutDashboard, 
-  Users, 
+  Users,
+    User, 
   CreditCard, 
   FileText, 
   Database, 
