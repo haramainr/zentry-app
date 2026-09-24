@@ -1963,7 +1963,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-small">PPN 11% (Auto)</span>
+                    <span className="text-small">PPN (Auto)</span>
                     <div className="flex items-center gap-sm">
                       <span className="text-muted">Rp</span>
                       <input type="text" className="input-field" style={{ width: '120px', padding: '4px', textAlign: 'right', backgroundColor: '#f0f0f0' }} value={formatRupiah(kalkulasi.ppn).replace('Rp ', '')} readOnly />
@@ -2368,7 +2368,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             )}
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>PPN 11%</span>
+              <span>PPN</span>
               <span style={{ fontWeight: 600, color: '#0F172A' }}>{formatRupiah(kalkulasi.ppn)}</span>
             </div>
           </div>
