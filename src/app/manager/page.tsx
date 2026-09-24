@@ -39,7 +39,7 @@ export default async function ManagerDashboardPage() {
   }
 
   return (
-    <div className="animate-fade-in dashboard-container" style={{ position: 'relative', minHeight: '100vh', padding: '32px' }}>
+    <div className="animate-fade-in" style={{ position: 'relative', minHeight: '100vh', padding: 'clamp(12px, 4vw, 32px)' }}>
       <header style={{ marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div>
           <h1 className="h2" style={{ color: 'var(--text-primary)', margin: 0 }}>Executive Dashboard</h1>
