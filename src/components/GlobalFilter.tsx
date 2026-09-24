@@ -34,7 +34,7 @@ export default function GlobalFilter({
       background: '#FFFFFF',
       border: '1px solid #E2E8F0',
       borderRadius: '12px',
-      padding: '20px 24px',
+      padding: '16px',
       marginBottom: '24px',
       boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)',
       position: 'relative',
@@ -75,7 +75,7 @@ export default function GlobalFilter({
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0F172A', fontWeight: 700, fontSize: '0.85rem', marginBottom: '10px' }}>
               <CalendarDays size={16} color="#64748B" /> <span>Rentang Waktu</span>
             </div>
-            <div style={{ display: 'flex', gap: '12px' }}>
+            <div className="flex flex-col sm:flex-row gap-3">
               <div style={{ flex: 1 }}>
                 <label style={{ display: 'block', fontSize: '0.7rem', fontWeight: 600, color: '#64748B', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Dari Tanggal</label>
                 <input 

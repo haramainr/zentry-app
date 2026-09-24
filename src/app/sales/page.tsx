@@ -51,7 +51,7 @@ export default async function SalesDashboard() {
   return (
     <div className="animate-fade-in dashboard-container" style={{ position: 'relative', minHeight: '100vh' }}>
       
-      <div style={{ padding: '32px' }}>
+      <div className="p-4 md:p-8">
         <header style={{ 
           marginBottom: '28px', 
           display: 'flex', 
