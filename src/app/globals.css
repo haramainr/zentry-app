@@ -400,12 +400,12 @@ button {
   z-index: 100;
   flex-shrink: 0;
   transition: width 0.2s ease;
-  background-color: #FFFFFF;
-  border-right: 1px solid #E2E8F0;
+  background-color: #0F172A;
+  border-right: 1px solid #1E293B;
 }
 
 .sidebar-float-card {
-  background-color: #FFFFFF;
+  background-color: #0F172A;
   border-radius: 0 !important;
   border: none !important;
   box-shadow: none !important;
