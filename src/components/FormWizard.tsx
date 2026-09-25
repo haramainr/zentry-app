@@ -1548,7 +1548,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <input type="tel" name="telpSelular" className="input-field" value={formData.telpSelular} onChange={handleChange} />
               </div>
               <div className="input-group" style={{ flex: 1 }}>
-                <label className="input-label">Telepon Rumah (Opsional)</label>
+                <label className="input-label">Telepon Selular 2 (Opsional)</label>
                 <input type="tel" name="telpRumah" className="input-field" value={formData.telpRumah} onChange={handleChange} />
               </div>
             </div>
