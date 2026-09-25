@@ -42,10 +42,10 @@ Telp 1 : ${telp1Formatted}
 Telp 2 : ${telp2Formatted}
 Building Status : ${formData.statusKepemilikan || 'Pemilik'}
 ----------------------------------------------------------
-Username :${(formData.username || '').toLowerCase()}
+Username : ${(formData.username || '').toLowerCase()}
 Service : ${serviceText.trim()}
 Email : ${formData.email ? formData.email.toLowerCase() : '**'}
-Installation Date:${formData.tglPemasangan || ''}
+Installation Date : ${formData.tglPemasangan || ''}
 Promo : ${formData.catatan || formData.promoTerm || '**'}
 STB :${formData.smartboxQty || '**'}
 ====================
