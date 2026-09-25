@@ -11,23 +11,38 @@ export default function DeveloperFeedbackPage() {
   const [filterType, setFilterType] = useState('All');
   const [filterStatus, setFilterStatus] = useState('All');
 
+  const getCookie = (name: string) => {
+    if (typeof document === 'undefined') return null;
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+    return null;
+  };
+
   useEffect(() => {
     fetchFeedbacks();
   }, []);
 
   const fetchFeedbacks = async () => {
     setLoading(true);
-    // Kita mengambil data feedback beserta nama/role user dari public.users (via join kalau bisa, tapi karena fk ke auth.users, kita butuh trick)
-    // Di Supabase biasa, kita bisa ambil manual.
+    
+    if (getCookie('dummy_auth') === 'true') {
+      setFeedbacks([
+        { id: '1', user_name: 'Alfath (Sales)', user_role: 'Sales', type: 'Saran', message: 'Tampilan aplikasi sangat elegan dan profesional!', status: 'Resolved', created_at: new Date(Date.now() - 86400000).toISOString() },
+        { id: '2', user_name: 'Akun Demo (Sales)', user_role: 'Sales', type: 'Kritik', message: 'Terkadang loading saat scan KTP agak lama.', status: 'In Progress', created_at: new Date().toISOString() },
+        { id: '3', user_name: 'Bima (Manager)', user_role: 'Manager', type: 'Saran', message: 'Tolong tambahkan filter berdasarkan area.', status: 'New', created_at: new Date(Date.now() - 3600000).toISOString() }
+      ]);
+      setLoading(false);
+      return;
+    }
+
     const { data: fData, error } = await supabase
       .from('feedbacks')
       .select('*')
       .order('created_at', { ascending: false });
 
     if (fData) {
-      // Ambil user info
       const { data: usersData } = await supabase.from('users').select('id, full_name, role');
-      
       const combined = fData.map((f: any) => {
         const user = usersData?.find((u: any) => u.id === f.user_id);
         return {
@@ -42,6 +57,11 @@ export default function DeveloperFeedbackPage() {
   };
 
   const handleUpdateStatus = async (id: string, newStatus: string) => {
+    if (getCookie('dummy_auth') === 'true') {
+      setFeedbacks(feedbacks.map(f => f.id === id ? { ...f, status: newStatus } : f));
+      return;
+    }
+
     const { error } = await supabase
       .from('feedbacks')
       .update({ status: newStatus })
@@ -65,7 +85,7 @@ export default function DeveloperFeedbackPage() {
       <header style={{ marginBottom: 'var(--spacing-xl)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h1 className="h2" style={{ color: '#F8FAFC', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <MessageSquare size={28} color="#60A5FA" />
+            <MessageSquare size={28} color="#94A3B8" />
             Data Kritik & Saran
           </h1>
           <p style={{ color: '#94A3B8' }}>Pantau masukan, saran, dan kritik dari seluruh karyawan.</p>
@@ -106,7 +126,7 @@ export default function DeveloperFeedbackPage() {
         ) : filteredFeedbacks.map((f: any) => (
           <div key={f.id} style={{ 
             backgroundColor: '#1E293B', borderRadius: '12px', border: '1px solid #334155', overflow: 'hidden',
-            borderLeft: `4px solid ${f.type === 'Kritik' ? '#EF4444' : '#3B82F6'}`
+            borderLeft: `4px solid ${f.type === 'Kritik' ? '#EF4444' : '#0F172A'}`
           }}>
             <div style={{ padding: '16px 20px', borderBottom: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -115,8 +135,8 @@ export default function DeveloperFeedbackPage() {
                     <AlertTriangle size={18} color="#F87171" />
                   </div>
                 ) : (
-                  <div style={{ backgroundColor: 'rgba(59, 130, 246, 0.2)', padding: '8px', borderRadius: '50%' }}>
-                    <Lightbulb size={18} color="#60A5FA" />
+                  <div style={{ backgroundColor: 'rgba(148, 163, 184, 0.2)', padding: '8px', borderRadius: '50%' }}>
+                    <Lightbulb size={18} color="#94A3B8" />
                   </div>
                 )}
                 <div>
@@ -128,10 +148,10 @@ export default function DeveloperFeedbackPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <span style={{ 
                   display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 600, padding: '4px 12px', borderRadius: '16px',
-                  backgroundColor: f.status === 'Resolved' ? 'rgba(16, 185, 129, 0.1)' : f.status === 'In Progress' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(59, 130, 246, 0.1)',
-                  color: f.status === 'Resolved' ? '#34D399' : f.status === 'In Progress' ? '#FBBF24' : '#60A5FA'
+                  backgroundColor: f.status === 'Resolved' ? 'rgba(16, 185, 129, 0.1)' : f.status === 'In Progress' ? 'rgba(245, 158, 11, 0.1)' : 'rgba(148, 163, 184, 0.1)',
+                  color: f.status === 'Resolved' ? '#34D399' : f.status === 'In Progress' ? '#FBBF24' : '#94A3B8'
                 }}>
-                  {f.status === 'Resolved' ? <CheckCircle size={14}/> : f.status === 'In Progress' ? <Clock size={14}/> : <div style={{width:'8px', height:'8px', borderRadius:'50%', backgroundColor:'#60A5FA'}}></div>}
+                  {f.status === 'Resolved' ? <CheckCircle size={14}/> : f.status === 'In Progress' ? <Clock size={14}/> : <div style={{width:'8px', height:'8px', borderRadius:'50%', backgroundColor:'#94A3B8'}}></div>}
                   {f.status}
                 </span>
 
