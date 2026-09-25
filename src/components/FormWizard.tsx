@@ -1326,7 +1326,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                   <div style={{
                     width: '32px', height: '32px', borderRadius: '50%',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    backgroundColor: isDone ? '#10B981' : isActive ? '#2563EB' : '#F1F5F9',
+                    backgroundColor: isDone ? '#10B981' : isActive ? '#0F172A' : '#F1F5F9',
                     color: isDone || isActive ? 'white' : '#94A3B8',
                     fontWeight: 700, fontSize: '0.85rem',
                     border: isDone || isActive ? 'none' : '1px solid #CBD5E1',
@@ -1338,7 +1338,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                   <span style={{
                     fontSize: '0.85rem',
                     fontWeight: isActive || isDone ? 700 : 500,
-                    color: isActive ? '#2563EB' : isDone ? '#0F172A' : '#94A3B8',
+                    color: isActive ? '#0F172A' : isDone ? '#0F172A' : '#94A3B8',
                     whiteSpace: 'nowrap'
                   }}>
                     {STEP_TITLES[idx]}
@@ -1357,7 +1357,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           
           {/* Step Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '28px', borderBottom: '1px solid #F1F5F9', paddingBottom: '20px' }}>
-            <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#EFF6FF', color: '#2563EB', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>
+            <div style={{ width: '44px', height: '44px', borderRadius: '10px', background: '#F1F5F9', color: '#0F172A', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', flexShrink: 0 }}>
               {STEP_ICONS[currentStep - 1]}
             </div>
             <h2 style={{ margin: 0, fontSize: '1.4rem', fontWeight: 800, color: '#0F172A' }}>
@@ -2117,7 +2117,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 onClick={handleNext} 
                 disabled={isSubmitting || isDrafting} 
                 style={{ 
-                  background: '#2563EB', 
+                  background: '#0F172A', 
                   border: 'none', 
                   padding: '10px 24px', 
                   borderRadius: '8px', 
@@ -2313,7 +2313,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', borderBottom: '1px solid #F1F5F9', paddingBottom: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Receipt size={17} color="#2563EB" />
+              <Receipt size={17} color="#0F172A" />
               <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Ringkasan Tagihan</span>
             </div>
             <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#059669', backgroundColor: '#ECFDF5', padding: '2px 8px', borderRadius: '6px' }}>
@@ -2403,7 +2403,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px dashed #CBD5E1', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
               <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0F172A' }}>Total Tagihan</span>
-              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#2563EB', letterSpacing: '-0.5px' }}>
+              <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0F172A', letterSpacing: '-0.5px' }}>
                 {formatRupiah(kalkulasi.total)}
               </span>
             </div>
@@ -2419,7 +2419,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
               Langkah {currentStep} dari {totalSteps}
             </span>
-            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#2563EB' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#0F172A' }}>
               {Math.round((currentStep / totalSteps) * 100)}% Selesai
             </span>
           </div>
@@ -2430,7 +2430,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
               style={{ 
                 width: `${(currentStep / totalSteps) * 100}%`, 
                 height: '100%', 
-                backgroundColor: '#2563EB', 
+                backgroundColor: '#0F172A', 
                 borderRadius: '9999px',
                 transition: 'width 0.3s ease'
               }} 
@@ -2443,7 +2443,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {(STEP_TIPS[currentStep - 1] || STEP_TIPS[0]).slice(0, 2).map((tip, idx) => (
               <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '0.78rem', color: '#475569', lineHeight: 1.4 }}>
-                <span style={{ color: '#2563EB', fontWeight: 700, flexShrink: 0 }}>•</span>
+                <span style={{ color: '#0F172A', fontWeight: 700, flexShrink: 0 }}>•</span>
                 <span>{tip}</span>
               </li>
             ))}
