@@ -97,58 +97,8 @@ export default function LoginPage() {
       <div className="glow-sphere sphere-bottom-left" />
 
       <main className="login-main">
-        <div className="split-layout">
-          
-          {/* ================= HERO SECTION (LEFT - 55-60%) ================= */}
-          <div className="hero-section">
-            <div className="hero-brand">
-              <div className="logo-badge">
-                <Image src="/zentry-logo.png" width={140} height={35} alt="ZEntry Logo" style={{ objectFit: 'contain' }} />
-              </div>
-            </div>
-            
-            <h1 className="hero-headline">
-              Kelola Data Pelanggan <br />
-              <span className="highlight-blue">Lebih Cepat & Akurat</span>
-            </h1>
-            
-            <p className="hero-subheadline">
-              Sistem database internal ZEntry dirancang khusus untuk mempermudah operasional tim Sales, Leader, dan Manajer dalam satu platform terpadu.
-            </p>
-
-            <div className="feature-grid">
-              <div className="feature-item float-delay-1">
-                <div className="feature-icon"><Zap size={20} /></div>
-                <div>
-                  <h4 className="feature-title">Performa Tinggi</h4>
-                  <p className="feature-desc">Akses data instan tanpa delay.</p>
-                </div>
-              </div>
-              <div className="feature-item float-delay-2">
-                <div className="feature-icon"><ShieldCheck size={20} /></div>
-                <div>
-                  <h4 className="feature-title">Keamanan Ganda</h4>
-                  <p className="feature-desc">Enkripsi data standar enterprise.</p>
-                </div>
-              </div>
-              <div className="feature-item float-delay-3">
-                <div className="feature-icon"><Cloud size={20} /></div>
-                <div>
-                  <h4 className="feature-title">Cloud Sync</h4>
-                  <p className="feature-desc">Otomatis tersimpan & sinkron.</p>
-                </div>
-              </div>
-              <div className="feature-item float-delay-4">
-                <div className="feature-icon"><BarChart3 size={20} /></div>
-                <div>
-                  <h4 className="feature-title">Laporan Real-time</h4>
-                  <p className="feature-desc">Pantau performa kapan saja.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ================= LOGIN CARD (RIGHT - 40-45%) ================= */}
+        <div className="center-layout">
+          {/* ================= LOGIN CARD ================= */}
           <div className="login-card-wrapper">
             <div className="login-card glassmorphism-card">
               
