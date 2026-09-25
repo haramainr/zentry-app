@@ -2471,7 +2471,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
             <div>
               <h3 style={{ margin: 0, fontSize: '1.25rem', color: '#0F172A', marginBottom: '8px', fontWeight: 800 }}>Menganalisis KTP...</h3>
-              <p style={{ margin: 0, color: '#64748B', fontSize: '0.95rem', lineHeight: '1.5' }}>AI sedang mengekstrak data dari KTP Anda. Mohon tunggu sebentar.</p>
+              <p style={{ margin: 0, color: '#64748B', fontSize: '0.95rem', lineHeight: '1.5' }}>Sistem sedang mengekstrak data dari KTP Anda. Mohon tunggu sebentar.</p>
             </div>
             
             <div style={{ width: '100%', background: '#F1F5F9', height: '6px', borderRadius: '4px', overflow: 'hidden' }}>
