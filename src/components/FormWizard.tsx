@@ -2459,13 +2459,13 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             
             {/* Animated Scanner Ring */}
             <div style={{ position: 'relative', width: '90px', height: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <div style={{ position: 'absolute', width: '100%', height: '100%', border: '6px solid #EFF6FF', borderRadius: '50%' }} />
-              <div style={{ position: 'absolute', width: '100%', height: '100%', border: '6px solid #3B82F6', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite' }} />
+              <div style={{ position: 'absolute', width: '100%', height: '100%', border: '6px solid #F1F5F9', borderRadius: '50%' }} />
+              <div style={{ position: 'absolute', width: '100%', height: '100%', border: '6px solid #0F172A', borderRadius: '50%', borderTopColor: 'transparent', animation: 'spin 1.2s cubic-bezier(0.5, 0.1, 0.4, 0.9) infinite' }} />
               
               {/* Inner scanning laser */}
               <div style={{ position: 'absolute', width: '40px', height: '40px', overflow: 'hidden' }}>
-                <Scan size={40} color="#3B82F6" strokeWidth={2} />
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#3B82F6', boxShadow: '0 0 8px #3B82F6', animation: 'scan 1.5s ease-in-out infinite alternate' }} />
+                <Scan size={40} color="#0F172A" strokeWidth={2} />
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '2px', background: '#0F172A', boxShadow: '0 0 8px rgba(15, 23, 42, 0.5)', animation: 'scan 1.5s ease-in-out infinite alternate' }} />
               </div>
             </div>
 
@@ -2475,7 +2475,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             </div>
             
             <div style={{ width: '100%', background: '#F1F5F9', height: '6px', borderRadius: '4px', overflow: 'hidden' }}>
-              <div style={{ width: '50%', height: '100%', background: '#3B82F6', borderRadius: '4px', animation: 'progress 2s ease-in-out infinite' }} />
+              <div style={{ width: '50%', height: '100%', background: '#0F172A', borderRadius: '4px', animation: 'progress 2s ease-in-out infinite' }} />
             </div>
           </div>
           
