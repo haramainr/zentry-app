@@ -81,7 +81,7 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
           >
             <Menu size={26} />
           </button>
-          <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '110px', height: 'auto', objectFit: 'contain' }} />
+          <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '110px', height: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
         </div>
         <div className="hidden-desktop">
           <ProfileDropdown profile={profile || null} />
@@ -123,7 +123,7 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
           }}>
             {!isCollapsed && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '128px', height: 'auto', objectFit: 'contain' }} />
+                <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '128px', height: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
               </div>
             )}
             
@@ -283,9 +283,9 @@ export default function Sidebar({ role = 'Sales', subscriptionEndDate, profile }
                       <div>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                           <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }}></span>
-                          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0F172A' }}>Lisensi Enterprise</span>
+                          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#F8FAFC' }}>Lisensi Enterprise</span>
                         </div>
-                        <div style={{ fontSize: '0.75rem', color: '#64748B', marginTop: '3px', fontWeight: 500 }}>
+                        <div style={{ fontSize: '0.75rem', color: '#94A3B8', marginTop: '3px', fontWeight: 500 }}>
                           {days > 0 ? `${days} hari tersisa` : `${hours} jam tersisa`}
                         </div>
                       </div>

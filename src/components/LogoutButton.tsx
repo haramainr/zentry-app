@@ -28,9 +28,9 @@ export default function LogoutButton({ isIconOnly = false }: { isIconOnly?: bool
         gap: '10px',
         padding: isIconOnly ? '0' : '0 16px',
         borderRadius: '14px',
-        border: '1px solid #FECACA',
+        border: '1px solid rgba(239, 68, 68, 0.3)',
         backgroundColor: 'transparent',
-        color: '#DC2626',
+        color: '#FCA5A5',
         fontWeight: 600,
         fontSize: '0.95rem',
         cursor: 'pointer',
@@ -38,8 +38,8 @@ export default function LogoutButton({ isIconOnly = false }: { isIconOnly?: bool
         transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor = '#FEF2F2';
-        e.currentTarget.style.borderColor = '#F87171';
+        e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+        e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.6)';
         e.currentTarget.style.transform = 'translateY(-1px)';
         e.currentTarget.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.12)';
       }}
