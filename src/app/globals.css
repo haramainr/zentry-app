@@ -437,27 +437,27 @@ button {
 }
 
 .sidebar-nav-item:hover:not(.active) {
-  background-color: #F8FAFC;
-  color: #0F172A;
+  background-color: #1E293B;
+  color: #F8FAFC;
   border-color: transparent;
 }
 
 .sidebar-nav-item.active {
-  background-color: #EFF6FF;
-  color: #2563EB !important;
+  background-color: rgba(59, 130, 246, 0.15);
+  color: #60A5FA !important;
   font-weight: 600;
-  border-left: 3px solid #2563EB;
+  border-left: 3px solid #3B82F6;
   border-radius: 0 8px 8px 0;
 }
 
 .sidebar-nav-item.active svg {
-  color: #2563EB !important;
-  stroke: #2563EB !important;
+  color: #60A5FA !important;
+  stroke: #60A5FA !important;
 }
 
 .sidebar-nav-item:hover:not(.active) svg {
-  color: #0F172A;
-  stroke: #0F172A;
+  color: #F8FAFC;
+  stroke: #F8FAFC;
 }
 
 .sidebar-settings-item {
@@ -475,8 +475,8 @@ button {
 }
 
 .sidebar-settings-item:hover {
-  background-color: #F8FAFC;
-  color: #0F172A;
+  background-color: #1E293B;
+  color: #F8FAFC;
 }
 
 .sidebar-settings-item:hover svg {
@@ -484,8 +484,8 @@ button {
 }
 
 .premium-license-card {
-  background: #F8FAFC;
-  border: 1px solid #E2E8F0;
+  background: #1E293B;
+  border: 1px solid #334155;
   border-radius: 8px;
   padding: 10px 12px;
   box-shadow: none;
@@ -494,7 +494,7 @@ button {
 }
 
 .premium-license-card:hover {
-  background: #F1F5F9;
+  background: #0F172A;
 }
 
 .premium-license-card::before {
