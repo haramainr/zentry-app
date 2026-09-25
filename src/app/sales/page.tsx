@@ -64,7 +64,7 @@ export default async function SalesDashboard() {
         }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#2563EB', backgroundColor: '#EFF6FF', padding: '3px 10px', borderRadius: '6px', letterSpacing: '0.3px' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 600, color: '#0F172A', backgroundColor: '#F1F5F9', padding: '3px 10px', borderRadius: '6px', letterSpacing: '0.3px' }}>
                 Sales Dashboard
               </span>
             </div>

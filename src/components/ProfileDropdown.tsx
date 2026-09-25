@@ -103,7 +103,7 @@ export default function ProfileDropdown({ profile }: { profile: Profile | null }
             <div style={{ fontSize: '0.875rem', color: '#0F172A', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {displayName}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#2563EB', fontWeight: 600 }}>{displayRole}</div>
+            <div style={{ fontSize: '0.75rem', color: '#0F172A', fontWeight: 600 }}>{displayRole}</div>
           </div>
           
           <Link href="/settings/profile" style={{ textDecoration: 'none' }} onClick={() => setIsOpen(false)}>

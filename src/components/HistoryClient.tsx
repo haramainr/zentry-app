@@ -358,7 +358,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                 }),
                 multiValueLabel: (base) => ({
                   ...base,
-                  color: '#1D4ED8',
+                  color: '#1E293B',
                   fontWeight: 600,
                   fontSize: '0.85rem'
                 }),
@@ -616,7 +616,7 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                                 href={`/sales/form?draft_id=${sub.id}`}
                                 style={{ 
                                   padding: '8px 18px', borderRadius: '10px',
-                                  background: 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)',
+                                  background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
                                   color: '#FFFFFF', fontWeight: 700, fontSize: '0.85rem',
                                   textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px',
                                   boxShadow: '0 4px 10px rgba(37, 99, 235, 0.3)',
@@ -732,12 +732,12 @@ export default function HistoryClient({ initialSubmissions }: { initialSubmissio
                                     rel="noopener noreferrer"
                                     style={{ 
                                       width: '100%', padding: '10px 14px', borderRadius: '8px',
-                                      backgroundColor: 'transparent', border: 'none', color: '#2563EB',
+                                      backgroundColor: 'transparent', border: 'none', color: '#0F172A',
                                       fontSize: '0.88rem', fontWeight: 600, cursor: 'pointer',
                                       display: 'flex', alignItems: 'center', gap: '10px',
                                       textDecoration: 'none', transition: 'all 0.15s ease'
                                     }}
-                                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#EFF6FF'; }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#F1F5F9'; }}
                                     onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; }}
                                   >
                                     <FileText size={16} />

@@ -117,7 +117,7 @@ export default function SubmitFeedbackPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '14px', marginBottom: '8px' }}>
           <div style={{ 
             width: '46px', height: '46px', borderRadius: '14px', 
-            background: 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)',
+            background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF',
             boxShadow: '0 4px 12px rgba(37, 99, 235, 0.25)'
           }}>
@@ -176,7 +176,7 @@ export default function SubmitFeedbackPage() {
             <div style={{ position: 'relative', width: '42px', height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <div style={{ 
                 width: '36px', height: '32px', borderRadius: '10px', 
-                background: 'linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%)',
+                background: 'linear-gradient(135deg, #1E293B 0%, #60A5FA 100%)',
                 boxShadow: '0 4px 10px rgba(59, 130, 246, 0.3)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFFFFF',
                 position: 'absolute', top: '2px', left: '2px'
@@ -209,8 +209,8 @@ export default function SubmitFeedbackPage() {
                 style={{ 
                   padding: '20px 22px', 
                   borderRadius: '16px', 
-                  border: `2px solid ${type === 'Saran' ? '#2563EB' : '#E2E8F0'}`,
-                  backgroundColor: type === 'Saran' ? '#EFF6FF' : '#FFFFFF',
+                  border: `2px solid ${type === 'Saran' ? '#0F172A' : '#E2E8F0'}`,
+                  backgroundColor: type === 'Saran' ? '#F1F5F9' : '#FFFFFF',
                   textAlign: 'left', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', gap: '16px',
                   transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -221,16 +221,16 @@ export default function SubmitFeedbackPage() {
               >
                 <div style={{ 
                   width: '26px', height: '26px', borderRadius: '50%', 
-                  border: `2px solid ${type === 'Saran' ? '#2563EB' : '#CBD5E1'}`,
-                  backgroundColor: type === 'Saran' ? '#2563EB' : '#FFFFFF',
+                  border: `2px solid ${type === 'Saran' ? '#0F172A' : '#CBD5E1'}`,
+                  backgroundColor: type === 'Saran' ? '#0F172A' : '#FFFFFF',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: '#FFFFFF', flexShrink: 0, transition: 'all 0.2s'
                 }}>
                   {type === 'Saran' && <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: '1.02rem', color: type === 'Saran' ? '#1D4ED8' : '#0F172A' }}>Saran & Masukan</div>
-                  <div style={{ fontSize: '0.85rem', color: type === 'Saran' ? '#3B82F6' : '#64748B', marginTop: '2px', fontWeight: 500 }}>Ide baru atau usulan fitur untuk pengembangan</div>
+                  <div style={{ fontWeight: 700, fontSize: '1.02rem', color: type === 'Saran' ? '#1E293B' : '#0F172A' }}>Saran & Masukan</div>
+                  <div style={{ fontSize: '0.85rem', color: type === 'Saran' ? '#1E293B' : '#64748B', marginTop: '2px', fontWeight: 500 }}>Ide baru atau usulan fitur untuk pengembangan</div>
                 </div>
               </button>
 
@@ -241,8 +241,8 @@ export default function SubmitFeedbackPage() {
                 style={{ 
                   padding: '20px 22px', 
                   borderRadius: '16px', 
-                  border: `2px solid ${type === 'Kritik' ? '#2563EB' : '#E2E8F0'}`,
-                  backgroundColor: type === 'Kritik' ? '#EFF6FF' : '#FFFFFF',
+                  border: `2px solid ${type === 'Kritik' ? '#0F172A' : '#E2E8F0'}`,
+                  backgroundColor: type === 'Kritik' ? '#F1F5F9' : '#FFFFFF',
                   textAlign: 'left', cursor: 'pointer',
                   display: 'flex', alignItems: 'center', gap: '16px',
                   transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
@@ -253,16 +253,16 @@ export default function SubmitFeedbackPage() {
               >
                 <div style={{ 
                   width: '26px', height: '26px', borderRadius: '50%', 
-                  border: `2px solid ${type === 'Kritik' ? '#2563EB' : '#CBD5E1'}`,
-                  backgroundColor: type === 'Kritik' ? '#2563EB' : '#FFFFFF',
+                  border: `2px solid ${type === 'Kritik' ? '#0F172A' : '#CBD5E1'}`,
+                  backgroundColor: type === 'Kritik' ? '#0F172A' : '#FFFFFF',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   color: '#FFFFFF', flexShrink: 0, transition: 'all 0.2s'
                 }}>
                   {type === 'Kritik' && <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#FFFFFF' }} />}
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: '1.02rem', color: type === 'Kritik' ? '#1D4ED8' : '#0F172A' }}>Kritik / Laporan Kendala</div>
-                  <div style={{ fontSize: '0.85rem', color: type === 'Kritik' ? '#3B82F6' : '#64748B', marginTop: '2px', fontWeight: 500 }}>Keluhan atau fungsi error pada sistem</div>
+                  <div style={{ fontWeight: 700, fontSize: '1.02rem', color: type === 'Kritik' ? '#1E293B' : '#0F172A' }}>Kritik / Laporan Kendala</div>
+                  <div style={{ fontSize: '0.85rem', color: type === 'Kritik' ? '#1E293B' : '#64748B', marginTop: '2px', fontWeight: 500 }}>Keluhan atau fungsi error pada sistem</div>
                 </div>
               </button>
 
@@ -288,7 +288,7 @@ export default function SubmitFeedbackPage() {
                 transition: 'all 0.2s ease', resize: 'vertical', lineHeight: 1.6,
                 fontFamily: 'inherit'
               }}
-              onFocus={(e) => { e.currentTarget.style.borderColor = '#2563EB'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37,99,235,0.12)'; }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = '#0F172A'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(37,99,235,0.12)'; }}
               onBlur={(e) => { e.currentTarget.style.borderColor = '#CBD5E1'; e.currentTarget.style.boxShadow = 'none'; }}
               required
             />
@@ -311,11 +311,11 @@ export default function SubmitFeedbackPage() {
             <div style={{ 
               display: 'flex', alignItems: 'center', gap: '12px',
               padding: '14px 20px', borderRadius: '14px',
-              backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE',
+              backgroundColor: '#F1F5F9', border: '1px solid #BFDBFE',
               color: '#1E40AF', fontSize: '0.88rem', fontWeight: 600,
               boxShadow: '0 2px 6px rgba(59, 130, 246, 0.05)'
             }}>
-              <Shield size={18} color="#2563EB" style={{ flexShrink: 0 }} />
+              <Shield size={18} color="#0F172A" style={{ flexShrink: 0 }} />
               <span>Data Anda aman dan akan kami jaga kerahasiaannya.</span>
             </div>
 
@@ -325,7 +325,7 @@ export default function SubmitFeedbackPage() {
               disabled={isSubmitting || !message.trim()}
               style={{ 
                 height: '50px', padding: '0 32px', borderRadius: '14px',
-                background: isSubmitting || !message.trim() ? '#CBD5E1' : 'linear-gradient(135deg, #2563EB 0%, #3B82F6 100%)',
+                background: isSubmitting || !message.trim() ? '#CBD5E1' : 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
                 color: '#FFFFFF', fontWeight: 700, fontSize: '0.96rem',
                 border: 'none', cursor: isSubmitting || !message.trim() ? 'not-allowed' : 'pointer',
                 display: 'flex', alignItems: 'center', gap: '10px',
@@ -368,7 +368,7 @@ export default function SubmitFeedbackPage() {
         {/* Header Row & Status Filter */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px', borderBottom: '1px solid #F1F5F9', paddingBottom: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{ width: '38px', height: '38px', borderRadius: '12px', backgroundColor: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563EB' }}>
+            <div style={{ width: '38px', height: '38px', borderRadius: '12px', backgroundColor: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0F172A' }}>
               <Clock size={20} />
             </div>
             <div>
@@ -408,7 +408,7 @@ export default function SubmitFeedbackPage() {
                   fontSize: '0.88rem', fontWeight: 600, color: '#334155', outline: 'none',
                   cursor: 'pointer', appearance: 'none', transition: 'all 0.2s ease', minWidth: '170px'
                 }}
-                onFocus={(e) => { e.currentTarget.style.borderColor = '#2563EB'; }}
+                onFocus={(e) => { e.currentTarget.style.borderColor = '#0F172A'; }}
                 onBlur={(e) => { e.currentTarget.style.borderColor = '#CBD5E1'; }}
               >
                 <option value="Semua Status">Semua Status</option>
@@ -444,7 +444,7 @@ export default function SubmitFeedbackPage() {
               <button
                 type="button"
                 onClick={() => setStatusFilter('Semua Status')}
-                style={{ padding: '8px 18px', borderRadius: '10px', backgroundColor: '#EFF6FF', color: '#2563EB', fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer', marginTop: '4px' }}
+                style={{ padding: '8px 18px', borderRadius: '10px', backgroundColor: '#F1F5F9', color: '#0F172A', fontWeight: 700, fontSize: '0.85rem', border: 'none', cursor: 'pointer', marginTop: '4px' }}
               >
                 Lihat Semua Status
               </button>
@@ -466,8 +466,8 @@ export default function SubmitFeedbackPage() {
                   onClick={() => setExpandedId(isExpanded ? null : item.id)}
                   style={{ 
                     borderRadius: '16px', 
-                    border: isExpanded ? '1px solid #3B82F6' : '1px solid #E2E8F0',
-                    backgroundColor: isExpanded ? '#EFF6FF' : '#FFFFFF',
+                    border: isExpanded ? '1px solid #1E293B' : '1px solid #E2E8F0',
+                    backgroundColor: isExpanded ? '#F1F5F9' : '#FFFFFF',
                     padding: '20px 24px',
                     transition: 'all 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
                     cursor: 'pointer',
@@ -495,7 +495,7 @@ export default function SubmitFeedbackPage() {
                       ) : (
                         <span style={{ 
                           padding: '5px 14px', borderRadius: '9999px',
-                          backgroundColor: '#EFF6FF', color: '#1D4ED8', border: '1px solid #BFDBFE',
+                          backgroundColor: '#F1F5F9', color: '#1E293B', border: '1px solid #BFDBFE',
                           fontSize: '0.78rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '5px'
                         }}>
                           <MessageSquare size={13} />
@@ -532,10 +532,10 @@ export default function SubmitFeedbackPage() {
                       ) : (
                         <span style={{ 
                           padding: '5px 14px', borderRadius: '9999px',
-                          backgroundColor: '#EFF6FF', color: '#2563EB', border: '1px solid #BFDBFE',
+                          backgroundColor: '#F1F5F9', color: '#0F172A', border: '1px solid #BFDBFE',
                           fontSize: '0.78rem', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '6px'
                         }}>
-                          <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#2563EB' }} />
+                          <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#0F172A' }} />
                           <span>Menunggu Review</span>
                         </span>
                       )}
@@ -549,7 +549,7 @@ export default function SubmitFeedbackPage() {
                       {/* Arrow Detail Button */}
                       <div style={{ 
                         width: '34px', height: '34px', borderRadius: '9999px',
-                        backgroundColor: isExpanded ? '#3B82F6' : '#F1F5F9',
+                        backgroundColor: isExpanded ? '#1E293B' : '#F1F5F9',
                         color: isExpanded ? '#FFFFFF' : '#475569',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         transition: 'all 0.2s ease', flexShrink: 0
@@ -573,7 +573,7 @@ export default function SubmitFeedbackPage() {
                       fontSize: '0.84rem', color: '#475569', fontWeight: 500 
                     }}>
                       <span>ID Laporan: <strong>{item.id}</strong></span>
-                      <span>Status: <strong style={{ color: item.status === 'Resolved' ? '#059669' : item.status === 'In Progress' ? '#7C3AED' : '#2563EB' }}>
+                      <span>Status: <strong style={{ color: item.status === 'Resolved' ? '#059669' : item.status === 'In Progress' ? '#7C3AED' : '#0F172A' }}>
                         {item.status === 'New' ? 'Menunggu Review Tim Developer' : item.status === 'In Progress' ? 'Sedang Dalam Proses Tindak Lanjut' : 'Telah Selesai Ditangani'}
                       </strong></span>
                     </div>

@@ -20,7 +20,7 @@ import {
 import { Users, FileEdit, CheckCircle2, ChevronRight } from "lucide-react";
 import GlobalFilter from './GlobalFilter';
 
-const COLORS = ['#2563EB', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#EF4444', '#14B8A6', '#F97316'];
+const COLORS = ['#0F172A', '#10B981', '#F59E0B', '#8B5CF6', '#EC4899', '#EF4444', '#14B8A6', '#F97316'];
 
 function getTimeAgo(dateString: string) {
   if (!dateString) return 'Baru saja';
@@ -219,7 +219,7 @@ export default function SalesDashboardClient({
           
           {/* Card 1: Total Pelanggan Didaftarkan */}
           <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '20px 22px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.04)', display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#2563EB', flexShrink: 0 }}>
+            <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: '#F1F5F9', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0F172A', flexShrink: 0 }}>
               <Users size={22} strokeWidth={2} />
             </div>
             <div>
@@ -373,7 +373,7 @@ export default function SalesDashboardClient({
 
               {/* Bottom Link */}
               <div style={{ textAlign: 'center', marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #F1F5F9' }}>
-                <a href="#detail-paket" style={{ color: '#2563EB', fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                <a href="#detail-paket" style={{ color: '#0F172A', fontWeight: 700, fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   Lihat Detail Paket <ChevronRight size={16} />
                 </a>
               </div>
@@ -386,14 +386,14 @@ export default function SalesDashboardClient({
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
             <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#0F172A' }}>Aktivitas Terbaru</h3>
             <Link href="/sales/history" style={{ textDecoration: 'none' }}>
-              <span style={{ background: '#EFF6FF', color: '#2563EB', padding: '4px 14px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s' }}
+              <span style={{ background: '#F1F5F9', color: '#0F172A', padding: '4px 14px', borderRadius: '20px', fontSize: '0.75rem', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s' }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#DBEAFE';
+                  e.currentTarget.style.backgroundColor = '#E2E8F0';
                   e.currentTarget.style.color = '#1D4ED8';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#EFF6FF';
-                  e.currentTarget.style.color = '#2563EB';
+                  e.currentTarget.style.backgroundColor = '#F1F5F9';
+                  e.currentTarget.style.color = '#0F172A';
                 }}
               >
                 Lihat Semua
@@ -409,7 +409,7 @@ export default function SalesDashboardClient({
                     width: '36px', 
                     height: '36px', 
                     borderRadius: '50%', 
-                    backgroundColor: sub.is_draft ? '#EFF6FF' : '#ECFDF5', 
+                    backgroundColor: sub.is_draft ? '#F1F5F9' : '#ECFDF5', 
                     color: sub.is_draft ? '#3B82F6' : '#10B981', 
                     display: 'flex', 
                     alignItems: 'center', 

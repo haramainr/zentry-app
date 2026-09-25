@@ -131,7 +131,7 @@ export default function DeveloperSidebar() {
           border-radius: 9999px;
         }
         .dev-sidebar-scroll::-webkit-scrollbar-thumb:hover {
-          background: #3B82F6;
+          background: #1E293B;
         }
         .dev-nav-item {
           display: flex;
@@ -158,7 +158,7 @@ export default function DeveloperSidebar() {
           transform: scale(1.1);
         }
         .dev-nav-item.active {
-          background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+          background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
           color: #FFFFFF;
           font-weight: 600;
           box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
@@ -223,7 +223,7 @@ export default function DeveloperSidebar() {
           </button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <img src="/zentry-logo.png" alt="ZEntry Logo" style={{ width: '110px', height: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
-            <span style={{ fontSize: '0.65rem', backgroundColor: '#2563EB', color: '#FFFFFF', padding: '2px 6px', borderRadius: '6px', fontWeight: 700 }}>DEV</span>
+            <span style={{ fontSize: '0.65rem', backgroundColor: '#0F172A', color: '#FFFFFF', padding: '2px 6px', borderRadius: '6px', fontWeight: 700 }}>DEV</span>
           </div>
         </div>
       </div>
@@ -479,7 +479,7 @@ export default function DeveloperSidebar() {
                 <div style={{ 
                   width: '36px', height: '36px', borderRadius: '12px', 
                   backgroundColor: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3B82F6',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1E293B',
                   boxShadow: '0 0 15px rgba(59, 130, 246, 0.25)', flexShrink: 0
                 }}>
                   <User size={18} />
@@ -499,7 +499,7 @@ export default function DeveloperSidebar() {
                 style={{ 
                   width: '40px', height: '40px', borderRadius: '12px', 
                   backgroundColor: 'rgba(59, 130, 246, 0.15)', border: '1px solid rgba(59, 130, 246, 0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#3B82F6',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1E293B',
                   boxShadow: '0 0 15px rgba(59, 130, 246, 0.25)'
                 }}
               >

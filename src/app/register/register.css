@@ -190,8 +190,8 @@
         }
 
         .highlight-blue {
-          color: #3B82F6;
-          background: linear-gradient(90deg, #60A5FA 0%, #3B82F6 100%);
+          color: #1E293B;
+          background: linear-gradient(90deg, #60A5FA 0%, #1E293B 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.4));
@@ -374,7 +374,7 @@
         .card-title {
           font-size: 18px;
           font-weight: 800;
-          color: #2563EB;
+          color: #0F172A;
           text-align: center;
           margin: 0 0 2px 0;
         }
@@ -477,7 +477,7 @@
 
         .input-container:focus-within {
           background: #FFFFFF;
-          border-color: #2563EB;
+          border-color: #0F172A;
           box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
         }
 
@@ -491,7 +491,7 @@
         }
 
         .input-container:focus-within .input-icon {
-          color: #2563EB;
+          color: #0F172A;
         }
 
         .form-input {
@@ -543,7 +543,7 @@
         }
 
         .toggle-pwd-btn:hover {
-          color: #2563EB;
+          color: #0F172A;
           background: rgba(37, 99, 235, 0.08);
         }
 
@@ -571,20 +571,20 @@
           height: 15px;
           border-radius: 4px;
           border: 1.5px solid #CBD5E1;
-          accent-color: #2563EB;
+          accent-color: #0F172A;
           cursor: pointer;
         }
 
         .forgot-link {
           font-size: 12.5px;
           font-weight: 600;
-          color: #2563EB;
+          color: #0F172A;
           text-decoration: none;
           transition: color 0.2s ease;
         }
 
         .forgot-link:hover {
-          color: #1D4ED8;
+          color: #1E293B;
           text-decoration: underline;
         }
 
@@ -593,7 +593,7 @@
           width: 100%;
           height: 46px;
           margin-top: 2px;
-          background: linear-gradient(90deg, #2563EB 0%, #3B82F6 100%);
+          background: linear-gradient(90deg, #0F172A 0%, #1E293B 100%);
           color: #FFFFFF;
           border: none;
           border-radius: 12px;
@@ -618,7 +618,7 @@
         .submit-btn:hover:not(:disabled) {
           box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.65);
           transform: translateY(-2px);
-          background: linear-gradient(90deg, #1D4ED8 0%, #2563EB 100%);
+          background: linear-gradient(90deg, #1E293B 0%, #0F172A 100%);
         }
 
         .submit-btn:active:not(:disabled) {
@@ -731,13 +731,13 @@
 
         .register-link {
           font-weight: 700;
-          color: #2563EB;
+          color: #0F172A;
           text-decoration: none;
           transition: color 0.2s ease;
         }
 
         .register-link:hover {
-          color: #1D4ED8;
+          color: #1E293B;
           text-decoration: underline;
         }
 
@@ -752,7 +752,7 @@
         }
 
         .dev-name {
-          color: #3B82F6;
+          color: #1E293B;
           font-weight: 600;
         }
       
