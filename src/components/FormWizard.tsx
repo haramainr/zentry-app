@@ -1259,7 +1259,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
     );
   }
 
-  const STEP_TITLES = ['Data Pelanggan', 'Data Alamat', 'Paket & Layanan', 'Dokumen', 'Verifikasi', 'Ringkasan'];
+  const STEP_TITLES = ['Data Pelanggan', 'Data Alamat', 'Paket & Layanan', 'Dokumen', 'Rincian Harga', 'Finalisasi'];
   const STEP_ICONS = ['👤', '📍', '📦', '📄', '✅', '📝'];
   const STEP_TIPS = [
       [
