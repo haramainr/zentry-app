@@ -6,6 +6,7 @@ import { CheckCircle, ChevronRight, ChevronLeft, Save, Calendar, Upload, Plus, M
 import SignatureCanvas from 'react-signature-canvas';
 import Select from 'react-select';
 import { createClient } from "@/lib/supabase/client";
+import { generateWaTemplate } from "@/lib/waGenerator";
 import { AREAS, PACKAGE_CATEGORIES, PAYMENT_TERMS, PACKAGES_DATA, VAS_DATA, SMARTBOX_PRICES } from '@/lib/packagesData';
 
 export default function FormWizard({ initialData, caeName, tlName }: { initialData?: any, caeName?: string, tlName?: string }) {
@@ -1212,6 +1213,14 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         </p>
         
         <div className="flex flex-col gap-md" style={{ maxWidth: '400px', margin: '0 auto' }}>
+          <div style={{ padding: '15px', backgroundColor: '#f0fdf4', borderRadius: '8px', border: '1px solid #bbf7d0', marginBottom: '15px', textAlign: 'left' }}>
+            <h4 style={{ margin: '0 0 10px 0', fontSize: '14px', color: '#166534', fontWeight: 'bold' }}>
+              Preview Format WhatsApp
+            </h4>
+            <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '12px', color: '#374151', fontFamily: 'inherit', maxHeight: '200px', overflowY: 'auto', backgroundColor: '#ffffff', padding: '10px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
+              {generateWaTemplate({ ...formData, salesNameManual: salesNameInput })}
+            </pre>
+          </div>
           <button type="button" className="btn btn-primary" onClick={handleShareWa} style={{ width: '100%', backgroundColor: '#25D366', borderColor: '#25D366', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
             Kirim ke WhatsApp
           </button>
@@ -2527,3 +2536,4 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
     </div>
   );
 }
+
