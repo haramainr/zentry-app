@@ -2087,13 +2087,13 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 onClick={handleSaveDraft} 
                 disabled={isSubmitting || isDrafting} 
                 style={{ 
-                  background: 'white', 
-                  border: '1px solid #CBD5E1', 
-                  padding: '10px 20px', 
-                  borderRadius: '8px', 
-                  fontWeight: 600, 
-                  fontSize: '0.875rem', 
-                  color: '#0F172A', 
+                  background: '#FFFBEB',
+                    border: '1px solid #FDE68A',
+                    padding: '10px 20px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '0.875rem',
+                    color: '#D97706', 
                   display: 'flex', 
                   alignItems: 'center', 
                   gap: '6px', 
