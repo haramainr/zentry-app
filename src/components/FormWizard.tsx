@@ -1225,9 +1225,10 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             Kirim ke WhatsApp
           </button>
           
-          <button type="button" className="btn btn-secondary" onClick={handleCopyText} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
-            Salin Teks Format Saja
-          </button>
+          <button type="button" className="btn btn-secondary" onClick={handleCopyText} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', backgroundColor: isWaCopied ? '#ECFDF5' : '', borderColor: isWaCopied ? '#10B981' : '', color: isWaCopied ? '#059669' : '', transition: 'all 0.2s' }}>
+              {isWaCopied ? <Check size={18} /> : <Copy size={18} />}
+              {isWaCopied ? 'Tersalin!' : 'Salin Teks Format Saja'}
+            </button>
 
           <div style={{ display: 'flex', gap: '10px' }}>
             <button type="button" className="btn btn-secondary" onClick={() => handleDownloadJpg()} disabled={isConvertingToJpg || !pdfBlobUrl} style={{ width: '100%', backgroundColor: '#e2e8f0', color: '#1e293b', borderColor: '#cbd5e1' }}>
