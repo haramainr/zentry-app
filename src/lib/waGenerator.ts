@@ -56,7 +56,7 @@ Alamat : ${formData.alamat || ''}
 Tikor : ${formData.titikKoordinat || ''}
 
 CAE : ${formData.salesNameManual || formData.caeName || '[Ketik Nama Anda]'}
-TL : ${formData.tlName || '[Ketik Nama TL Anda]'}
+TL : ${formData.tlNameManual || formData.tlName || '[Ketik Nama TL Anda]'}
 
 Terima kasih`;
 };

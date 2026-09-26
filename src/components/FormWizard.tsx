@@ -86,6 +86,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   const [ccSignatureData, setCcSignatureData] = useState<string | null>(initialData?.cc_signature_base64 || parsedExtras?.cc_signature_base64 || null);
   const [salesSignatureData, setSalesSignatureData] = useState<string | null>(null);
   const [salesNameInput, setSalesNameInput] = useState<string>(parsedExtras?.salesNameManual || '');
+  const [tlNameInput, setTlNameInput] = useState<string>(parsedExtras?.tlNameManual || tlName || '');
   
   // State untuk ID draft agar auto-save tidak membuat draft baru berkali-kali
   const [draftId, setDraftId] = useState(initialData?.id || null);
@@ -889,7 +890,8 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           promo: formData.promo,
           signature_base64: signatureData,
           cc_signature_base64: ccSignatureData,
-          salesNameManual: salesNameInput
+          salesNameManual: salesNameInput,
+          tlNameManual: tlNameInput
         }),
         promo: formData.promoTerm || formData.promo || null,
         router_qty: Number(formData.routerQty) || 0,
@@ -990,10 +992,11 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         // Signatures fetched from client-side for dummy DB compatibility
         salesSignatureBase64,
         leaderSignatureBase64,
-        salesNameManual: salesNameInput
-      };
+        salesNameManual: salesNameInput,
+          tlNameManual: tlNameInput
+        };
 
-      const response = await fetch('/api/generate-pdf', {
+        const response = await fetch('/api/generate-pdf', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -1183,14 +1186,14 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
   const handleShareWa = async () => {
     const { generateWaTemplate } = await import("@/lib/waGenerator");
-    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
+    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput, tlNameManual: tlNameInput });
     const waUrl = `https://wa.me/?text=${encodeURIComponent(template)}`;
     window.open(waUrl, '_blank');
   };
 
   const handleCopyText = async () => {
     const { generateWaTemplate } = await import("@/lib/waGenerator");
-    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
+    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput, tlNameManual: tlNameInput });
     try {
       await navigator.clipboard.writeText(template);
       setIsWaCopied(true);
@@ -1218,7 +1221,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
               Preview Format WhatsApp
             </h4>
             <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '12px', color: '#374151', fontFamily: 'inherit', maxHeight: '200px', overflowY: 'auto', backgroundColor: '#ffffff', padding: '10px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-              {generateWaTemplate({ ...formData, salesNameManual: salesNameInput })}
+              {generateWaTemplate({ ...formData, salesNameManual: salesNameInput, tlNameManual: tlNameInput })}
             </pre>
           </div>
           <button type="button" className="btn btn-primary" onClick={handleShareWa} style={{ width: '100%', backgroundColor: '#25D366', borderColor: '#25D366', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
