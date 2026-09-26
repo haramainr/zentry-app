@@ -35,6 +35,12 @@ export default async function SalesFormPage({
         tlName = 'Iz Timisela';
       } else if (user.email === 'bima_sales@zentry.com') {
         tlName = 'Bima Giri Pangestu';
+      } else if (user.email === 'fachry_sales@zentry.com') {
+        tlName = 'Fachry Suryari';
+      } else if (user.email === 'ramadhani_sales@zentry.com') {
+        tlName = 'Ramadhani Alvian Sandy';
+      } else if (user.email === 'parulian_sales@zentry.com') {
+        tlName = 'Parulian Butar Butar';
       }
     }
   }
