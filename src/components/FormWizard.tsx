@@ -86,7 +86,6 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   const [ccSignatureData, setCcSignatureData] = useState<string | null>(initialData?.cc_signature_base64 || parsedExtras?.cc_signature_base64 || null);
   const [salesSignatureData, setSalesSignatureData] = useState<string | null>(null);
   const [salesNameInput, setSalesNameInput] = useState<string>(parsedExtras?.salesNameManual || '');
-  const [tlNameInput, setTlNameInput] = useState<string>(parsedExtras?.tlNameManual || tlName || '');
   
   // State untuk ID draft agar auto-save tidak membuat draft baru berkali-kali
   const [draftId, setDraftId] = useState(initialData?.id || null);
@@ -890,8 +889,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           promo: formData.promo,
           signature_base64: signatureData,
           cc_signature_base64: ccSignatureData,
-          salesNameManual: salesNameInput,
-          tlNameManual: tlNameInput
+          salesNameManual: salesNameInput
         }),
         promo: formData.promoTerm || formData.promo || null,
         router_qty: Number(formData.routerQty) || 0,
@@ -992,8 +990,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         // Signatures fetched from client-side for dummy DB compatibility
         salesSignatureBase64,
         leaderSignatureBase64,
-        salesNameManual: salesNameInput,
-          tlNameManual: tlNameInput
+        salesNameManual: salesNameInput
         };
 
         const response = await fetch('/api/generate-pdf', {
@@ -1186,14 +1183,14 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
   const handleShareWa = async () => {
     const { generateWaTemplate } = await import("@/lib/waGenerator");
-    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput, tlNameManual: tlNameInput });
+    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
     const waUrl = `https://wa.me/?text=${encodeURIComponent(template)}`;
     window.open(waUrl, '_blank');
   };
 
   const handleCopyText = async () => {
     const { generateWaTemplate } = await import("@/lib/waGenerator");
-    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput, tlNameManual: tlNameInput });
+    const template = generateWaTemplate({ ...formData, salesNameManual: salesNameInput });
     try {
       await navigator.clipboard.writeText(template);
       setIsWaCopied(true);
@@ -1221,7 +1218,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
               Preview Format WhatsApp
             </h4>
             <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: '12px', color: '#374151', fontFamily: 'inherit', maxHeight: '200px', overflowY: 'auto', backgroundColor: '#ffffff', padding: '10px', borderRadius: '4px', border: '1px solid #e2e8f0' }}>
-              {generateWaTemplate({ ...formData, salesNameManual: salesNameInput, tlNameManual: tlNameInput })}
+              {generateWaTemplate({ ...formData, salesNameManual: salesNameInput })}
             </pre>
           </div>
           <button type="button" className="btn btn-primary" onClick={handleShareWa} style={{ width: '100%', backgroundColor: '#25D366', borderColor: '#25D366', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }}>
@@ -2022,18 +2019,6 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <label className="input-label">Nama Lengkap Sales</label>
                 <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap Sales..." value={salesNameInput} onChange={(e) => setSalesNameInput(e.target.value)} />
               </div>
-              <div className="input-group" style={{ marginBottom: '16px', width: '100%' }}>
-                  <label className="input-label">Nama Lengkap TL</label>
-                  <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap TL..." value={tlNameInput} onChange={(e) => setTlNameInput(e.target.value)} />
-            <label className="input-label">Tanda Tangan Sales</label>
-
-              <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                  <Upload size={18} color="#475569" style={{ marginTop: '2px' }} />
-                  <div>
-                    <span style={{ fontSize: '0.85rem', color: '#0F172A', fontWeight: 600, display: 'block' }}>Import dari Galeri (Disarankan)</span>
-                    <span style={{ fontSize: '0.8rem', color: '#64748B' }}>Gunakan gambar tanda tangan berlatar transparan agar menyatu dengan dokumen PDF.</span>
-                  </div>
                 </div>
                 <button type="button" onClick={() => sigFileInputRef.current?.click()} style={{ background: 'white', border: '1px solid #CBD5E1', color: '#334155', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, marginTop: '10px', cursor: 'pointer', transition: 'all 0.2s' }}>
                   Pilih Gambar Tanda Tangan
