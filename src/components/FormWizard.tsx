@@ -87,6 +87,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   const [salesSignatureData, setSalesSignatureData] = useState<string | null>(null);
   const [salesNameInput, setSalesNameInput] = useState<string>(parsedExtras?.salesNameManual || '');
   
+  
   // State untuk ID draft agar auto-save tidak membuat draft baru berkali-kali
   const [draftId, setDraftId] = useState(initialData?.id || null);
 
@@ -2019,6 +2020,15 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <label className="input-label">Nama Lengkap Sales</label>
                 <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap Sales..." value={salesNameInput} onChange={(e) => setSalesNameInput(e.target.value)} />
               </div>
+            <label className="input-label">Tanda Tangan Sales</label>
+
+              <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <Upload size={18} color="#475569" style={{ marginTop: '2px' }} />
+                  <div>
+                    <span style={{ fontSize: '0.85rem', color: '#0F172A', fontWeight: 600, display: 'block' }}>Import dari Galeri (Disarankan)</span>
+                    <span style={{ fontSize: '0.8rem', color: '#64748B' }}>Gunakan gambar tanda tangan berlatar transparan agar menyatu dengan dokumen PDF.</span>
+                  </div>
                 </div>
                 <button type="button" onClick={() => sigFileInputRef.current?.click()} style={{ background: 'white', border: '1px solid #CBD5E1', color: '#334155', padding: '6px 12px', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 600, marginTop: '10px', cursor: 'pointer', transition: 'all 0.2s' }}>
                   Pilih Gambar Tanda Tangan
