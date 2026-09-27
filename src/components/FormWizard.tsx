@@ -2022,6 +2022,9 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <label className="input-label">Nama Lengkap Sales</label>
                 <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap Sales..." value={salesNameInput} onChange={(e) => setSalesNameInput(e.target.value)} />
               </div>
+              <div className="input-group" style={{ marginBottom: '16px', width: '100%' }}>
+                  <label className="input-label">Nama Lengkap TL</label>
+                  <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap TL..." value={tlNameInput} onChange={(e) => setTlNameInput(e.target.value)} />
             <label className="input-label">Tanda Tangan Sales</label>
 
               <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
