@@ -374,9 +374,33 @@ export async function POST(req: NextRequest) {
       }
     };
 
-    const checkBox = (fieldName: string, check: boolean) => {
-      if (!check) return;
-      try { form.getCheckBox(fieldName).check(); } catch (e) {}
+        const checkBox = (fieldName: string, isChecked: boolean) => {
+      try {
+        const field = form.getCheckBox(fieldName);
+        if (isChecked) {
+          const widgets = field.acroField.getWidgets();
+          if (widgets.length > 0) {
+            const rect = widgets[0].getRectangle();
+            const cbnBlue = rgb(0, 87/255, 155/255);
+            const w = rect.width;
+            const h = rect.height;
+            
+            firstPage.drawLine({
+                start: { x: rect.x + w * 0.2, y: rect.y + h * 0.45 },
+                end: { x: rect.x + w * 0.45, y: rect.y + h * 0.2 },
+                thickness: 2,
+                color: cbnBlue
+            });
+            firstPage.drawLine({
+                start: { x: rect.x + w * 0.4, y: rect.y + h * 0.2 },
+                end: { x: rect.x + w * 0.85, y: rect.y + h * 0.8 },
+                thickness: 2,
+                color: cbnBlue
+            });
+          }
+        }
+        form.removeField(field);
+      } catch (e) {}
     };
 
     // Helper function to convert text to Title Case
