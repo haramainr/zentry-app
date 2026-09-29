@@ -386,12 +386,12 @@ export async function POST(req: NextRequest) {
             const h = rect.height;
             
             if (drawBox) {
-              // Shrink the box by 2 points on all sides to match the native printed boxes
+              // Shrink the box slightly to match the native printed boxes
               firstPage.drawRectangle({
-                x: rect.x + 2.5,
-                y: rect.y + 2.5,
-                width: w - 5,
-                height: h - 5,
+                x: rect.x + 0.5,
+                y: rect.y + 0.5,
+                width: w - 1.5,
+                height: h - 1.5,
                 borderColor: rgb(0.3, 0.3, 0.3), // Dark gray instead of pure black
                 borderWidth: 0.5 // Thinner border
               });
