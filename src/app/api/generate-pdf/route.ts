@@ -385,6 +385,16 @@ export async function POST(req: NextRequest) {
             const w = rect.width;
             const h = rect.height;
             
+            // Draw border box just in case the native PDF doesn't have a printed box (e.g. 3rd Add-on slot)
+            firstPage.drawRectangle({
+              x: rect.x,
+              y: rect.y,
+              width: w,
+              height: h,
+              borderColor: rgb(0, 0, 0),
+              borderWidth: 0.7
+            });
+            
             firstPage.drawLine({
                 start: { x: rect.x + w * 0.2, y: rect.y + h * 0.45 },
                 end: { x: rect.x + w * 0.45, y: rect.y + h * 0.2 },
