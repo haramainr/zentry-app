@@ -223,7 +223,7 @@ export async function POST(req: NextRequest) {
           if (value) {
             const rect = widgets[0].getRectangle();
               if (fieldName === 'Text17') {
-                rect.x += 8.5;
+                rect.x += 1.5;
                   rect.y -= 5.0;
               }
               let numRows = 1;
