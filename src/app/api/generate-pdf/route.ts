@@ -164,9 +164,14 @@ export async function POST(req: NextRequest) {
           value = value.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-'); value = value.replace(/[^\x20-\x7E\n]/g, ' ');
           value = value.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-'); value = value.replace(/[^\x20-\x7E\n]/g, ' ');
           const rect = widgets[0].getRectangle();
-
-          
-          const textWidth = helveticaBoldFont.widthOfTextAtSize(value, fontSize);
+            if (fieldName === 'Text39') {
+              rect.x = 190;
+              rect.width = 140;
+            } else if (fieldName === 'Text40') {
+              rect.x = 360;
+              rect.width = 140;
+            }
+            const textWidth = helveticaBoldFont.widthOfTextAtSize(value, fontSize);
           const xPos = rect.x + (rect.width - textWidth) / 2;
           
           firstPage.drawText(value, {
