@@ -223,7 +223,7 @@ export async function POST(req: NextRequest) {
           if (value) {
             const rect = widgets[0].getRectangle();
               if (fieldName === 'Text17') {
-                rect.x += 1.5;
+                rect.x += 2.0;
                   rect.y -= 5.0;
               }
               let numRows = 1;
@@ -525,7 +525,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Aktivasi, Jadwal & Catatan
-    fillCombText('Text17', data.username, 14, 10, false, 151.5);
+    fillCombText('Text17', data.username, 14, 10, false, 156.5);
     if (data.tglPemasangan === 'Secepatnya') {
       try {
         const field21 = form.getTextField('Text21');
