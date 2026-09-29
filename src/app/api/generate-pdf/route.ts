@@ -145,11 +145,11 @@ export async function POST(req: NextRequest) {
         const rect = widgets[0].getRectangle();
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
-              rect.x = 220;
-              rect.width = 135;
+              rect.x = 170;
+              rect.width = 140;
             } else if (fieldName === 'Text40') {
-              rect.x = 385;
-              rect.width = 135;
+              rect.x = 335;
+              rect.width = 140;
             }
         firstPage.drawText(text, {
           x: rect.x + 2 + xOffset,
@@ -173,11 +173,11 @@ export async function POST(req: NextRequest) {
           const rect = widgets[0].getRectangle();
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
-              rect.x = 220;
-              rect.width = 135;
+              rect.x = 170;
+              rect.width = 140;
             } else if (fieldName === 'Text40') {
-              rect.x = 385;
-              rect.width = 135;
+              rect.x = 335;
+              rect.width = 140;
             }
           
           const textWidth = helveticaBoldFont.widthOfTextAtSize(value, fontSize);
@@ -233,11 +233,11 @@ export async function POST(req: NextRequest) {
             const rect = widgets[0].getRectangle();
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
-              rect.x = 220;
-              rect.width = 135;
+              rect.x = 170;
+              rect.width = 140;
             } else if (fieldName === 'Text40') {
-              rect.x = 385;
-              rect.width = 135;
+              rect.x = 335;
+              rect.width = 140;
             }
             
             let numRows = 1;
@@ -462,11 +462,11 @@ export async function POST(req: NextRequest) {
           const rect = widgets[0].getRectangle();
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
-              rect.x = 220;
-              rect.width = 135;
+              rect.x = 170;
+              rect.width = 140;
             } else if (fieldName === 'Text40') {
-              rect.x = 385;
-              rect.width = 135;
+              rect.x = 335;
+              rect.width = 140;
             }
           firstPage.drawText(value, {
             x: rect.x + 5,
@@ -555,11 +555,11 @@ export async function POST(req: NextRequest) {
           const rect = widgets[0].getRectangle();
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
-              rect.x = 220;
-              rect.width = 135;
+              rect.x = 170;
+              rect.width = 140;
             } else if (fieldName === 'Text40') {
-              rect.x = 385;
-              rect.width = 135;
+              rect.x = 335;
+              rect.width = 140;
             }
           firstPage.drawText('Secepatnya', {
               x: rect.x + 8,
@@ -664,8 +664,8 @@ export async function POST(req: NextRequest) {
       if(widgets.length > 0) {
         salesSigBoxRect = widgets[0].getRectangle();
           // Adjust for new CBN PDF layout
-          salesSigBoxRect.x = 220;
-          salesSigBoxRect.width = 135;
+          salesSigBoxRect.x = 170;
+          salesSigBoxRect.width = 140;
       }
       form.removeField(salesSigField);
     } catch(e) {}
@@ -677,8 +677,8 @@ export async function POST(req: NextRequest) {
       if(widgets.length > 0) {
         leaderSigBoxRect = widgets[0].getRectangle();
           // Adjust for new CBN PDF layout
-          leaderSigBoxRect.x = 385;
-          leaderSigBoxRect.width = 135;
+          leaderSigBoxRect.x = 335;
+          leaderSigBoxRect.width = 140;
       }
       form.removeField(leaderSigField);
     } catch(e) {}
