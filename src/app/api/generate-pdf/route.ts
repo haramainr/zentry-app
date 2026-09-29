@@ -143,8 +143,6 @@ export async function POST(req: NextRequest) {
         field.defaultUpdateAppearances(helveticaFont);
         
         const rect = widgets[0].getRectangle();
-              rect.x += 4.5;
-              rect.y -= 2.5;
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
               rect.x = 190;
@@ -173,8 +171,6 @@ export async function POST(req: NextRequest) {
           value = value.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-'); value = value.replace(/[^\x20-\x7E\n]/g, ' ');
           value = value.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-'); value = value.replace(/[^\x20-\x7E\n]/g, ' ');
           const rect = widgets[0].getRectangle();
-              rect.x += 4.5;
-              rect.y -= 2.5;
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
               rect.x = 190;
@@ -235,8 +231,6 @@ export async function POST(req: NextRequest) {
         if (widgets.length > 0) {
           if (value) {
             const rect = widgets[0].getRectangle();
-              rect.x += 4.5;
-              rect.y -= 2.5;
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
               rect.x = 190;
@@ -466,8 +460,6 @@ export async function POST(req: NextRequest) {
         const widgets = field.acroField.getWidgets();
         if (widgets.length > 0 && value) {
           const rect = widgets[0].getRectangle();
-              rect.x += 4.5;
-              rect.y -= 2.5;
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
               rect.x = 190;
@@ -561,8 +553,6 @@ export async function POST(req: NextRequest) {
         const widgets = field21.acroField.getWidgets();
         if (widgets.length > 0) {
           const rect = widgets[0].getRectangle();
-              rect.x += 4.5;
-              rect.y -= 2.5;
             // Adjust for new CBN PDF layout
             if (fieldName === 'Text39') {
               rect.x = 190;
