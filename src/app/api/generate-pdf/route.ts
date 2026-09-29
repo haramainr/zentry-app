@@ -150,7 +150,10 @@ export async function POST(req: NextRequest) {
             } else if (fieldName === 'Text40') {
               rect.x = 360;
               rect.width = 140;
-            }
+            } else if (fieldName === 'Text17') {
+                rect.x += 4.5;
+                rect.y -= 2.5;
+              }
         firstPage.drawText(text, {
           x: rect.x + 2 + xOffset,
           y: rect.y + yOffset,
@@ -178,7 +181,10 @@ export async function POST(req: NextRequest) {
             } else if (fieldName === 'Text40') {
               rect.x = 360;
               rect.width = 140;
-            }
+            } else if (fieldName === 'Text17') {
+                rect.x += 4.5;
+                rect.y -= 2.5;
+              }
           
           const textWidth = helveticaBoldFont.widthOfTextAtSize(value, fontSize);
           const xPos = rect.x + (rect.width - textWidth) / 2;
@@ -238,7 +244,10 @@ export async function POST(req: NextRequest) {
             } else if (fieldName === 'Text40') {
               rect.x = 360;
               rect.width = 140;
-            }
+            } else if (fieldName === 'Text17') {
+                rect.x += 4.5;
+                rect.y -= 2.5;
+              }
             
             let numRows = 1;
             let totalWidth = customWidth || rect.width;
@@ -467,7 +476,10 @@ export async function POST(req: NextRequest) {
             } else if (fieldName === 'Text40') {
               rect.x = 360;
               rect.width = 140;
-            }
+            } else if (fieldName === 'Text17') {
+                rect.x += 4.5;
+                rect.y -= 2.5;
+              }
           firstPage.drawText(value, {
             x: rect.x + 5,
             y: rect.y + 7, // Geser lebih ke atas lagi agar tidak menabrak titik-titik
@@ -560,7 +572,10 @@ export async function POST(req: NextRequest) {
             } else if (fieldName === 'Text40') {
               rect.x = 360;
               rect.width = 140;
-            }
+            } else if (fieldName === 'Text17') {
+                rect.x += 4.5;
+                rect.y -= 2.5;
+              }
           firstPage.drawText('Secepatnya', {
               x: rect.x + 8,
               y: rect.y + 4,
