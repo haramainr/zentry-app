@@ -525,7 +525,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Aktivasi, Jadwal & Catatan
-    fillCombText('Text17', data.username, 14, 10, false, 158.5);
+    fillCombText('Text17', data.username, 14, 10, false, 157.5);
     if (data.tglPemasangan === 'Secepatnya') {
       try {
         const field21 = form.getTextField('Text21');
