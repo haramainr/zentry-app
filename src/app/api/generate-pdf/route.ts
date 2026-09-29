@@ -222,9 +222,11 @@ export async function POST(req: NextRequest) {
         if (widgets.length > 0) {
           if (value) {
             const rect = widgets[0].getRectangle();
-
-            
-            let numRows = 1;
+              if (fieldName === 'Text17') {
+                rect.x += 4.5;
+                rect.y -= 2.5;
+              }
+              let numRows = 1;
             let totalWidth = customWidth || rect.width;
             let boxWidth = totalWidth / maxBoxes;
             let rowHeight = rect.height;
