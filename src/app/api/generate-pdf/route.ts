@@ -451,11 +451,21 @@ export async function POST(req: NextRequest) {
       form.removeField(form.getTextField('Text11'));
     } catch(e) {}
 
-    const cleanTelpRumah = (data.telpRumah || '').replace(/[^0-9]/g, '');
-    if (cleanTelpRumah.length > 0) {
-      // Gambar kotak kedua di bawah telpSelular (y - 20) tanpa label tambahan
-      drawCustomCombBox(cleanTelpRumah, 407.38, 660, 148.12, 15.15, 13, 10);
-    }
+          const cleanTelpRumah = (data.telpRumah || '').replace(/[^0-9]/g, '');
+      if (cleanTelpRumah.length > 0) {
+        // Hapus teks disclaimer "Nomor telepon yang tercantum..." dengan blok putih
+        firstPage.drawRectangle({
+          x: 310,
+          y: 659,
+          width: 260,
+          height: 18,
+          color: rgb(1, 1, 1),
+          borderWidth: 0
+        });
+        
+        // Gambar kotak kedua di bawah telpSelular (y - 20) tanpa label tambahan
+        drawCustomCombBox(cleanTelpRumah, 407.38, 660, 148.12, 15.15, 13, 10);
+      }
 
     // 2. Alamat Pemasangan
     fillCombText('Text16', data.alamat, 38, 10, true, undefined, true); // 38 kotak per baris, 2 baris, force normal text
