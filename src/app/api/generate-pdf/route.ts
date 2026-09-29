@@ -223,8 +223,8 @@ export async function POST(req: NextRequest) {
           if (value) {
             const rect = widgets[0].getRectangle();
               if (fieldName === 'Text17') {
-                rect.x += 2.0;
-                  rect.y -= 5.0;
+                rect.x += 0.5;
+                  rect.y -= 6.0;
               }
               let numRows = 1;
             let totalWidth = customWidth || rect.width;
