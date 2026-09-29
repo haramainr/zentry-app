@@ -374,7 +374,7 @@ export async function POST(req: NextRequest) {
       }
     };
 
-        const checkBox = (fieldName: string, isChecked: boolean) => {
+        const checkBox = (fieldName: string, isChecked: boolean, drawBox: boolean = false) => {
       try {
         const field = form.getCheckBox(fieldName);
         if (isChecked) {
@@ -385,15 +385,16 @@ export async function POST(req: NextRequest) {
             const w = rect.width;
             const h = rect.height;
             
-            // Draw border box just in case the native PDF doesn't have a printed box (e.g. 3rd Add-on slot)
-            firstPage.drawRectangle({
-              x: rect.x,
-              y: rect.y,
-              width: w,
-              height: h,
-              borderColor: rgb(0, 0, 0),
-              borderWidth: 0.7
-            });
+            if (drawBox) {
+              firstPage.drawRectangle({
+                x: rect.x,
+                y: rect.y,
+                width: w,
+                height: h,
+                borderColor: rgb(0, 0, 0),
+                borderWidth: 0.7
+              });
+            }
             
             firstPage.drawLine({
                 start: { x: rect.x + w * 0.2, y: rect.y + h * 0.45 },
@@ -531,7 +532,7 @@ export async function POST(req: NextRequest) {
 
     // Custom Add-On TV (Lainnya) -> Left Side (Button51 & Text53)
     if (data.addon1Check || data.addon1Text) {
-      if (data.addon1Check) checkBox('Button51', true);
+      if (data.addon1Check) checkBox('Button51', true, true);
       if (data.addon1Text) drawCustomFieldText('Text53', data.addon1Text, 3, 9);
     }
 
@@ -552,7 +553,7 @@ export async function POST(req: NextRequest) {
       drawCustomFieldText('Text52', vasArray[1], 4, getDynamicFontSize(vasArray[1]), true, -4);
     }
     if (vasArray.length > 2) {
-      checkBox('Button1', true);
+      checkBox('Button1', true, true);
       // Jika lebih dari 3, gabungkan sisanya di slot ke-3
       const remaining = vasArray.slice(2).join(', ');
       drawCustomFieldText('Text49', remaining, 4, getDynamicFontSize(remaining), true, -4);
