@@ -143,6 +143,14 @@ export async function POST(req: NextRequest) {
         field.defaultUpdateAppearances(helveticaFont);
         
         const rect = widgets[0].getRectangle();
+            // Adjust for new CBN PDF layout
+            if (fieldName === 'Text39') {
+              rect.x = 220;
+              rect.width = 135;
+            } else if (fieldName === 'Text40') {
+              rect.x = 385;
+              rect.width = 135;
+            }
         firstPage.drawText(text, {
           x: rect.x + 2 + xOffset,
           y: rect.y + yOffset,
@@ -163,6 +171,14 @@ export async function POST(req: NextRequest) {
           value = value.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-'); value = value.replace(/[^\x20-\x7E\n]/g, ' ');
           value = value.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"').replace(/[\u2013\u2014]/g, '-'); value = value.replace(/[^\x20-\x7E\n]/g, ' ');
           const rect = widgets[0].getRectangle();
+            // Adjust for new CBN PDF layout
+            if (fieldName === 'Text39') {
+              rect.x = 220;
+              rect.width = 135;
+            } else if (fieldName === 'Text40') {
+              rect.x = 385;
+              rect.width = 135;
+            }
           
           const textWidth = helveticaBoldFont.widthOfTextAtSize(value, fontSize);
           const xPos = rect.x + (rect.width - textWidth) / 2;
@@ -215,6 +231,14 @@ export async function POST(req: NextRequest) {
         if (widgets.length > 0) {
           if (value) {
             const rect = widgets[0].getRectangle();
+            // Adjust for new CBN PDF layout
+            if (fieldName === 'Text39') {
+              rect.x = 220;
+              rect.width = 135;
+            } else if (fieldName === 'Text40') {
+              rect.x = 385;
+              rect.width = 135;
+            }
             
             let numRows = 1;
             let totalWidth = customWidth || rect.width;
@@ -436,6 +460,14 @@ export async function POST(req: NextRequest) {
         const widgets = field.acroField.getWidgets();
         if (widgets.length > 0 && value) {
           const rect = widgets[0].getRectangle();
+            // Adjust for new CBN PDF layout
+            if (fieldName === 'Text39') {
+              rect.x = 220;
+              rect.width = 135;
+            } else if (fieldName === 'Text40') {
+              rect.x = 385;
+              rect.width = 135;
+            }
           firstPage.drawText(value, {
             x: rect.x + 5,
             y: rect.y + 7, // Geser lebih ke atas lagi agar tidak menabrak titik-titik
@@ -521,6 +553,14 @@ export async function POST(req: NextRequest) {
         const widgets = field21.acroField.getWidgets();
         if (widgets.length > 0) {
           const rect = widgets[0].getRectangle();
+            // Adjust for new CBN PDF layout
+            if (fieldName === 'Text39') {
+              rect.x = 220;
+              rect.width = 135;
+            } else if (fieldName === 'Text40') {
+              rect.x = 385;
+              rect.width = 135;
+            }
           firstPage.drawText('Secepatnya', {
               x: rect.x + 8,
               y: rect.y + 4,
@@ -623,6 +663,9 @@ export async function POST(req: NextRequest) {
       const widgets = salesSigField.acroField.getWidgets();
       if(widgets.length > 0) {
         salesSigBoxRect = widgets[0].getRectangle();
+          // Adjust for new CBN PDF layout
+          salesSigBoxRect.x = 220;
+          salesSigBoxRect.width = 135;
       }
       form.removeField(salesSigField);
     } catch(e) {}
@@ -633,6 +676,9 @@ export async function POST(req: NextRequest) {
       const widgets = leaderSigField.acroField.getWidgets();
       if(widgets.length > 0) {
         leaderSigBoxRect = widgets[0].getRectangle();
+          // Adjust for new CBN PDF layout
+          leaderSigBoxRect.x = 385;
+          leaderSigBoxRect.width = 135;
       }
       form.removeField(leaderSigField);
     } catch(e) {}
