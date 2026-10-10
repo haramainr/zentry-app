@@ -998,6 +998,14 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const handleSubmit = async (format: 'pdf' | 'jpg' = 'pdf') => {
+    if (!salesNameInput || salesNameInput.trim() === '') {
+      alert("Peringatan: Nama Lengkap Sales wajib diisi!");
+      return;
+    }
+    if (!signatureData || signatureData.trim() === '') {
+      alert("Peringatan: Tanda Tangan Sales wajib diisi!");
+      return;
+    }
     setIsSubmitting(true);
     try {
       await handleSaveDraft(true, true);
@@ -2059,10 +2067,10 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             <p className="text-muted" style={{ marginBottom: 'var(--spacing-sm)' }}>Silakan masukkan nama dan tanda tangan Sales. (Kotak TTD Pelanggan dibiarkan kosong untuk tanda tangan basah).</p>
             
             <div className="input-group" style={{ marginBottom: '16px', width: '100%' }}>
-                <label className="input-label">Nama Lengkap Sales</label>
+                <label className="input-label">Nama Lengkap Sales <span style={{color: 'red'}}>*</span></label>
                 <input type="text" className="input-field" style={{ width: '100%' }} placeholder="Ketik nama lengkap Sales..." value={salesNameInput} onChange={(e) => setSalesNameInput(e.target.value)} />
               </div>
-            <label className="input-label">Tanda Tangan Sales</label>
+            <label className="input-label">Tanda Tangan Sales <span style={{color: 'red'}}>*</span></label>
 
               <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '12px', borderRadius: '8px', marginBottom: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
