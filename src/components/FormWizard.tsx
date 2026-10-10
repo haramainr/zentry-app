@@ -802,7 +802,21 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           return;
         }
     }
-    if (currentStep === 3) {
+          if (currentStep === 2) {
+        if (!formData.alamat || formData.alamat.trim() === '') {
+          alert("Peringatan: Alamat Lengkap wajib diisi!");
+          return;
+        }
+        if (!formData.statusKepemilikan || formData.statusKepemilikan.trim() === '') {
+          alert("Peringatan: Status Kepemilikan wajib dipilih!");
+          return;
+        }
+        if (!formData.email || formData.email.trim() === '') {
+          alert("Peringatan: Alamat Email Pelanggan wajib diisi!");
+          return;
+        }
+      }
+      if (currentStep === 3) {
       const rPrice = parseInt(formData.routerPrice) || 0;
       const rQty = parseInt(formData.routerQty) || 0;
       if ((formData.routerText || rPrice > 0) && rQty <= 0) {
@@ -1591,9 +1605,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           <div className="animate-fade-in">
             <div className="input-group">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                <label className="input-label" style={{ fontWeight: 600, color: '#0F172A', margin: 0 }}>
-                  Alamat Lengkap
-                </label>
+                <label className="input-label" style={{ fontWeight: 600, color: '#0F172A', margin: 0 }}>Alamat Lengkap <span style={{color: 'red'}}>*</span></label>
                 <span style={{ fontSize: '0.72rem', fontWeight: 600, color: '#0284C7', backgroundColor: '#F0F9FF', border: '1px solid #BAE6FD', padding: '2px 8px', borderRadius: '4px' }}>
                   Wajib Sesuai Home ID
                 </span>
@@ -1661,7 +1673,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             </div>
 
             <div className="input-group">
-              <label className="input-label" style={{ marginBottom: 'var(--spacing-sm)' }}>Status Kepemilikan</label>
+              <label className="input-label" style={{ marginBottom: 'var(--spacing-sm)' }}>Status Kepemilikan <span style={{color: 'red'}}>*</span></label>
               <div className="flex stack-mobile gap-md">
                 <label className="flex items-center gap-sm" style={{ cursor: 'pointer' }}>
                   <input type="radio" name="statusKepemilikan" value="Pemilik" checked={formData.statusKepemilikan === 'Pemilik'} onChange={handleChange} /> Pemilik
@@ -1673,7 +1685,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             </div>
 
             <div className="input-group">
-              <label className="input-label">Alamat Email Pelanggan</label>
+              <label className="input-label">Alamat Email Pelanggan <span style={{color: 'red'}}>*</span></label>
               <input type="email" name="email" className="input-field" value={formData.email} onChange={handleChange} />
             </div>
           </div>
