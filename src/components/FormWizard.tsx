@@ -776,7 +776,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const handleNext = () => {
-                      if (currentStep === 1) {
+                            if (currentStep === 1) {
         if (!formData.namaLengkap || formData.namaLengkap.trim() === '') {
           alert("Peringatan: Nama Lengkap wajib diisi!");
           return;
@@ -787,6 +787,10 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         }
         if (!formData.tanggalLahir || formData.tanggalLahir.trim() === '') {
           alert("Peringatan: Tanggal Lahir wajib diisi!");
+          return;
+        }
+        if (!formData.jenisKelamin || formData.jenisKelamin === '') {
+          alert("Peringatan: Jenis Kelamin wajib dipilih!");
           return;
         }
         if (!formData.ktp || formData.ktp.length !== 16) {
@@ -1560,7 +1564,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 )}
               </div>
               <div className="input-group" style={{ flex: 1 }}>
-                <label className="input-label">Jenis Kelamin</label>
+                <label className="input-label">Jenis Kelamin <span style={{color: 'red'}}>*</span></label>
                 <select name="jenisKelamin" className="input-field" value={formData.jenisKelamin} onChange={handleChange}>
                   <option value="">Pilih...</option>
                   <option value="Pria">Pria</option>
