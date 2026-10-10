@@ -776,8 +776,12 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const handleNext = () => {
-    if (currentStep === 1) {
-      if (!formData.ktp || formData.ktp.length !== 16) {
+          if (currentStep === 1) {
+        if (!formData.namaLengkap || formData.namaLengkap.trim() === '') {
+          alert("Peringatan: Nama Lengkap wajib diisi!");
+          return;
+        }
+        if (!formData.ktp || formData.ktp.length !== 16) {
         alert("Peringatan: Nomor Identitas (KTP) harus diisi dan berjumlah tepat 16 digit angka!");
         return;
       }
@@ -1520,7 +1524,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 </div>
 
             <div className="input-group">
-              <label className="input-label">Nama Lengkap</label>
+              <label className="input-label">Nama Lengkap <span style={{color: 'red'}}>*</span></label>
               <input type="text" name="namaLengkap" className="input-field" value={formData.namaLengkap} onChange={handleChange} />
             </div>
             
@@ -1537,7 +1541,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
             <div className="flex stack-mobile gap-md">
               <div className="input-group" style={{ flex: 2 }}>
-                <label className="input-label">Nomor Identitas (KTP)</label>
+                <label className="input-label">Nomor Identitas (KTP) <span style={{color: 'red'}}>*</span></label>
                 <input type="text" name="ktp" className="input-field" maxLength={16} value={formData.ktp} onChange={handleNumberChange} placeholder="Harus 16 Digit Angka" />
                 {formData.ktp.length > 0 && formData.ktp.length !== 16 && (
                   <span style={{ color: 'red', fontSize: '12px' }}>KTP harus 16 digit angka ({formData.ktp.length}/16)</span>
