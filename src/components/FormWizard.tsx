@@ -776,9 +776,17 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const handleNext = () => {
-          if (currentStep === 1) {
+                if (currentStep === 1) {
         if (!formData.namaLengkap || formData.namaLengkap.trim() === '') {
           alert("Peringatan: Nama Lengkap wajib diisi!");
+          return;
+        }
+        if (!formData.tempatLahir || formData.tempatLahir.trim() === '') {
+          alert("Peringatan: Tempat Lahir wajib diisi!");
+          return;
+        }
+        if (!formData.tanggalLahir || formData.tanggalLahir.trim() === '') {
+          alert("Peringatan: Tanggal Lahir wajib diisi!");
           return;
         }
         if (!formData.ktp || formData.ktp.length !== 16) {
@@ -1530,11 +1538,11 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
             
             <div className="flex stack-mobile gap-md">
               <div className="input-group" style={{ flex: 1 }}>
-                <label className="input-label">Tempat Lahir</label>
+                <label className="input-label">Tempat Lahir <span style={{color: 'red'}}>*</span></label>
                 <input type="text" name="tempatLahir" className="input-field" value={formData.tempatLahir} onChange={handleChange} />
               </div>
               <div className="input-group" style={{ flex: 1 }}>
-                <label className="input-label">Tanggal Lahir</label>
+                <label className="input-label">Tanggal Lahir <span style={{color: 'red'}}>*</span></label>
                 <input type="date" name="tanggalLahir" className="input-field" value={formData.tanggalLahir} onChange={handleChange} />
               </div>
             </div>
