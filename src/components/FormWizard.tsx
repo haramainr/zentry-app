@@ -776,7 +776,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const handleNext = () => {
-                if (currentStep === 1) {
+                      if (currentStep === 1) {
         if (!formData.namaLengkap || formData.namaLengkap.trim() === '') {
           alert("Peringatan: Nama Lengkap wajib diisi!");
           return;
@@ -790,9 +790,13 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
           return;
         }
         if (!formData.ktp || formData.ktp.length !== 16) {
-        alert("Peringatan: Nomor Identitas (KTP) harus diisi dan berjumlah tepat 16 digit angka!");
-        return;
-      }
+          alert("Peringatan: Nomor Identitas (KTP) harus diisi dan berjumlah tepat 16 digit angka!");
+          return;
+        }
+        if (!formData.telpSelular || formData.telpSelular.trim() === '') {
+          alert("Peringatan: Telepon Selular wajib diisi!");
+          return;
+        }
     }
     if (currentStep === 3) {
       const rPrice = parseInt(formData.routerPrice) || 0;
@@ -1567,7 +1571,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
 
             <div className="flex stack-mobile gap-md">
               <div className="input-group" style={{ flex: 1 }}>
-                <label className="input-label">Telepon Selular</label>
+                <label className="input-label">Telepon Selular <span style={{color: 'red'}}>*</span></label>
                 <input type="tel" name="telpSelular" className="input-field" value={formData.telpSelular} onChange={handleChange} />
               </div>
               <div className="input-group" style={{ flex: 1 }}>
