@@ -803,6 +803,12 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         return;
       }
     }
+    if (currentStep === 4) {
+      if (!formData.titikKoordinat || formData.titikKoordinat.trim() === '') {
+        alert("Peringatan: Titik Koordinat (Tikor) wajib diisi!");
+        return;
+      }
+    }
     if (currentStep < totalSteps) {
       const nextStep = currentStep + 1;
       
@@ -1826,7 +1832,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
                 <input type="text" name="homepassId" className="input-field" value={formData.homepassId} onChange={handleChange} placeholder="Contoh: CBN-12345" />
               </div>
               <div className="input-group" style={{ flex: 1 }}>
-                <label className="input-label">Titik Koordinat (Lat, Long)</label>
+                <label className="input-label">Titik Koordinat (Lat, Long) <span style={{color: 'red'}}>*</span></label>
                 <input type="text" name="titikKoordinat" className="input-field" value={formData.titikKoordinat} onChange={handleChange} placeholder="-6.2088, 106.8456" />
               </div>
             </div>
