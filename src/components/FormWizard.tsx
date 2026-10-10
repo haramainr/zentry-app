@@ -803,8 +803,12 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         return;
       }
     }
-    if (currentStep === 4) {
-      if (!formData.titikKoordinat || formData.titikKoordinat.trim() === '') {
+          if (currentStep === 4) {
+        if (!formData.username || formData.username.trim() === '') {
+          alert("Peringatan: Username ZEntry wajib diisi!");
+          return;
+        }
+        if (!formData.titikKoordinat || formData.titikKoordinat.trim() === '') {
         alert("Peringatan: Titik Koordinat (Tikor) wajib diisi!");
         return;
       }
@@ -1820,7 +1824,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         {currentStep === 4 && (
           <div className="animate-fade-in">
             <div className="input-group">
-              <label className="input-label">Username ZEntry</label>
+              <label className="input-label">Username ZEntry <span style={{color: 'red'}}>*</span></label>
               <div className="flex items-center">
                 <input type="text" name="username" className="input-field" style={{ flex: 1 }} value={formData.username} onChange={handleChange} />
               </div>
