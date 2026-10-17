@@ -21,6 +21,67 @@ export default function UserManagementPage() {
   const [createForm, setCreateForm] = useState({ fullName: "", email: "", password: "", role: "Sales", supervisorId: "" });
   const [creating, setCreating] = useState(false);
   
+  // State khusus Akun Sales TL
+  const [createMode, setCreateMode] = useState<'TL_SALES' | 'STANDARD'>('TL_SALES');
+  const [tlSalesForm, setTlSalesForm] = useState({
+    tlFullName: "",
+    salesEmail: "",
+    salesPassword: "",
+    salesFullName: ""
+  });
+  const [tlSigBase64, setTlSigBase64] = useState<string | null>(null);
+  const tlSigFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleTlSigUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        if (ev.target?.result) {
+          setTlSigBase64(ev.target.result.toString());
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleCreateTlSalesUser = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!tlSigBase64) {
+      if (!confirm("Tanda tangan TL belum diunggah. Apakah yakin ingin lanjut tanpa tanda tangan TL (bisa diunggah nanti)?")) {
+        return;
+      }
+    }
+    setCreating(true);
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "CREATE_TL_SALES_ACCOUNT",
+          payload: {
+            ...tlSalesForm,
+            tlSignatureBase64: tlSigBase64
+          }
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Akun Sales TL berhasil dibuat dan langsung aktif!");
+        setShowCreateModal(false);
+        setTlSalesForm({ tlFullName: "", salesEmail: "", salesPassword: "", salesFullName: "" });
+        setTlSigBase64(null);
+        fetchUsers();
+      } else {
+        alert(data.error || "Gagal membuat akun Sales TL");
+      }
+    } catch (e: any) {
+      alert("Error: " + e.message);
+    } finally {
+      setCreating(false);
+    }
+  };
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [sigBase64, setSigBase64] = useState<string | null>(null);
 
@@ -201,10 +262,16 @@ export default function UserManagementPage() {
               />
             </div>
             <button 
-              onClick={() => setShowCreateModal(true)}
+              onClick={() => { setCreateMode('TL_SALES'); setShowCreateModal(true); }}
+              style={{ padding: '10px 16px', borderRadius: '8px', backgroundColor: '#10B981', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600, boxShadow: '0 2px 8px rgba(16, 185, 129, 0.25)' }}
+            >
+              <Shield size={18} /> + Akun Sales TL
+            </button>
+            <button 
+              onClick={() => { setCreateMode('STANDARD'); setShowCreateModal(true); }}
               style={{ padding: '10px 16px', borderRadius: '8px', backgroundColor: '#3B82F6', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontWeight: 600 }}
             >
-              <Plus size={18} /> Tambah Akun
+              <Plus size={18} /> Tambah Akun Biasa
             </button>
           </div>
       </header>
@@ -427,47 +494,226 @@ export default function UserManagementPage() {
     
       {/* Create Modal */}
       {showCreateModal && typeof document !== 'undefined' ? createPortal(
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div className="animate-fade-in" style={{ backgroundColor: '#1E293B', width: '100%', maxWidth: '400px', borderRadius: '12px', border: '1px solid #334155', overflow: 'hidden' }}>
-            <div style={{ padding: '20px', borderBottom: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h3 style={{ margin: 0, color: '#F8FAFC' }}>Buat Akun Baru</h3>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.8)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, padding: '16px' }}>
+          <div className="animate-fade-in" style={{ backgroundColor: '#1E293B', width: '100%', maxWidth: '480px', borderRadius: '12px', border: '1px solid #334155', overflow: 'hidden', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
+            
+            {/* Header */}
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#0F172A' }}>
+              <h3 style={{ margin: 0, color: '#F8FAFC', fontSize: '1.1rem' }}>Buat Akun Baru</h3>
               <button onClick={() => setShowCreateModal(false)} style={{ background: 'none', border: 'none', color: '#94A3B8', cursor: 'pointer' }}><X size={20} /></button>
             </div>
-            <form onSubmit={handleCreateUser} style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              <div>
-                <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Nama Lengkap</p>
-                <input required type="text" value={createForm.fullName} onChange={e => setCreateForm({...createForm, fullName: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} />
-              </div>
-              <div>
-                <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Email</p>
-                <input required type="email" value={createForm.email} onChange={e => setCreateForm({...createForm, email: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} />
-              </div>
-              <div>
-                <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Password</p>
-                <input required type="text" minLength={6} value={createForm.password} onChange={e => setCreateForm({...createForm, password: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} />
-              </div>
-              <div>
-                <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Role / Jabatan</p>
-                <select value={createForm.role} onChange={e => setCreateForm({...createForm, role: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }}>
-                  <option value="Sales">Sales</option>
-                  <option value="Leader">Leader</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Developer">Developer</option>
-                </select>
-              </div>
-              {createForm.role === 'Sales' && (
-                <div>
-                  <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Pilih Atasan (Leader)</p>
-                  <select value={createForm.supervisorId} onChange={e => setCreateForm({...createForm, supervisorId: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }}>
-                    <option value="">-- Pilih Leader --</option>
-                    {leaders.map(l => <option key={l.id} value={l.id}>{l.full_name}</option>)}
-                  </select>
-                </div>
-              )}
-              <button type="submit" disabled={creating} style={{ padding: '10px 16px', borderRadius: '6px', border: 'none', backgroundColor: '#3B82F6', color: 'white', cursor: 'pointer', fontWeight: 600, marginTop: '8px' }}>
-                {creating ? 'Menyimpan...' : 'Buat Akun'}
+
+            {/* Mode Switch Tabs */}
+            <div style={{ display: 'flex', borderBottom: '1px solid #334155', backgroundColor: '#0B1120' }}>
+              <button
+                type="button"
+                onClick={() => setCreateMode('TL_SALES')}
+                style={{
+                  flex: 1,
+                  padding: '12px 16px',
+                  background: createMode === 'TL_SALES' ? '#1E293B' : 'transparent',
+                  border: 'none',
+                  borderBottom: createMode === 'TL_SALES' ? '2px solid #10B981' : 'none',
+                  color: createMode === 'TL_SALES' ? '#34D399' : '#94A3B8',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
+                }}
+              >
+                <Shield size={16} /> Akun Sales TL
               </button>
-            </form>
+              <button
+                type="button"
+                onClick={() => setCreateMode('STANDARD')}
+                style={{
+                  flex: 1,
+                  padding: '12px 16px',
+                  background: createMode === 'STANDARD' ? '#1E293B' : 'transparent',
+                  border: 'none',
+                  borderBottom: createMode === 'STANDARD' ? '2px solid #3B82F6' : 'none',
+                  color: createMode === 'STANDARD' ? '#60A5FA' : '#94A3B8',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px'
+                }}
+              >
+                <Users size={16} /> Akun Standar
+              </button>
+            </div>
+
+            {/* Content Scrollable */}
+            <div style={{ overflowY: 'auto', flex: 1 }}>
+              {createMode === 'TL_SALES' ? (
+                <form onSubmit={handleCreateTlSalesUser} style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  <div style={{ padding: '10px 12px', backgroundColor: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.25)', borderRadius: '8px', fontSize: '0.785rem', color: '#A7F3D0', lineHeight: 1.4 }}>
+                    💡 <strong>Format Akun Sales TL:</strong> Akun ini sama persis dengan sistem <em>alfath_sales</em>, <em>parulian_sales</em>, atau <em>ayi_cro</em>. Nama & Tanda Tangan TL yang diisi di sini akan otomatis terkunci di kolom kanan bawah PDF formulir!
+                  </div>
+
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8', fontWeight: 500 }}>
+                      Nama Lengkap Team Leader (TL) <span style={{ color: '#EF4444' }}>*</span>
+                    </p>
+                    <input 
+                      required 
+                      type="text" 
+                      placeholder="Contoh: Muhammad Ayi N. H. atau Dimas Prasetyo" 
+                      value={tlSalesForm.tlFullName} 
+                      onChange={e => {
+                        const val = e.target.value;
+                        const firstWord = val.trim().split(' ')[0] || '';
+                        setTlSalesForm(prev => ({
+                          ...prev,
+                          tlFullName: val,
+                          salesFullName: prev.salesFullName || (firstWord ? `Sales ${firstWord}` : ''),
+                          salesEmail: prev.salesEmail || (firstWord ? `${firstWord.toLowerCase()}_sales@zentry.com` : '')
+                        }));
+                      }} 
+                      style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} 
+                    />
+                    <span style={{ fontSize: '0.72rem', color: '#64748B' }}>Nama ini yang akan tercetak di kotak tanda tangan TL (kanan bawah PDF).</span>
+                  </div>
+
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8', fontWeight: 500 }}>
+                      Tanda Tangan Digital TL <span style={{ color: '#EF4444' }}>*</span>
+                    </p>
+                    <input type="file" accept="image/*" ref={tlSigFileInputRef} onChange={handleTlSigUpload} style={{ display: 'none' }} />
+                    <div 
+                      onClick={() => tlSigFileInputRef.current?.click()} 
+                      style={{ 
+                        border: '2px dashed #334155', 
+                        borderRadius: '8px', 
+                        padding: '16px', 
+                        textAlign: 'center', 
+                        cursor: 'pointer', 
+                        backgroundColor: '#0F172A',
+                        transition: 'all 0.2s'
+                      }}
+                    >
+                      {tlSigBase64 ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                          <img src={tlSigBase64} alt="Preview TTD TL" style={{ maxHeight: '80px', objectFit: 'contain' }} />
+                          <span style={{ fontSize: '0.75rem', color: '#10B981', fontWeight: 600 }}>✓ Tanda Tangan Terpilih (Klik untuk ganti)</span>
+                        </div>
+                      ) : (
+                        <div style={{ color: '#94A3B8', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+                          <Upload size={20} color="#64748B" />
+                          <span style={{ fontSize: '0.82rem', fontWeight: 500 }}>Klik untuk pilih file tanda tangan (.png transparan)</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8', fontWeight: 500 }}>
+                      Email Login Sales <span style={{ color: '#EF4444' }}>*</span>
+                    </p>
+                    <input 
+                      required 
+                      type="email" 
+                      placeholder="Contoh: dimas_sales@zentry.com" 
+                      value={tlSalesForm.salesEmail} 
+                      onChange={e => setTlSalesForm({...tlSalesForm, salesEmail: e.target.value})} 
+                      style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} 
+                    />
+                  </div>
+
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8', fontWeight: 500 }}>
+                      Password Login <span style={{ color: '#EF4444' }}>*</span>
+                    </p>
+                    <input 
+                      required 
+                      type="text" 
+                      minLength={6} 
+                      placeholder="Contoh: password123" 
+                      value={tlSalesForm.salesPassword} 
+                      onChange={e => setTlSalesForm({...tlSalesForm, salesPassword: e.target.value})} 
+                      style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} 
+                    />
+                  </div>
+
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8', fontWeight: 500 }}>
+                      Nama Akun / Sales Display (Opsional)
+                    </p>
+                    <input 
+                      type="text" 
+                      placeholder="Contoh: Sales Dimas" 
+                      value={tlSalesForm.salesFullName} 
+                      onChange={e => setTlSalesForm({...tlSalesForm, salesFullName: e.target.value})} 
+                      style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} 
+                    />
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    disabled={creating} 
+                    style={{ 
+                      padding: '12px 16px', 
+                      borderRadius: '8px', 
+                      border: 'none', 
+                      backgroundColor: '#10B981', 
+                      color: 'white', 
+                      cursor: creating ? 'not-allowed' : 'pointer', 
+                      fontWeight: 700, 
+                      marginTop: '6px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                      boxShadow: '0 2px 8px rgba(16, 185, 129, 0.3)'
+                    }}
+                  >
+                    <Shield size={18} /> {creating ? 'Memproses Akun...' : 'Simpan & Aktifkan Akun Sales TL'}
+                  </button>
+                </form>
+              ) : (
+                <form onSubmit={handleCreateUser} style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Nama Lengkap</p>
+                    <input required type="text" value={createForm.fullName} onChange={e => setCreateForm({...createForm, fullName: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} />
+                  </div>
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Email</p>
+                    <input required type="email" value={createForm.email} onChange={e => setCreateForm({...createForm, email: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} />
+                  </div>
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Password</p>
+                    <input required type="text" minLength={6} value={createForm.password} onChange={e => setCreateForm({...createForm, password: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }} />
+                  </div>
+                  <div>
+                    <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Role / Jabatan</p>
+                    <select value={createForm.role} onChange={e => setCreateForm({...createForm, role: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }}>
+                      <option value="Sales">Sales</option>
+                      <option value="Leader">Leader</option>
+                      <option value="Manager">Manager</option>
+                      <option value="Developer">Developer</option>
+                    </select>
+                  </div>
+                  {createForm.role === 'Sales' && (
+                    <div>
+                      <p style={{ margin: '0 0 4px 0', fontSize: '0.85rem', color: '#94A3B8' }}>Pilih Atasan (Leader)</p>
+                      <select value={createForm.supervisorId} onChange={e => setCreateForm({...createForm, supervisorId: e.target.value})} style={{ width: '100%', padding: '10px 14px', backgroundColor: '#0F172A', color: 'white', borderRadius: '6px', border: '1px solid #334155', outline: 'none' }}>
+                        <option value="">-- Pilih Leader --</option>
+                        {leaders.map(l => <option key={l.id} value={l.id}>{l.full_name}</option>)}
+                      </select>
+                    </div>
+                  )}
+                  <button type="submit" disabled={creating} style={{ padding: '10px 16px', borderRadius: '6px', border: 'none', backgroundColor: '#3B82F6', color: 'white', cursor: 'pointer', fontWeight: 600, marginTop: '8px' }}>
+                    {creating ? 'Menyimpan...' : 'Buat Akun Standar'}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
         </div>, document.body) : null}
 

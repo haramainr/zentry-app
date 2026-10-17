@@ -43,6 +43,85 @@ export async function POST(req: NextRequest) {
 
       return NextResponse.json({ success: true, user: authData.user });
     }
+
+    else if (action === 'CREATE_TL_SALES_ACCOUNT') {
+      const { tlFullName, tlSignatureBase64, salesEmail, salesPassword, salesFullName } = body.payload;
+
+      if (!tlFullName || !salesEmail || !salesPassword) {
+        return NextResponse.json({ error: "Nama TL, Email Sales, dan Password wajib diisi." }, { status: 400 });
+      }
+
+      // 1. Cari atau buat Leader di public.users
+      let leaderId: string;
+      const { data: existingLeader } = await adminAuth
+        .from('users')
+        .select('id')
+        .eq('full_name', tlFullName.trim())
+        .eq('role', 'Leader')
+        .maybeSingle();
+
+      if (existingLeader) {
+        leaderId = existingLeader.id;
+      } else {
+        leaderId = crypto.randomUUID();
+        const { error: leaderErr } = await adminAuth.from('users').insert({
+          id: leaderId,
+          full_name: tlFullName.trim(),
+          role: 'Leader',
+          subscription_status: 'Active',
+          subscription_end_date: '2028-12-31T00:00:00+00:00'
+        });
+        if (leaderErr) throw leaderErr;
+      }
+
+      // 2. Simpan tanda tangan TL jika ada
+      if (tlSignatureBase64) {
+        const { data: existingSig } = await adminAuth.from('signatures').select('id').eq('user_id', leaderId).maybeSingle();
+        if (existingSig) {
+          await adminAuth.from('signatures').update({ signature_url: tlSignatureBase64 }).eq('user_id', leaderId);
+        } else {
+          await adminAuth.from('signatures').insert({ user_id: leaderId, signature_url: tlSignatureBase64 });
+        }
+      }
+
+      // 3. Buat user Sales di Supabase Auth
+      const finalSalesName = salesFullName?.trim() || `Sales ${tlFullName.trim()}`;
+      const { data: authData, error: authError } = await adminAuth.auth.admin.createUser({
+        email: salesEmail.trim(),
+        password: salesPassword,
+        email_confirm: true,
+        user_metadata: {
+          full_name: finalSalesName,
+          role: 'Sales',
+          supervisor_id: leaderId
+        }
+      });
+
+      if (authError) throw authError;
+
+      // 4. Pastikan public.users terisi dengan supervisor_id ke Leader dan Active
+      const { data: existingSales } = await adminAuth.from('users').select('id').eq('id', authData.user.id).maybeSingle();
+      if (existingSales) {
+        await adminAuth.from('users').update({
+          full_name: finalSalesName,
+          role: 'Sales',
+          supervisor_id: leaderId,
+          subscription_status: 'Active',
+          subscription_end_date: '2028-12-31T00:00:00+00:00'
+        }).eq('id', authData.user.id);
+      } else {
+        await adminAuth.from('users').insert({
+          id: authData.user.id,
+          full_name: finalSalesName,
+          role: 'Sales',
+          supervisor_id: leaderId,
+          subscription_status: 'Active',
+          subscription_end_date: '2028-12-31T00:00:00+00:00'
+        });
+      }
+
+      return NextResponse.json({ success: true, user: authData.user, leaderId });
+    }
     
     else if (action === 'UPDATE_USER') {
       const { userId, supervisorId, role, subscriptionStatus, subscriptionEndDate } = body.payload;

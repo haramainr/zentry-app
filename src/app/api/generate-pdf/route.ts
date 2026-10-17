@@ -31,11 +31,24 @@ export async function POST(req: NextRequest) {
           salesFullName = data.salesNameManual;
         }
         
-        // TETAP KUNCI NAMA & TTD LEADER (WINDIH)
+        // Default leader (Windih)
         leaderSignatureBase64 = WINDIH_SIGNATURE;
-          leaderFullName = 'Windih Niswanti Yanna';
+        leaderFullName = 'Windih Niswanti Yanna';
+
+        // 1. Cek apakah akun memiliki Team Leader (supervisor_id) terdaftar di database
+        const { data: userProfile } = await supabase.from('users').select('supervisor_id').eq('id', user.id).maybeSingle();
+        if (userProfile && userProfile.supervisor_id) {
+          const { data: tlUser } = await supabase.from('users').select('full_name').eq('id', userProfile.supervisor_id).maybeSingle();
+          if (tlUser && tlUser.full_name) {
+            leaderFullName = tlUser.full_name;
+          }
+          const { data: tlSig } = await supabase.from('signatures').select('signature_url').eq('user_id', userProfile.supervisor_id).maybeSingle();
+          if (tlSig && tlSig.signature_url) {
+            leaderSignatureBase64 = tlSig.signature_url.replace(/^data:image\/\w+;base64,/, '');
+          }
+        }
           
-          if (user.email === 'demo_sales@zentry.com') {
+        if (user.email === 'demo_sales@zentry.com') {
             // HANYA hapus TTD Leader. TTD Sales tetap dipertahankan.
             leaderSignatureBase64 = null;
             leaderFullName = '';
