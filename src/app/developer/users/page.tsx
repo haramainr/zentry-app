@@ -174,13 +174,21 @@ export default function UserManagementPage() {
     if (!confirm(`Apakah Anda yakin ingin menghapus akun ${user.full_name} secara permanen? Data ini tidak dapat dipulihkan.`)) return;
     
     setLoading(true);
-    const { error } = await supabase.from('users').delete().eq('id', user.id);
-    
-    if (error) {
-      alert("Gagal menghapus akun: " + error.message);
-    } else {
-      alert("Akun berhasil dihapus!");
-      fetchUsers();
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "DELETE_USER", payload: { userId: user.id } })
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert("Akun berhasil dihapus secara permanen!");
+        fetchUsers();
+      } else {
+        alert("Gagal menghapus akun: " + (data.error || "Terjadi kesalahan"));
+      }
+    } catch (e: any) {
+      alert("Error: " + e.message);
     }
     setLoading(false);
   };

@@ -164,6 +164,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: true });
     }
 
+    else if (action === 'DELETE_USER') {
+      const { userId } = body.payload;
+      if (!userId) {
+        return NextResponse.json({ error: "User ID wajib disertakan." }, { status: 400 });
+      }
+
+      // 1. Unlink child users whose supervisor_id is this user
+      await adminAuth.from('users').update({ supervisor_id: null }).eq('supervisor_id', userId);
+
+      // 2. Delete signatures
+      await adminAuth.from('signatures').delete().eq('user_id', userId);
+
+      // 3. Unlink submissions
+      await adminAuth.from('submissions').update({ sales_id: null }).eq('sales_id', userId);
+
+      // 4. Delete from public.users
+      const { error: dbErr } = await adminAuth.from('users').delete().eq('id', userId);
+      if (dbErr) console.warn("Delete public.users warn:", dbErr.message);
+
+      // 5. Delete from Supabase Auth
+      const { error: authErr } = await adminAuth.auth.admin.deleteUser(userId);
+      if (authErr) console.warn("Delete auth.users warn:", authErr.message);
+
+      return NextResponse.json({ success: true });
+    }
+
     return NextResponse.json({ error: "Invalid action" }, { status: 400 });
 
   } catch (error: any) {
