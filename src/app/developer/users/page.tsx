@@ -171,7 +171,7 @@ export default function UserManagementPage() {
   };
 
   const handleDelete = async (user: any) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus akun ${user.full_name} secara permanen? Data ini tidak dapat dipulihkan.`)) return;
+    if (!confirm(`Apakah Anda yakin ingin menghapus akun ${user.full_name} secara permanen? Seluruh data terkait akun ini akan dihapus.`)) return;
     
     setLoading(true);
     try {
@@ -182,6 +182,8 @@ export default function UserManagementPage() {
       });
       const data = await res.json();
       if (data.success) {
+        // Optimistic UI update: immediately remove user from list
+        setUsers(prev => prev.filter(u => u.id !== user.id));
         alert("Akun berhasil dihapus secara permanen!");
         fetchUsers();
       } else {

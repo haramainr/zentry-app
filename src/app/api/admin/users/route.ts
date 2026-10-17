@@ -170,22 +170,53 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "User ID wajib disertakan." }, { status: 400 });
       }
 
+      // Check user info first to see if they have an internal dummy supervisor
+      const { data: userToDelete } = await adminAuth.from('users').select('id, supervisor_id').eq('id', userId).single();
+      const supervisorId = userToDelete?.supervisor_id;
+
       // 1. Unlink child users whose supervisor_id is this user
       await adminAuth.from('users').update({ supervisor_id: null }).eq('supervisor_id', userId);
 
       // 2. Delete signatures
       await adminAuth.from('signatures').delete().eq('user_id', userId);
 
-      // 3. Unlink submissions
-      await adminAuth.from('submissions').update({ sales_id: null }).eq('sales_id', userId);
+      // 3. Delete submissions made by this user (submissions.sales_id has a NOT NULL constraint)
+      const { error: subErr } = await adminAuth.from('submissions').delete().eq('sales_id', userId);
+      if (subErr) {
+        console.error("Delete submissions error:", subErr);
+        throw new Error("Gagal menghapus submission pengguna: " + subErr.message);
+      }
 
       // 4. Delete from public.users
       const { error: dbErr } = await adminAuth.from('users').delete().eq('id', userId);
-      if (dbErr) console.warn("Delete public.users warn:", dbErr.message);
+      if (dbErr) {
+        console.error("Delete public.users error:", dbErr);
+        throw new Error("Gagal menghapus user dari database: " + dbErr.message);
+      }
 
       // 5. Delete from Supabase Auth
       const { error: authErr } = await adminAuth.auth.admin.deleteUser(userId);
-      if (authErr) console.warn("Delete auth.users warn:", authErr.message);
+      if (authErr) {
+        console.error("Delete auth.users error:", authErr);
+        throw new Error("Gagal menghapus user dari Supabase Auth: " + authErr.message);
+      }
+
+      // 6. Clean up internal dummy leader if orphan
+      if (supervisorId) {
+        try {
+          const { data: supAuth } = await adminAuth.auth.admin.getUserById(supervisorId);
+          if (supAuth?.user?.email?.includes('@internal.zentry.com')) {
+            const { data: siblingSales } = await adminAuth.from('users').select('id').eq('supervisor_id', supervisorId);
+            if (!siblingSales || siblingSales.length === 0) {
+              await adminAuth.from('signatures').delete().eq('user_id', supervisorId);
+              await adminAuth.from('users').delete().eq('id', supervisorId);
+              await adminAuth.auth.admin.deleteUser(supervisorId);
+            }
+          }
+        } catch (cleanupErr) {
+          console.warn("Cleanup internal dummy leader error (ignored):", cleanupErr);
+        }
+      }
 
       return NextResponse.json({ success: true });
     }
