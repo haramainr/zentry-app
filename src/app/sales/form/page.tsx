@@ -16,8 +16,8 @@ export default async function SalesFormPage({
     const { data: profile } = await supabase.from('users').select('full_name, supervisor_id').eq('id', user.id).single();
     if (profile) {
       caeName = profile.full_name;
-      if (user.email === 'ayi_cro@zentry.com') {
-        caeName = 'Muhammad Ayi N. H.';
+      if (user.email === 'ayi_cro@zentry.com' || user.email?.includes('sales')) {
+        caeName = '';
       }
       if (profile.supervisor_id) {
         const { data: tlProfile } = await supabase.from('users').select('full_name').eq('id', profile.supervisor_id).single();
@@ -44,6 +44,8 @@ export default async function SalesFormPage({
         tlName = 'Ramadhani Alvian Sandy';
       } else if (user.email === 'parulian_sales@zentry.com') {
         tlName = 'Parulian Butar Butar';
+      } else if (user.email === 'ayi_cro@zentry.com') {
+        tlName = 'Muhammad Ayi N. H.';
       }
     }
   }

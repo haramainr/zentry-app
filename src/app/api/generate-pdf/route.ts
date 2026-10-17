@@ -3,7 +3,7 @@ import { PDFDocument, StandardFonts, TextAlignment, PDFName, rgb, PDFTextField, 
 import fs from 'fs';
 import path from 'path';
 import { createClient } from '@/lib/supabase/server';
-import { DEA_SIGNATURE, WINDIH_SIGNATURE, ALFATH_SIGNATURE, IZ_SIGNATURE, BIMA_SIGNATURE, FACHRY_SIGNATURE, RAMADHANI_SIGNATURE, PARULIAN_SIGNATURE } from '@/lib/locked-signatures';
+import { DEA_SIGNATURE, WINDIH_SIGNATURE, ALFATH_SIGNATURE, IZ_SIGNATURE, BIMA_SIGNATURE, FACHRY_SIGNATURE, RAMADHANI_SIGNATURE, PARULIAN_SIGNATURE, AYI_SIGNATURE } from '@/lib/locked-signatures';
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,13 +26,9 @@ export async function POST(req: NextRequest) {
         
         if (data.signature) {
           salesSignatureBase64 = data.signature.replace(/^data:image\/\w+;base64,/, '');
-        } else if (data.salesSignatureBase64) {
-          salesSignatureBase64 = data.salesSignatureBase64.replace(/^data:image\/\w+;base64,/, '');
         }
         if (data.salesNameManual) {
           salesFullName = data.salesNameManual;
-        } else if (data.caeName) {
-          salesFullName = data.caeName;
         }
         
         // TETAP KUNCI NAMA & TTD LEADER (WINDIH)
@@ -61,6 +57,9 @@ export async function POST(req: NextRequest) {
             } else if (user.email === 'bima_sales@zentry.com') {
             leaderSignatureBase64 = BIMA_SIGNATURE;
             leaderFullName = 'Bima Giri Pangestu';
+          } else if (user.email === 'ayi_cro@zentry.com') {
+            leaderSignatureBase64 = AYI_SIGNATURE;
+            leaderFullName = 'Muhammad Ayi N. H.';
           }
       }
 
