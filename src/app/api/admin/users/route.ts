@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Nama TL, Email Sales, dan Password wajib diisi." }, { status: 400 });
       }
 
-      // 1. Cari atau buat Leader di public.users
+      // 1. Cari apakah Leader sudah ada di public.users
       let leaderId: string;
       const { data: existingLeader } = await adminAuth
         .from('users')
@@ -63,15 +63,28 @@ export async function POST(req: NextRequest) {
       if (existingLeader) {
         leaderId = existingLeader.id;
       } else {
-        leaderId = crypto.randomUUID();
-        const { error: leaderErr } = await adminAuth.from('users').insert({
-          id: leaderId,
+        // Buat user Leader di auth.users (trigger DB otomatis membuatkan row di public.users)
+        const cleanName = tlFullName.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+        const leaderEmail = `leader_${cleanName}_${Date.now()}@internal.zentry.com`;
+        const { data: leaderAuth, error: lAuthErr } = await adminAuth.auth.admin.createUser({
+          email: leaderEmail,
+          password: crypto.randomUUID(),
+          email_confirm: true,
+          user_metadata: {
+            full_name: tlFullName.trim(),
+            role: 'Leader'
+          }
+        });
+        if (lAuthErr) throw lAuthErr;
+        leaderId = leaderAuth.user.id;
+
+        // Pastikan nama & status di public.users sesuai
+        await adminAuth.from('users').update({
           full_name: tlFullName.trim(),
           role: 'Leader',
           subscription_status: 'Active',
           subscription_end_date: '2028-12-31T00:00:00+00:00'
-        });
-        if (leaderErr) throw leaderErr;
+        }).eq('id', leaderId);
       }
 
       // 2. Simpan tanda tangan TL jika ada
@@ -99,26 +112,14 @@ export async function POST(req: NextRequest) {
 
       if (authError) throw authError;
 
-      // 4. Pastikan public.users terisi dengan supervisor_id ke Leader dan Active
-      const { data: existingSales } = await adminAuth.from('users').select('id').eq('id', authData.user.id).maybeSingle();
-      if (existingSales) {
-        await adminAuth.from('users').update({
-          full_name: finalSalesName,
-          role: 'Sales',
-          supervisor_id: leaderId,
-          subscription_status: 'Active',
-          subscription_end_date: '2028-12-31T00:00:00+00:00'
-        }).eq('id', authData.user.id);
-      } else {
-        await adminAuth.from('users').insert({
-          id: authData.user.id,
-          full_name: finalSalesName,
-          role: 'Sales',
-          supervisor_id: leaderId,
-          subscription_status: 'Active',
-          subscription_end_date: '2028-12-31T00:00:00+00:00'
-        });
-      }
+      // 4. Update data sales di public.users (yang otomatis dibuat oleh trigger DB)
+      await adminAuth.from('users').update({
+        full_name: finalSalesName,
+        role: 'Sales',
+        supervisor_id: leaderId,
+        subscription_status: 'Active',
+        subscription_end_date: '2028-12-31T00:00:00+00:00'
+      }).eq('id', authData.user.id);
 
       return NextResponse.json({ success: true, user: authData.user, leaderId });
     }
