@@ -16,6 +16,9 @@ export default async function SalesFormPage({
     const { data: profile } = await supabase.from('users').select('full_name, supervisor_id').eq('id', user.id).single();
     if (profile) {
       caeName = profile.full_name;
+      if (user.email === 'ayi_cro@zentry.com') {
+        caeName = 'Muhammad Ayi N. H.';
+      }
       if (profile.supervisor_id) {
         const { data: tlProfile } = await supabase.from('users').select('full_name').eq('id', profile.supervisor_id).single();
         if (tlProfile) {

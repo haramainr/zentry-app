@@ -26,9 +26,13 @@ export async function POST(req: NextRequest) {
         
         if (data.signature) {
           salesSignatureBase64 = data.signature.replace(/^data:image\/\w+;base64,/, '');
+        } else if (data.salesSignatureBase64) {
+          salesSignatureBase64 = data.salesSignatureBase64.replace(/^data:image\/\w+;base64,/, '');
         }
         if (data.salesNameManual) {
           salesFullName = data.salesNameManual;
+        } else if (data.caeName) {
+          salesFullName = data.caeName;
         }
         
         // TETAP KUNCI NAMA & TTD LEADER (WINDIH)

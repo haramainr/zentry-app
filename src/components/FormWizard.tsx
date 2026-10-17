@@ -85,7 +85,26 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   const [signatureData, setSignatureData] = useState<string | null>(initialData?.signature_base64 || parsedExtras?.signature_base64 || null);
   const [ccSignatureData, setCcSignatureData] = useState<string | null>(initialData?.cc_signature_base64 || parsedExtras?.cc_signature_base64 || null);
   const [salesSignatureData, setSalesSignatureData] = useState<string | null>(null);
-  const [salesNameInput, setSalesNameInput] = useState<string>(parsedExtras?.salesNameManual || '');
+  const [salesNameInput, setSalesNameInput] = useState<string>(parsedExtras?.salesNameManual || caeName || '');
+
+  // Auto load sales signature & default name from DB if not yet set
+  useEffect(() => {
+    async function initSalesData() {
+      if (!salesNameInput && caeName) {
+        setSalesNameInput(caeName);
+      }
+      if (!signatureData) {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (user) {
+          const { data: sig } = await supabase.from('signatures').select('signature_url').eq('user_id', user.id).maybeSingle();
+          if (sig && sig.signature_url) {
+            setSignatureData(sig.signature_url);
+          }
+        }
+      }
+    }
+    initSalesData();
+  }, [caeName]);
   
   
   // State untuk ID draft agar auto-save tidak membuat draft baru berkali-kali
@@ -998,11 +1017,23 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
   };
 
   const handleSubmit = async (format: 'pdf' | 'jpg' = 'pdf') => {
-    if (!salesNameInput || salesNameInput.trim() === '') {
+    const effectiveSalesName = salesNameInput.trim() || (caeName ? caeName.trim() : '');
+    if (!effectiveSalesName) {
       alert("Peringatan: Nama Lengkap Sales wajib diisi!");
       return;
     }
-    if (!signatureData || signatureData.trim() === '') {
+    let effectiveSignature = signatureData;
+    if (!effectiveSignature) {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: salesSig } = await supabase.from('signatures').select('signature_url').eq('user_id', user.id).maybeSingle();
+        if (salesSig && salesSig.signature_url) {
+          effectiveSignature = salesSig.signature_url;
+          setSignatureData(salesSig.signature_url);
+        }
+      }
+    }
+    if (!effectiveSignature || effectiveSignature.trim() === '') {
       alert("Peringatan: Tanda Tangan Sales wajib diisi!");
       return;
     }
@@ -1028,7 +1059,7 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
       const payload = {
         ...formData,
         id: draftId,
-        signature: signatureData,
+        signature: effectiveSignature,
         ccSignature: ccSignatureData,
         hariPemasangan: getHari(formData.tglPemasangan),
         biayaPemasangan: formatRupiah(formData.biayaPemasangan),
@@ -1041,9 +1072,9 @@ export default function FormWizard({ initialData, caeName, tlName }: { initialDa
         biayaPpn: formatRupiah(kalkulasi.ppn),
         biayaTotal: formatRupiah(kalkulasi.total),
         // Signatures fetched from client-side for dummy DB compatibility
-        salesSignatureBase64,
+        salesSignatureBase64: salesSignatureBase64 || effectiveSignature,
         leaderSignatureBase64,
-        salesNameManual: salesNameInput
+        salesNameManual: effectiveSalesName
         };
 
         const response = await fetch('/api/generate-pdf', {
